@@ -670,19 +670,19 @@ body::after {
 
 /* ---- LIGHT THEME ---- */
 body.light {
-    --bg: #faf8f5;
-    --bg-2: #f0ece6;
-    --bg-card: rgba(0, 0, 0, 0.02);
-    --bg-card-hover: rgba(0, 0, 0, 0.04);
-    --text: #2a2a2e;
-    --text-muted: #7a7a88;
-    --accent: #e8652b;
-    --accent-2: #d4a017;
-    --accent-3: #e8652b;
-    --accent-glow: rgba(232, 101, 43, 0.08);
-    --accent-glow-2: rgba(212, 160, 23, 0.08);
-    --border: rgba(0, 0, 0, 0.07);
-    --border-hover: rgba(232, 101, 43, 0.3);
+    --bg: #1a1714;
+    --bg-2: #211e19;
+    --bg-card: rgba(255, 255, 255, 0.03);
+    --bg-card-hover: rgba(255, 255, 255, 0.06);
+    --text: #d4cfc8;
+    --text-muted: #8a8278;
+    --accent: #c4703a;
+    --accent-2: #b8922e;
+    --accent-3: #c4703a;
+    --accent-glow: rgba(196, 112, 58, 0.1);
+    --accent-glow-2: rgba(184, 146, 46, 0.08);
+    --border: rgba(255, 255, 255, 0.06);
+    --border-hover: rgba(196, 112, 58, 0.3);
 }
 
 body.light { cursor: auto; }
@@ -694,23 +694,20 @@ body.light .project-visit-btn { cursor: pointer; }
 
 body.light .bg-grid {
     background-image:
-        linear-gradient(rgba(232,101,43,0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(232,101,43,0.04) 1px, transparent 1px);
+        linear-gradient(rgba(196,112,58,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(196,112,58,0.03) 1px, transparent 1px);
 }
-body.light .bg-glow-1 { background: rgba(232,101,43,0.08); }
-body.light .bg-glow-2 { background: rgba(212,160,23,0.06); }
-body.light .bg-glow-3 { background: rgba(232,101,43,0.03); }
+body.light .bg-glow-1 { background: rgba(196,112,58,0.08); }
+body.light .bg-glow-2 { background: rgba(184,146,46,0.05); }
+body.light .bg-glow-3 { background: rgba(196,112,58,0.03); }
 
-body.light::before { opacity: 0; }
-body.light::after { background: none; }
-
-body.light .nav-logo { color: #2a2a2e; text-shadow: none; }
+body.light .nav-logo { color: #e8e0d6; text-shadow: 0 0 20px rgba(196,112,58,0.2); }
 body.light .nav.scrolled {
-    background: rgba(250,248,245,0.92);
-    border-bottom-color: rgba(0,0,0,0.06);
+    background: rgba(26,23,20,0.9);
+    border-bottom-color: rgba(255,255,255,0.05);
 }
 
-body.light strong { color: #1a1a1e; }
+body.light strong { color: #ede6dc; }
 body.light .hero-title .accent {
     background: linear-gradient(135deg, var(--accent), var(--accent-2));
     -webkit-background-clip: text;
@@ -719,86 +716,53 @@ body.light .hero-title .accent {
 }
 body.light .cursor { color: var(--accent); text-shadow: none; }
 
-body.light .stat-num {
-    background: linear-gradient(135deg, var(--accent), var(--accent-2));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
-
-body.light .terminal {
-    background: rgba(42,42,46,0.95);
-    color: #d4d4dc;
-}
-body.light .terminal .accent { color: #00f0ff; }
-body.light .term-prompt { color: #00f0ff; }
-body.light .term-line.json { color: #a0a0b0; }
-body.light .term-line .str { color: #28c840; }
-body.light .term-line .bool { color: #00f0ff; }
-
-body.light .project-card.featured {
-    background: linear-gradient(135deg, rgba(232,101,43,0.03), rgba(212,160,23,0.02));
-    border-color: rgba(232,101,43,0.12);
-}
-body.light .project-card:hover {
-    box-shadow: 0 20px 60px rgba(232,101,43,0.08);
-}
-body.light .project-card::after {
-    background: linear-gradient(90deg, transparent, var(--accent), transparent);
-}
-body.light .project-glow {
-    background: radial-gradient(circle, rgba(232,101,43,0.08), transparent);
-}
-
-body.light .mini-val {
-    background: linear-gradient(135deg, var(--accent), var(--accent-2));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
-
-body.light .skill-bar {
-    background: linear-gradient(90deg, var(--accent), var(--accent-2));
-    box-shadow: 0 0 8px rgba(232,101,43,0.3);
-}
-
-body.light .skill-group:hover {
-    box-shadow: 0 10px 40px rgba(232,101,43,0.06);
-}
-
 body.light .btn-primary {
     border-color: var(--accent);
     color: var(--accent);
-    box-shadow: 0 0 20px rgba(232,101,43,0.1), inset 0 0 20px rgba(232,101,43,0.05);
+    box-shadow: 0 0 20px rgba(196,112,58,0.1), inset 0 0 20px rgba(196,112,58,0.05);
 }
 body.light .btn-primary:hover {
     background: var(--accent);
-    color: #fff;
-    box-shadow: 0 0 40px rgba(232,101,43,0.25);
+    color: #1a1714;
+    box-shadow: 0 0 40px rgba(196,112,58,0.2);
     text-shadow: none;
 }
 
 body.light .project-visit-btn:hover {
     background: var(--accent);
-    color: #fff;
-    box-shadow: 0 0 25px rgba(232,101,43,0.2);
+    color: #1a1714;
+    box-shadow: 0 0 25px rgba(196,112,58,0.15);
 }
 
 body.light .social-link:hover {
-    box-shadow: 0 0 20px rgba(232,101,43,0.1);
+    box-shadow: 0 0 20px rgba(196,112,58,0.1);
 }
 
 body.light .hero-badge {
-    border-color: rgba(232,101,43,0.25);
+    border-color: rgba(196,112,58,0.25);
     color: var(--accent);
 }
 body.light .hero-badge::before {
-    background: linear-gradient(90deg, transparent, rgba(232,101,43,0.1), transparent);
+    background: linear-gradient(90deg, transparent, rgba(196,112,58,0.08), transparent);
 }
 
 body.light .project-badge {
-    border-color: rgba(232,101,43,0.25);
+    border-color: rgba(196,112,58,0.25);
     color: var(--accent);
+}
+
+body.light .project-card.featured {
+    background: linear-gradient(135deg, rgba(196,112,58,0.04), rgba(184,146,46,0.02));
+    border-color: rgba(196,112,58,0.1);
+}
+body.light .project-card:hover {
+    box-shadow: 0 20px 60px rgba(196,112,58,0.06);
+}
+body.light .project-card::after {
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+}
+body.light .project-glow {
+    background: radial-gradient(circle, rgba(196,112,58,0.06), transparent);
 }
 
 body.light .nav-links a::after {
@@ -806,13 +770,18 @@ body.light .nav-links a::after {
     box-shadow: 0 0 8px var(--accent);
 }
 
-body.light .section-title::after {
-    background: linear-gradient(90deg, var(--border), transparent);
+body.light .skill-bar {
+    background: linear-gradient(90deg, var(--accent), var(--accent-2));
+    box-shadow: 0 0 6px rgba(196,112,58,0.2);
+}
+
+body.light .skill-group:hover {
+    box-shadow: 0 10px 40px rgba(196,112,58,0.04);
 }
 
 body.light .theme-dot.active {
-    border-color: #2a2a2e;
-    box-shadow: 0 0 12px rgba(0,0,0,0.15);
+    border-color: #e8e0d6;
+    box-shadow: 0 0 12px rgba(196,112,58,0.2);
 }
 
 /* ---- Responsive ---- */
