@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Andrea Vacchini | Developer & Creator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Animated background -->
+    <div class="bg-grid"></div>
+    <div class="bg-glow bg-glow-1"></div>
+    <div class="bg-glow bg-glow-2"></div>
+    <div class="bg-glow bg-glow-3"></div>
+
+    <!-- Navigation -->
+    <nav class="nav" id="nav">
+        <div class="nav-inner">
+            <a href="#" class="nav-logo">AV<span class="accent">.</span></a>
+            <div class="nav-links">
+                <a href="#about">About</a>
+                <a href="#projects">Projects</a>
+                <a href="#skills">Skills</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero" id="hero">
+        <div class="hero-content">
+            <div class="hero-badge reveal">Python Developer & Automation Engineer</div>
+            <h1 class="hero-title reveal">
+                <span class="line">Hi, I'm <span class="accent">Andrea</span></span>
+                <span class="line">I build things that</span>
+                <span class="line"><span class="typed-wrapper">work<span class="cursor">|</span></span></span>
+            </h1>
+            <p class="hero-sub reveal">
+                From algorithmic trading bots to network tools and web apps &mdash;
+                I turn complex problems into clean, automated solutions.
+            </p>
+            <div class="hero-cta reveal">
+                <a href="#projects" class="btn btn-primary">View My Work</a>
+                <a href="#contact" class="btn btn-ghost">Get in Touch</a>
+            </div>
+            <div class="hero-stats reveal">
+                <div class="stat">
+                    <span class="stat-num" data-target="8">0</span><span class="accent">+</span>
+                    <span class="stat-label">Projects</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-num" data-target="3">0</span><span class="accent">+</span>
+                    <span class="stat-label">Years Coding</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-num" data-target="5">0</span><span class="accent">+</span>
+                    <span class="stat-label">Technologies</span>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator reveal">
+            <div class="mouse">
+                <div class="mouse-wheel"></div>
+            </div>
+            <span>Scroll to explore</span>
+        </div>
+    </section>
+
+    <!-- About -->
+    <section class="section" id="about">
+        <div class="container">
+            <h2 class="section-title reveal">
+                <span class="section-num">01.</span> About Me
+            </h2>
+            <div class="about-grid">
+                <div class="about-text reveal">
+                    <p>
+                        I'm a <strong>Python developer</strong> based in Italy with a passion for
+                        <strong>automation</strong>, <strong>algorithmic trading</strong>, and building
+                        tools that solve real problems.
+                    </p>
+                    <p>
+                        I specialize in creating systems that run autonomously &mdash; from trading bots
+                        that manage prop firm accounts 24/7, to email automation platforms, network
+                        management tools, and AI-powered job matching engines.
+                    </p>
+                    <p>
+                        My approach is simple: <em>understand the problem deeply, build the simplest
+                        solution that works, then iterate.</em> I believe in data-driven decisions,
+                        clean architecture, and code that you can trust to run unattended.
+                    </p>
+                </div>
+                <div class="about-card reveal">
+                    <div class="terminal">
+                        <div class="terminal-header">
+                            <span class="terminal-dot red"></span>
+                            <span class="terminal-dot yellow"></span>
+                            <span class="terminal-dot green"></span>
+                            <span class="terminal-title">andrea@dev ~</span>
+                        </div>
+                        <div class="terminal-body">
+                            <div class="term-line"><span class="term-prompt">$</span> cat about.json</div>
+                            <div class="term-line json">{</div>
+                            <div class="term-line json">&nbsp;&nbsp;"name": "<span class="accent">Andrea Vacchini</span>",</div>
+                            <div class="term-line json">&nbsp;&nbsp;"role": "<span class="str">Developer & Creator</span>",</div>
+                            <div class="term-line json">&nbsp;&nbsp;"location": "<span class="str">Italy</span>",</div>
+                            <div class="term-line json">&nbsp;&nbsp;"focus": [</div>
+                            <div class="term-line json">&nbsp;&nbsp;&nbsp;&nbsp;"<span class="str">Trading Bots</span>",</div>
+                            <div class="term-line json">&nbsp;&nbsp;&nbsp;&nbsp;"<span class="str">Automation</span>",</div>
+                            <div class="term-line json">&nbsp;&nbsp;&nbsp;&nbsp;"<span class="str">Web Apps</span>",</div>
+                            <div class="term-line json">&nbsp;&nbsp;&nbsp;&nbsp;"<span class="str">Network Tools</span>"</div>
+                            <div class="term-line json">&nbsp;&nbsp;],</div>
+                            <div class="term-line json">&nbsp;&nbsp;"available": <span class="bool">true</span></div>
+                            <div class="term-line json">}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects -->
+    <section class="section" id="projects">
+        <div class="container">
+            <h2 class="section-title reveal">
+                <span class="section-num">02.</span> Featured Projects
+            </h2>
+            <div class="projects-grid">
+
+                <!-- Project 1: Trading Bots Suite -->
+                <div class="project-card featured reveal">
+                    <div class="project-glow"></div>
+                    <div class="project-header">
+                        <div class="project-icon">&#x1F4C8;</div>
+                        <div class="project-links">
+                            <span class="project-badge">Featured</span>
+                        </div>
+                    </div>
+                    <h3 class="project-title">Algorithmic Trading Suite</h3>
+                    <p class="project-desc">
+                        Over <strong>130 trading bots</strong> developed, backtested, and iterated
+                        across multiple strategies &mdash; from HP filter trend-following to
+                        Ichimoku multi-timeframe, mean reversion grids, ICT smart money concepts,
+                        and reinforcement learning agents. Each bot features automated position
+                        management, trailing stops, risk guards, and walk-forward validation
+                        on 21+ years of historical data.
+                    </p>
+                    <div class="project-stats">
+                        <div class="mini-stat">
+                            <span class="mini-val">130+</span>
+                            <span class="mini-label">Bots Built</span>
+                        </div>
+                        <div class="mini-stat">
+                            <span class="mini-val">21yr</span>
+                            <span class="mini-label">Backtest Data</span>
+                        </div>
+                        <div class="mini-stat">
+                            <span class="mini-val">Live</span>
+                            <span class="mini-label">Prop Firm Trading</span>
+                        </div>
+                    </div>
+                    <div class="project-tags">
+                        <span>Python</span>
+                        <span>MetaTrader 5</span>
+                        <span>NumPy</span>
+                        <span>SciPy</span>
+                        <span>Pandas</span>
+                        <span>Walk-Forward Testing</span>
+                        <span>Risk Management</span>
+                    </div>
+                </div>
+
+                <!-- Project 2: RispostaFacile -->
+                <div class="project-card reveal">
+                    <div class="project-glow"></div>
+                    <div class="project-header">
+                        <div class="project-icon">&#x1F916;</div>
+                        <a href="https://rispostafacile.ai" target="_blank" class="project-ext-link" title="Visit site">&#x2197;</a>
+                    </div>
+                    <h3 class="project-title">RispostaFacile.ai</h3>
+                    <p class="project-desc">
+                        AI-powered email response generator built for Italian accountants.
+                        Clients submit questions through a web interface, AI drafts a professional
+                        reply in seconds, the accountant reviews and sends. Full SaaS platform
+                        with landing page, authentication, lead scraping pipeline, and
+                        cold email outreach system for customer acquisition.
+                    </p>
+                    <div class="project-tags">
+                        <span>Python</span>
+                        <span>FastAPI</span>
+                        <span>AI / LLM</span>
+                        <span>Docker</span>
+                        <span>Web Scraping</span>
+                        <span>SaaS</span>
+                    </div>
+                </div>
+
+                <!-- Project 3: GymPage.it -->
+                <div class="project-card reveal">
+                    <div class="project-glow"></div>
+                    <div class="project-header">
+                        <div class="project-icon">&#x1F4AA;</div>
+                        <a href="https://gympage.it" target="_blank" class="project-ext-link" title="Visit site">&#x2197;</a>
+                    </div>
+                    <h3 class="project-title">GymPage.it</h3>
+                    <p class="project-desc">
+                        Professional website builder for gyms and personal trainers in Italy.
+                        Custom landing pages to showcase services, schedules, pricing, and
+                        contact forms. Includes an automated outreach engine that scrapes
+                        local gym contacts and sends personalized proposals with
+                        human-like sending patterns to avoid spam filters.
+                    </p>
+                    <div class="project-tags">
+                        <span>HTML / CSS</span>
+                        <span>Python</span>
+                        <span>Email Automation</span>
+                        <span>Lead Generation</span>
+                        <span>B2B Outreach</span>
+                    </div>
+                </div>
+
+                <!-- Project 4: Job Scanner -->
+                <div class="project-card reveal">
+                    <div class="project-glow"></div>
+                    <div class="project-header">
+                        <div class="project-icon">&#x1F50D;</div>
+                    </div>
+                    <h3 class="project-title">Job Scanner AI</h3>
+                    <p class="project-desc">
+                        AI-powered job matching engine that scans job listings, parses requirements,
+                        and matches them against your CV using intelligent scoring. Generates
+                        detailed HTML reports ranked by compatibility.
+                    </p>
+                    <div class="project-tags">
+                        <span>Python</span>
+                        <span>AI / NLP</span>
+                        <span>Web Scraping</span>
+                        <span>HTML Reports</span>
+                    </div>
+                </div>
+
+                <!-- Project 5: MailComm -->
+                <div class="project-card reveal">
+                    <div class="project-glow"></div>
+                    <div class="project-header">
+                        <div class="project-icon">&#x1F4E7;</div>
+                    </div>
+                    <h3 class="project-title">MailComm Platform</h3>
+                    <p class="project-desc">
+                        Full-stack email marketing and communication platform. Features a
+                        visual campaign builder, audience segmentation from CSV/database sources,
+                        template engine with dynamic personalization, scheduled sending with
+                        rate limiting, open/click tracking, and analytics dashboard for
+                        campaign performance monitoring.
+                    </p>
+                    <div class="project-tags">
+                        <span>Python</span>
+                        <span>SMTP / IMAP</span>
+                        <span>Template Engine</span>
+                        <span>Analytics</span>
+                        <span>Automation</span>
+                    </div>
+                </div>
+
+                <!-- Project 6: Network Manager -->
+                <div class="project-card reveal">
+                    <div class="project-glow"></div>
+                    <div class="project-header">
+                        <div class="project-icon">&#x1F310;</div>
+                    </div>
+                    <h3 class="project-title">Network Manager</h3>
+                    <p class="project-desc">
+                        Desktop application for Windows network management with modern dark GUI.
+                        Features automatic device discovery, subnet management, IP configuration,
+                        and real-time scanning with device type detection.
+                    </p>
+                    <div class="project-tags">
+                        <span>Python</span>
+                        <span>CustomTkinter</span>
+                        <span>Networking</span>
+                        <span>ARP / ICMP</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills -->
+    <section class="section" id="skills">
+        <div class="container">
+            <h2 class="section-title reveal">
+                <span class="section-num">03.</span> Tech Stack
+            </h2>
+            <div class="skills-grid">
+                <div class="skill-group reveal">
+                    <h3 class="skill-group-title">Languages</h3>
+                    <div class="skill-items">
+                        <div class="skill-item"><div class="skill-bar" style="--w:95%"></div><span>Python</span><span class="skill-pct">95%</span></div>
+                        <div class="skill-item"><div class="skill-bar" style="--w:75%"></div><span>HTML / CSS</span><span class="skill-pct">75%</span></div>
+                        <div class="skill-item"><div class="skill-bar" style="--w:60%"></div><span>JavaScript</span><span class="skill-pct">60%</span></div>
+                        <div class="skill-item"><div class="skill-bar" style="--w:50%"></div><span>SQL</span><span class="skill-pct">50%</span></div>
+                    </div>
+                </div>
+                <div class="skill-group reveal">
+                    <h3 class="skill-group-title">Frameworks & Tools</h3>
+                    <div class="skill-items">
+                        <div class="skill-item"><div class="skill-bar" style="--w:90%"></div><span>Pandas / NumPy</span><span class="skill-pct">90%</span></div>
+                        <div class="skill-item"><div class="skill-bar" style="--w:80%"></div><span>MetaTrader 5 API</span><span class="skill-pct">80%</span></div>
+                        <div class="skill-item"><div class="skill-bar" style="--w:70%"></div><span>Flask / FastAPI</span><span class="skill-pct">70%</span></div>
+                        <div class="skill-item"><div class="skill-bar" style="--w:75%"></div><span>Git / GitHub</span><span class="skill-pct">75%</span></div>
+                    </div>
+                </div>
+                <div class="skill-group reveal">
+                    <h3 class="skill-group-title">Domains</h3>
+                    <div class="skill-items">
+                        <div class="skill-item"><div class="skill-bar" style="--w:90%"></div><span>Algo Trading</span><span class="skill-pct">90%</span></div>
+                        <div class="skill-item"><div class="skill-bar" style="--w:85%"></div><span>Automation</span><span class="skill-pct">85%</span></div>
+                        <div class="skill-item"><div class="skill-bar" style="--w:70%"></div><span>Networking</span><span class="skill-pct">70%</span></div>
+                        <div class="skill-item"><div class="skill-bar" style="--w:65%"></div><span>Web Development</span><span class="skill-pct">65%</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section class="section" id="contact">
+        <div class="container">
+            <h2 class="section-title reveal">
+                <span class="section-num">04.</span> Get in Touch
+            </h2>
+            <div class="contact-content reveal">
+                <p class="contact-text">
+                    Got a business idea? Need to automate a workflow, build a website,
+                    or create a tool that saves you hours every week?
+                    <strong>Let's talk.</strong> I build custom software solutions for
+                    businesses and individuals &mdash; from concept to deployment.
+                </p>
+                <a href="mailto:studio.vacchini@gmail.com" class="btn btn-primary btn-lg">
+                    Let's Build Something Together
+                </a>
+                <div class="contact-links">
+                    <a href="https://github.com/" target="_blank" class="social-link">
+                        <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                        GitHub
+                    </a>
+                    <a href="https://linkedin.com/in/" target="_blank" class="social-link">
+                        <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                        LinkedIn
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>Designed & Built by <span class="accent">Andrea Vacchini</span></p>
+        <p class="footer-sub">Powered by curiosity and too much coffee.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
