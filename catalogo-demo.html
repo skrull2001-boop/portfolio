@@ -65,17 +65,25 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 .btn-outline:hover{border-color:var(--text);background:rgba(255,255,255,0.05)}
 
 /* --- FILTERS BAR --- */
-.filters{position:sticky;top:64px;z-index:50;background:rgba(10,14,26,0.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.04);padding:16px 0;transition:all .3s}
+.filters{position:sticky;top:64px;z-index:50;background:rgba(10,14,26,0.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.04);padding:12px 0;transition:all .3s}
 .filters-inner{max-width:1400px;margin:0 auto;padding:0 24px}
-.filters-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-.filter-btn{padding:8px 18px;background:var(--bg3);color:var(--text2);border:1px solid rgba(255,255,255,0.06);border-radius:20px;font-size:.8rem;font-weight:500;cursor:pointer;transition:all .25s ease}
-.filter-btn:hover{background:var(--bg4);color:var(--text);transform:translateY(-1px)}
-.filter-btn.active{background:var(--accent);color:#fff;border-color:var(--accent);box-shadow:0 2px 12px rgba(222,17,99,0.3)}
-.filter-label{font-size:.75rem;color:var(--text2);text-transform:uppercase;letter-spacing:1px;font-weight:600;margin-right:4px}
-.filter-sep{width:1px;height:24px;background:rgba(255,255,255,0.1);margin:0 4px}
+.filters-row{display:flex;gap:12px;align-items:center}
+.filter-dropdown{position:relative}
+.filter-toggle{display:flex;align-items:center;gap:8px;padding:9px 18px;background:var(--bg3);color:var(--text2);border:1px solid rgba(255,255,255,0.08);border-radius:8px;font-size:.85rem;font-weight:500;cursor:pointer;transition:all .25s ease;white-space:nowrap}
+.filter-toggle:hover{background:var(--bg4);color:var(--text)}
+.filter-toggle.has-value{background:var(--accent);color:#fff;border-color:var(--accent);box-shadow:0 2px 12px rgba(222,17,99,0.3)}
+.filter-toggle svg{width:14px;height:14px;transition:transform .2s}
+.filter-toggle.open svg{transform:rotate(180deg)}
+.filter-menu{position:absolute;top:calc(100% + 6px);left:0;min-width:180px;background:var(--bg2);border:1px solid rgba(255,255,255,0.1);border-radius:10px;box-shadow:0 12px 40px rgba(0,0,0,0.5);overflow:hidden;opacity:0;visibility:hidden;transform:translateY(-8px);transition:all .2s ease;z-index:60}
+.filter-menu.open{opacity:1;visibility:visible;transform:translateY(0)}
+.filter-menu-item{padding:10px 18px;font-size:.85rem;color:var(--text2);cursor:pointer;transition:all .15s;border-bottom:1px solid rgba(255,255,255,0.04)}
+.filter-menu-item:last-child{border-bottom:none}
+.filter-menu-item:hover{background:var(--bg4);color:var(--text)}
+.filter-menu-item.active{color:var(--accent);font-weight:600}
+.filter-sep{width:1px;height:28px;background:rgba(255,255,255,0.1);margin:0 2px}
 
 /* --- SEARCH RESULTS BAR --- */
-.search-results-bar{position:sticky;top:64px;z-index:51;background:var(--bg2);border-bottom:1px solid rgba(255,255,255,0.06);padding:14px 0;display:none;animation:slideDown .3s ease}
+.search-results-bar{background:var(--bg2);border-bottom:1px solid rgba(255,255,255,0.06);padding:14px 0;display:none;animation:slideDown .3s ease}
 .search-results-bar.show{display:block}
 .search-bar-inner{max-width:1400px;margin:0 auto;padding:0 24px;display:flex;align-items:center;gap:16px}
 .back-btn{display:flex;align-items:center;gap:6px;padding:8px 16px;background:var(--bg4);border:1px solid rgba(255,255,255,0.08);border-radius:8px;color:var(--text);font-size:.85rem;font-weight:500;cursor:pointer;transition:all .2s;white-space:nowrap}
@@ -292,23 +300,38 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
     <div class="filters" id="filtersBar">
         <div class="filters-inner">
             <div class="filters-row">
-                <span class="filter-label">Genere:</span>
-                <button class="filter-btn active" data-filter="genre" data-value="all" onclick="applyFilter('genre','all',this)">Tutti</button>
-                <button class="filter-btn" data-filter="genre" data-value="Dramma" onclick="applyFilter('genre','Dramma',this)">Dramma</button>
-                <button class="filter-btn" data-filter="genre" data-value="Documentario" onclick="applyFilter('genre','Documentario',this)">Documentario</button>
-                <button class="filter-btn" data-filter="genre" data-value="Commedia" onclick="applyFilter('genre','Commedia',this)">Commedia</button>
-                <button class="filter-btn" data-filter="genre" data-value="Thriller" onclick="applyFilter('genre','Thriller',this)">Thriller</button>
-                <button class="filter-btn" data-filter="genre" data-value="Biografico" onclick="applyFilter('genre','Biografico',this)">Biografico</button>
-                <button class="filter-btn" data-filter="genre" data-value="Azione" onclick="applyFilter('genre','Azione',this)">Azione</button>
-                <div class="filter-sep"></div>
-                <span class="filter-label">Anno:</span>
-                <button class="filter-btn" data-filter="year" data-value="all" onclick="applyFilter('year','all',this)">Tutti</button>
-                <button class="filter-btn" data-filter="year" data-value="2022" onclick="applyFilter('year',2022,this)">2022</button>
-                <button class="filter-btn" data-filter="year" data-value="2020" onclick="applyFilter('year',2020,this)">2020</button>
-                <button class="filter-btn" data-filter="year" data-value="2018" onclick="applyFilter('year',2018,this)">2018</button>
-                <button class="filter-btn" data-filter="year" data-value="2016" onclick="applyFilter('year',2016,this)">2016</button>
-                <button class="filter-btn" data-filter="year" data-value="2015" onclick="applyFilter('year',2015,this)">2015</button>
-                <button class="filter-btn" data-filter="year" data-value="2013" onclick="applyFilter('year',2013,this)">2013</button>
+                <div class="filter-dropdown" id="genreDropdown">
+                    <button class="filter-toggle" onclick="toggleDropdown('genre')">
+                        <span id="genreLabel">Genere</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                    </button>
+                    <div class="filter-menu" id="genreMenu">
+                        <div class="filter-menu-item active" onclick="selectFilter('genre','all')">Tutti i generi</div>
+                        <div class="filter-menu-item" onclick="selectFilter('genre','Dramma')">Dramma</div>
+                        <div class="filter-menu-item" onclick="selectFilter('genre','Documentario')">Documentario</div>
+                        <div class="filter-menu-item" onclick="selectFilter('genre','Commedia')">Commedia</div>
+                        <div class="filter-menu-item" onclick="selectFilter('genre','Thriller')">Thriller</div>
+                        <div class="filter-menu-item" onclick="selectFilter('genre','Biografico')">Biografico</div>
+                        <div class="filter-menu-item" onclick="selectFilter('genre','Azione')">Azione</div>
+                    </div>
+                </div>
+                <div class="filter-dropdown" id="yearDropdown">
+                    <button class="filter-toggle" onclick="toggleDropdown('year')">
+                        <span id="yearLabel">Anno</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+                    </button>
+                    <div class="filter-menu" id="yearMenu">
+                        <div class="filter-menu-item active" onclick="selectFilter('year','all')">Tutti gli anni</div>
+                        <div class="filter-menu-item" onclick="selectFilter('year','2022')">2022</div>
+                        <div class="filter-menu-item" onclick="selectFilter('year','2020')">2020</div>
+                        <div class="filter-menu-item" onclick="selectFilter('year','2019')">2019</div>
+                        <div class="filter-menu-item" onclick="selectFilter('year','2018')">2018</div>
+                        <div class="filter-menu-item" onclick="selectFilter('year','2017')">2017</div>
+                        <div class="filter-menu-item" onclick="selectFilter('year','2016')">2016</div>
+                        <div class="filter-menu-item" onclick="selectFilter('year','2015')">2015</div>
+                        <div class="filter-menu-item" onclick="selectFilter('year','2013')">2013</div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -855,14 +878,64 @@ let activeGenre = 'all';
 let activeYear = 'all';
 let isFiltered = false;
 let searchTimeout = null;
+let openDropdownId = null;
 
-function applyFilter(type, value, btnEl) {
-    // Update active state on buttons
-    document.querySelectorAll(`.filter-btn[data-filter="${type}"]`).forEach(b => b.classList.remove('active'));
-    if (btnEl) btnEl.classList.add('active');
+function toggleDropdown(type) {
+    const menuId = type + 'Menu';
+    const toggleEl = document.querySelector(`#${type}Dropdown .filter-toggle`);
+    const menu = document.getElementById(menuId);
 
+    if (openDropdownId === type) {
+        // Close current
+        menu.classList.remove('open');
+        toggleEl.classList.remove('open');
+        openDropdownId = null;
+    } else {
+        // Close any other open dropdown
+        closeAllDropdowns();
+        menu.classList.add('open');
+        toggleEl.classList.add('open');
+        openDropdownId = type;
+    }
+}
+
+function closeAllDropdowns() {
+    document.querySelectorAll('.filter-menu').forEach(m => m.classList.remove('open'));
+    document.querySelectorAll('.filter-toggle').forEach(t => t.classList.remove('open'));
+    openDropdownId = null;
+}
+
+// Close dropdowns when clicking outside
+document.addEventListener('click', e => {
+    if (!e.target.closest('.filter-dropdown')) closeAllDropdowns();
+});
+
+function selectFilter(type, value) {
     if (type === 'genre') activeGenre = value;
     if (type === 'year') activeYear = value;
+
+    // Update toggle label & style
+    const label = document.getElementById(type + 'Label');
+    const toggle = document.querySelector(`#${type}Dropdown .filter-toggle`);
+    if (value === 'all') {
+        label.textContent = type === 'genre' ? 'Genere' : 'Anno';
+        toggle.classList.remove('has-value');
+    } else {
+        label.textContent = value;
+        toggle.classList.add('has-value');
+    }
+
+    // Update active state in menu
+    const menu = document.getElementById(type + 'Menu');
+    menu.querySelectorAll('.filter-menu-item').forEach(item => item.classList.remove('active'));
+    const items = menu.querySelectorAll('.filter-menu-item');
+    items.forEach(item => {
+        const itemValue = item.textContent.trim();
+        const isAll = (value === 'all' && (itemValue === 'Tutti i generi' || itemValue === 'Tutti gli anni'));
+        if (isAll || itemValue === value) item.classList.add('active');
+    });
+
+    closeAllDropdowns();
 
     // If both are 'all', reset to home
     if (activeGenre === 'all' && activeYear === 'all') {
@@ -884,6 +957,10 @@ function applyFilter(type, value, btnEl) {
     }
 
     showFilteredResults(filtered, titleParts.join(' — '));
+}
+
+function filterByGenre(genre) {
+    selectFilter('genre', genre);
 }
 
 function handleSearch(query) {
@@ -913,10 +990,9 @@ function showFilteredResults(filtered, title) {
     homeSections.forEach(s => s.style.display = 'none');
     document.getElementById('heroSection').style.display = 'none';
 
-    // Show results bar
+    // Show results bar (keep filters visible for combining)
     const resultsBar = document.getElementById('resultsBar');
     resultsBar.classList.add('show');
-    document.getElementById('filtersBar').style.display = 'none';
     document.getElementById('resultsTitle').textContent = title;
     document.getElementById('resultsCount').textContent = `${filtered.length} film trovati`;
 
@@ -940,13 +1016,18 @@ function resetView() {
     activeGenre = 'all';
     activeYear = 'all';
 
-    // Reset filter buttons
-    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-    document.querySelector('.filter-btn[data-value="all"][data-filter="genre"]').classList.add('active');
+    // Reset dropdown labels
+    document.getElementById('genreLabel').textContent = 'Genere';
+    document.getElementById('yearLabel').textContent = 'Anno';
+    document.querySelectorAll('.filter-toggle').forEach(t => t.classList.remove('has-value'));
+    document.querySelectorAll('.filter-menu-item').forEach(item => {
+        item.classList.remove('active');
+        if (item.textContent.startsWith('Tutti')) item.classList.add('active');
+    });
+    closeAllDropdowns();
 
     // Hide results bar
     document.getElementById('resultsBar').classList.remove('show');
-    document.getElementById('filtersBar').style.display = '';
 
     // Show home sections with animation
     document.getElementById('heroSection').style.display = '';
