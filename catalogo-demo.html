@@ -424,7 +424,7 @@ const films = [
         production: "Strani Film S.r.l.",
         country: "Italia",
         language: "Italiano",
-        poster: null,
+        poster: "https://images.mubicdn.net/images/film/362391/cache-838004-1745500750/image-w1280.jpg?size=800x",
     },
     {
         id: 2,
@@ -443,7 +443,7 @@ const films = [
         production: "Strani Film S.r.l.",
         country: "Italia / Francia",
         language: "Italiano, Francese",
-        poster: null,
+        poster: "https://image.tmdb.org/t/p/w500/jDFusyosbI53jVvN7knIJoMw5h3.jpg",
     },
     {
         id: 3,
@@ -462,7 +462,7 @@ const films = [
         production: "Strani Film S.r.l.",
         country: "Italia",
         language: "Italiano",
-        poster: null,
+        poster: "https://image.tmdb.org/t/p/w500/eLXcmGzrbqCLxIdMpuNthZOqeFO.jpg",
     },
     {
         id: 4,
@@ -481,7 +481,7 @@ const films = [
         production: "Strani Film S.r.l.",
         country: "Italia",
         language: "Italiano",
-        poster: null,
+        poster: "https://pad.mymovies.it/filmclub/2013/10/053/locandina.jpg",
     },
     // --- CINEMA INDIPENDENTE ITALIANO ---
     {
@@ -501,7 +501,7 @@ const films = [
         production: "Tempesta Film",
         country: "Italia / Svizzera / Francia / Germania",
         language: "Italiano",
-        poster: null,
+        poster: "https://image.tmdb.org/t/p/w500/7i9Y24GDSQ7dkKBKdYP3gsgTI3L.jpg",
     },
     {
         id: 6,
@@ -520,7 +520,7 @@ const films = [
         production: "Archimede Film",
         country: "Italia / Francia",
         language: "Italiano",
-        poster: null,
+        poster: "https://image.tmdb.org/t/p/w500/70xnQgF7KGYaj3fp1uvZTyLi9VP.jpg",
     },
     {
         id: 7,
@@ -539,7 +539,7 @@ const films = [
         production: "Medusa Film",
         country: "Italia",
         language: "Italiano",
-        poster: null,
+        poster: "https://image.tmdb.org/t/p/w500/jFfnv6cf2u0qclzM3lqzU6f2Cob.jpg",
     },
     {
         id: 8,
@@ -558,7 +558,7 @@ const films = [
         production: "Goon Films",
         country: "Italia",
         language: "Italiano",
-        poster: null,
+        poster: "https://image.tmdb.org/t/p/w500/hx81Ze0wZMRKz5YtA2qwvwCjFdl.jpg",
     },
     {
         id: 9,
@@ -576,7 +576,7 @@ const films = [
         production: "Lucky Red",
         country: "Italia",
         language: "Italiano",
-        poster: null,
+        poster: "https://image.tmdb.org/t/p/w500/jOvvIZjdbGVpPaQ8upPpZzttO3T.jpg",
     },
     {
         id: 10,
@@ -595,7 +595,7 @@ const films = [
         production: "IBC Movie / Kavac Film",
         country: "Italia / Francia / Brasile / Germania",
         language: "Italiano",
-        poster: null,
+        poster: "https://image.tmdb.org/t/p/w500/mS5ic1vxkT6z4eGbYxiqDsBJduS.jpg",
     },
     {
         id: 11,
@@ -614,7 +614,7 @@ const films = [
         production: "Palomar / Rai Cinema",
         country: "Italia",
         language: "Italiano",
-        poster: null,
+        poster: "https://image.tmdb.org/t/p/w500/uDVFnMlXsVqsEMOislMFPimRSXv.jpg",
     },
     {
         id: 12,
@@ -632,7 +632,7 @@ const films = [
         production: "Minnie Ferrara & Associati",
         country: "Italia / USA",
         language: "Italiano, Inglese",
-        poster: null,
+        poster: "https://image.tmdb.org/t/p/w500/broPZaY0TBo61IdCTcnRi8h3jwK.jpg",
     },
     {
         id: 13,
@@ -650,7 +650,7 @@ const films = [
         production: "Lotus Production",
         country: "Italia / Francia",
         language: "Italiano",
-        poster: null,
+        poster: "https://image.tmdb.org/t/p/w500/xOcKiBmOOiviDzEAzOzu3LATC88.jpg",
     },
     {
         id: 14,
@@ -668,7 +668,7 @@ const films = [
         production: "Fandango / Rai Cinema",
         country: "Italia",
         language: "Italiano",
-        poster: null,
+        poster: "https://image.tmdb.org/t/p/w500/nicStobkEYh9iJO6CC3UqolQRsK.jpg",
     },
 ];
 
@@ -681,10 +681,13 @@ function createFilmCard(film) {
     const badgeHTML = film.badge
         ? `<span class="film-badge badge-${film.badge}">${film.badgeText}</span>`
         : '';
+    const posterHTML = film.poster
+        ? `<img src="${film.poster}" alt="${film.title}" loading="lazy" onerror="this.outerHTML='<div class=\\'poster-placeholder\\' style=\\'background:linear-gradient(135deg,${film.color},${film.color}dd,#0a0e1a)\\'>${film.title}</div>'">`
+        : `<div class="poster-placeholder" style="background:linear-gradient(135deg,${film.color},${film.color}dd,#0a0e1a)">${film.title}</div>`;
     return `
         <div class="film-card" onclick="openFilmModal(${film.id})" data-genres='${JSON.stringify(film.genres)}' data-year="${film.year}">
             <div class="film-poster">
-                <div class="poster-placeholder" style="background:linear-gradient(135deg,${film.color},${film.color}dd,#0a0e1a)">${film.title}</div>
+                ${posterHTML}
                 ${badgeHTML}
                 <span class="film-rating">&#9733; ${film.rating}</span>
                 <div class="overlay"><div class="overlay-info">${film.director} &bull; ${film.duration}</div></div>
@@ -713,7 +716,13 @@ function renderGrids() {
 function renderHero() {
     const film = films.find(f => f.id === heroFilmId);
     if (!film) return;
-    document.getElementById('heroBg').style.background = `linear-gradient(135deg,${film.color},${film.color}aa,#0a0e1a)`;
+    if (film.poster) {
+        document.getElementById('heroBg').style.background = `url('${film.poster}') center/cover`;
+        document.getElementById('heroBg').style.filter = 'blur(4px) brightness(0.3)';
+    } else {
+        document.getElementById('heroBg').style.background = `linear-gradient(135deg,${film.color},${film.color}aa,#0a0e1a)`;
+        document.getElementById('heroBg').style.filter = '';
+    }
     document.getElementById('heroBadge').textContent = film.production === 'Strani Film S.r.l.' ? 'Produzione Strani Film' : 'In Evidenza';
     document.getElementById('heroTitle').textContent = film.title;
     document.getElementById('heroMeta').innerHTML = `
@@ -729,7 +738,7 @@ function renderAdmin() {
     const tbody = document.getElementById('adminTableBody');
     tbody.innerHTML = films.map(f => `
         <tr>
-            <td><div class="poster-thumb"><div class="poster-placeholder" style="background:linear-gradient(135deg,${f.color},#0a0e1a);font-size:.45rem;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.5)">${f.title.substring(0,3)}</div></div></td>
+            <td><div class="poster-thumb">${f.poster ? `<img src="${f.poster}" alt="${f.title}">` : `<div class="poster-placeholder" style="background:linear-gradient(135deg,${f.color},#0a0e1a);font-size:.45rem;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.5)">${f.title.substring(0,3)}</div>`}</div></td>
             <td><strong>${f.title}</strong><br><span style="font-size:.75rem;color:var(--text2)">${f.director}</span></td>
             <td>${f.year}</td>
             <td>${f.genres[0]}</td>
@@ -746,8 +755,13 @@ function openFilmModal(id) {
     const film = films.find(f => f.id === id);
     if (!film) return;
 
-    document.getElementById('modalBg').style.background = `linear-gradient(135deg,${film.color},${film.color}aa,#0a0e1a)`;
-    document.getElementById('modalPoster').innerHTML = `<div class="poster-placeholder" style="background:linear-gradient(135deg,${film.color},#0a0e1a);height:100%;display:flex;align-items:center;justify-content:center;padding:12px;text-align:center;font-size:.85rem">${film.title}</div>`;
+    if (film.poster) {
+        document.getElementById('modalBg').style.background = `url('${film.poster}') center/cover`;
+        document.getElementById('modalPoster').innerHTML = `<img src="${film.poster}" alt="${film.title}" style="width:100%;height:100%;object-fit:cover">`;
+    } else {
+        document.getElementById('modalBg').style.background = `linear-gradient(135deg,${film.color},${film.color}aa,#0a0e1a)`;
+        document.getElementById('modalPoster').innerHTML = `<div class="poster-placeholder" style="background:linear-gradient(135deg,${film.color},#0a0e1a);height:100%;display:flex;align-items:center;justify-content:center;padding:12px;text-align:center;font-size:.85rem">${film.title}</div>`;
+    }
     document.getElementById('modalTitle').textContent = film.title;
     document.getElementById('modalMeta').innerHTML = `
         <span>${film.year}</span> &bull;
