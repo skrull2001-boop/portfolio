@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StraniFlix — Catalogo Film Indipendenti</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+/* ============================================
+   STRANIFLIX — Catalogo Film Indipendenti
+   Demo per Paolo Cavenaghi
+   ============================================ */
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+    --bg:#0a0e1a;
+    --bg2:#101627;
+    --bg3:#161d33;
+    --bg4:#1c2440;
+    --text:#e8e9ed;
+    --text2:#9499ab;
+    --accent:#de1163;
+    --accent2:#ff2d78;
+    --gold:#ffb400;
+    --cyan:#00b4d8;
+    --navy:#012853;
+    --card-radius:8px;
+    --shadow:0 4px 20px rgba(0,0,0,0.4);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+
+/* --- HEADER --- */
+.header{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,14,26,0.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.06)}
+.header-inner{max-width:1400px;margin:0 auto;padding:0 24px;height:64px;display:flex;align-items:center;gap:24px}
+.logo{font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--accent);text-decoration:none;font-weight:700;letter-spacing:-0.5px}
+.logo span{color:var(--text)}
+.nav-links{display:flex;gap:24px;margin-left:16px}
+.nav-links a{color:var(--text2);text-decoration:none;font-size:.875rem;font-weight:500;transition:color .2s}
+.nav-links a:hover,.nav-links a.active{color:var(--text)}
+.search-box{margin-left:auto;position:relative;width:280px}
+.search-box input{width:100%;padding:8px 16px 8px 36px;background:var(--bg3);border:1px solid rgba(255,255,255,0.08);border-radius:20px;color:var(--text);font-size:.85rem;outline:none;transition:border-color .2s}
+.search-box input:focus{border-color:var(--accent)}
+.search-box svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:16px;height:16px;color:var(--text2)}
+.admin-btn{padding:8px 16px;background:var(--accent);color:#fff;border:none;border-radius:6px;font-size:.8rem;font-weight:600;cursor:pointer;transition:background .2s}
+.admin-btn:hover{background:var(--accent2)}
+
+/* --- HERO --- */
+.hero{margin-top:64px;position:relative;height:480px;overflow:hidden;background:linear-gradient(135deg,#0a0e1a 0%,#1a1040 50%,#0a0e1a 100%)}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to right,rgba(10,14,26,0.95) 0%,rgba(10,14,26,0.4) 50%,rgba(10,14,26,0.8) 100%)}
+.hero-bg{position:absolute;inset:0;background:url('') center/cover;filter:blur(2px) brightness(0.4)}
+.hero-content{position:relative;max-width:1400px;margin:0 auto;padding:0 24px;height:100%;display:flex;align-items:center}
+.hero-info{max-width:550px}
+.hero-badge{display:inline-block;padding:4px 12px;background:var(--accent);color:#fff;font-size:.7rem;font-weight:700;border-radius:4px;margin-bottom:16px;text-transform:uppercase;letter-spacing:1px}
+.hero-title{font-family:'Playfair Display',serif;font-size:3rem;font-weight:700;line-height:1.1;margin-bottom:12px}
+.hero-meta{display:flex;gap:16px;align-items:center;margin-bottom:16px;font-size:.85rem;color:var(--text2)}
+.hero-meta .stars{color:var(--gold)}
+.hero-desc{font-size:.95rem;color:var(--text2);line-height:1.6;margin-bottom:24px}
+.hero-actions{display:flex;gap:12px}
+.btn{padding:10px 24px;border-radius:6px;font-size:.85rem;font-weight:600;cursor:pointer;border:none;transition:all .2s;text-decoration:none;display:inline-flex;align-items:center;gap:8px}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:var(--accent2);transform:translateY(-1px)}
+.btn-outline{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,0.2)}
+.btn-outline:hover{border-color:var(--text);background:rgba(255,255,255,0.05)}
+
+/* --- FILTERS BAR --- */
+.filters{max-width:1400px;margin:0 auto;padding:32px 24px 0}
+.filters-row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+.filter-btn{padding:8px 18px;background:var(--bg3);color:var(--text2);border:1px solid rgba(255,255,255,0.06);border-radius:20px;font-size:.8rem;font-weight:500;cursor:pointer;transition:all .2s}
+.filter-btn:hover{background:var(--bg4);color:var(--text)}
+.filter-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.filter-label{font-size:.75rem;color:var(--text2);text-transform:uppercase;letter-spacing:1px;font-weight:600;margin-right:4px}
+.filter-sep{width:1px;height:24px;background:rgba(255,255,255,0.1);margin:0 8px}
+
+/* --- SECTION --- */
+.section{max-width:1400px;margin:0 auto;padding:40px 24px 0}
+.section-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.section-title{font-size:1.3rem;font-weight:700}
+.section-title span{color:var(--accent)}
+.see-all{color:var(--accent);font-size:.85rem;text-decoration:none;font-weight:500}
+.see-all:hover{text-decoration:underline}
+
+/* --- FILM GRID --- */
+.film-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:20px}
+
+/* --- CAROUSEL --- */
+.carousel-wrapper{position:relative;overflow:hidden}
+.carousel{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding-bottom:8px}
+.carousel::-webkit-scrollbar{display:none}
+.carousel-arrow{position:absolute;top:50%;transform:translateY(-70%);width:40px;height:40px;background:rgba(10,14,26,0.9);border:1px solid rgba(255,255,255,0.1);border-radius:50%;color:var(--text);cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:5;transition:all .2s}
+.carousel-arrow:hover{background:var(--accent);border-color:var(--accent)}
+.carousel-arrow.left{left:0}
+.carousel-arrow.right{right:0}
+
+/* --- FILM CARD --- */
+.film-card{min-width:180px;max-width:220px;scroll-snap-align:start;cursor:pointer;transition:transform .3s;flex-shrink:0}
+.film-card:hover{transform:translateY(-8px)}
+.film-poster{position:relative;width:100%;aspect-ratio:2/3;border-radius:var(--card-radius);overflow:hidden;box-shadow:var(--shadow)}
+.film-poster img{width:100%;height:100%;object-fit:cover}
+.film-poster .poster-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:600;color:rgba(255,255,255,0.7);text-align:center;padding:16px;line-height:1.3}
+.film-poster .overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,0.8) 0%,transparent 50%);opacity:0;transition:opacity .3s;display:flex;align-items:flex-end;padding:12px}
+.film-card:hover .overlay{opacity:1}
+.overlay-info{font-size:.75rem;color:var(--text2)}
+.film-rating{position:absolute;top:8px;right:8px;background:rgba(0,0,0,0.7);color:var(--gold);padding:4px 8px;border-radius:4px;font-size:.75rem;font-weight:700;display:flex;align-items:center;gap:4px}
+.film-badge{position:absolute;top:8px;left:8px;padding:3px 8px;border-radius:4px;font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.badge-festival{background:var(--gold);color:#000}
+.badge-new{background:var(--accent);color:#fff}
+.badge-exclusive{background:var(--cyan);color:#000}
+.film-info{padding:10px 4px}
+.film-title{font-size:.9rem;font-weight:600;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.film-meta{font-size:.75rem;color:var(--text2)}
+
+/* --- MODAL --- */
+.modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.8);z-index:200;display:none;align-items:center;justify-content:center;padding:24px}
+.modal-backdrop.show{display:flex}
+.modal{background:var(--bg2);border-radius:12px;max-width:900px;width:100%;max-height:90vh;overflow-y:auto;position:relative;box-shadow:0 20px 60px rgba(0,0,0,0.6)}
+.modal-close{position:absolute;top:16px;right:16px;width:36px;height:36px;background:rgba(0,0,0,0.5);border:none;color:#fff;border-radius:50%;cursor:pointer;font-size:1.2rem;z-index:5;display:flex;align-items:center;justify-content:center}
+.modal-close:hover{background:var(--accent)}
+.modal-hero{position:relative;height:350px;overflow:hidden;border-radius:12px 12px 0 0}
+.modal-hero .poster-bg{position:absolute;inset:0;background-size:cover;background-position:center;filter:blur(20px) brightness(0.3);transform:scale(1.2)}
+.modal-hero .poster-main{position:absolute;left:40px;bottom:-40px;width:180px;height:270px;border-radius:8px;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,0.5);z-index:2}
+.modal-hero .poster-main img,.modal-hero .poster-main .poster-placeholder{width:100%;height:100%;object-fit:cover}
+.modal-hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,var(--bg2) 0%,transparent 60%)}
+.modal-hero-info{position:absolute;bottom:20px;left:240px;right:40px;z-index:2}
+.modal-hero-info h2{font-family:'Playfair Display',serif;font-size:2rem;margin-bottom:8px}
+.modal-hero-info .meta{display:flex;gap:12px;font-size:.85rem;color:var(--text2);flex-wrap:wrap;align-items:center}
+.modal-body{padding:60px 40px 40px}
+.modal-section{margin-bottom:28px}
+.modal-section h3{font-size:1rem;font-weight:700;margin-bottom:12px;color:var(--accent)}
+.modal-section p{font-size:.9rem;color:var(--text2);line-height:1.7}
+.modal-tags{display:flex;gap:8px;flex-wrap:wrap}
+.modal-tag{padding:4px 12px;background:var(--bg4);border-radius:12px;font-size:.75rem;color:var(--text2)}
+.modal-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+.modal-stat{text-align:center;padding:16px;background:var(--bg3);border-radius:8px}
+.modal-stat .val{font-size:1.5rem;font-weight:700;color:var(--gold)}
+.modal-stat .label{font-size:.7rem;color:var(--text2);margin-top:4px;text-transform:uppercase;letter-spacing:.5px}
+.modal-trailer{width:100%;aspect-ratio:16/9;background:var(--bg3);border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative;overflow:hidden}
+.modal-trailer .play-icon{width:60px;height:60px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;transition:transform .2s}
+.modal-trailer:hover .play-icon{transform:scale(1.1)}
+.modal-cast{display:flex;gap:16px;flex-wrap:wrap}
+.cast-item{text-align:center;width:80px}
+.cast-avatar{width:60px;height:60px;border-radius:50%;background:var(--bg4);margin:0 auto 6px;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700;color:var(--text2)}
+.cast-name{font-size:.7rem;color:var(--text2)}
+.cast-role{font-size:.65rem;color:var(--text2);opacity:.6}
+
+/* --- ADMIN PANEL --- */
+.admin-panel{display:none;margin-top:64px;min-height:100vh}
+.admin-panel.show{display:block}
+.main-content.hidden{display:none}
+.admin-sidebar{position:fixed;left:0;top:64px;bottom:0;width:220px;background:var(--bg2);border-right:1px solid rgba(255,255,255,0.06);padding:24px 0}
+.admin-sidebar a{display:flex;align-items:center;gap:12px;padding:10px 24px;color:var(--text2);text-decoration:none;font-size:.85rem;transition:all .2s}
+.admin-sidebar a:hover,.admin-sidebar a.active{background:var(--bg3);color:var(--text)}
+.admin-sidebar a.active{border-left:3px solid var(--accent);color:var(--accent)}
+.admin-sidebar .sidebar-label{font-size:.65rem;color:var(--text2);text-transform:uppercase;letter-spacing:1.5px;padding:20px 24px 8px;font-weight:700}
+.admin-main{margin-left:220px;padding:32px}
+.admin-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}
+.admin-header h2{font-size:1.4rem;font-weight:700}
+.admin-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:32px}
+.admin-stat-card{background:var(--bg2);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:20px;transition:border-color .2s}
+.admin-stat-card:hover{border-color:var(--accent)}
+.admin-stat-card .num{font-size:2rem;font-weight:800;margin-bottom:4px}
+.admin-stat-card .num.pink{color:var(--accent)}
+.admin-stat-card .num.gold{color:var(--gold)}
+.admin-stat-card .num.cyan{color:var(--cyan)}
+.admin-stat-card .num.green{color:#22c55e}
+.admin-stat-card .desc{font-size:.8rem;color:var(--text2)}
+.admin-table{width:100%;border-collapse:collapse;background:var(--bg2);border-radius:10px;overflow:hidden;border:1px solid rgba(255,255,255,0.06)}
+.admin-table th{text-align:left;padding:14px 16px;font-size:.75rem;text-transform:uppercase;letter-spacing:.5px;color:var(--text2);background:var(--bg3);font-weight:600}
+.admin-table td{padding:14px 16px;font-size:.85rem;border-top:1px solid rgba(255,255,255,0.04)}
+.admin-table tr:hover td{background:rgba(255,255,255,0.02)}
+.admin-table .poster-thumb{width:40px;height:60px;border-radius:4px;overflow:hidden}
+.admin-table .poster-thumb img,.admin-table .poster-thumb .poster-placeholder{width:100%;height:100%;object-fit:cover}
+.status-badge{padding:3px 10px;border-radius:10px;font-size:.7rem;font-weight:600}
+.status-published{background:rgba(34,197,94,0.15);color:#22c55e}
+.status-draft{background:rgba(255,180,0,0.15);color:var(--gold)}
+.admin-actions{display:flex;gap:6px}
+.admin-actions button{padding:6px 12px;border-radius:4px;border:none;font-size:.75rem;cursor:pointer;transition:all .2s}
+.admin-actions .edit-btn{background:var(--bg4);color:var(--text)}
+.admin-actions .edit-btn:hover{background:var(--accent);color:#fff}
+.admin-actions .del-btn{background:var(--bg4);color:var(--text2)}
+.admin-actions .del-btn:hover{background:#dc2626;color:#fff}
+
+/* --- FOOTER --- */
+.footer{margin-top:60px;padding:40px 24px;border-top:1px solid rgba(255,255,255,0.06);text-align:center}
+.footer p{font-size:.8rem;color:var(--text2)}
+.footer .demo-badge{display:inline-block;margin-top:12px;padding:6px 16px;background:var(--accent);color:#fff;border-radius:4px;font-size:.7rem;font-weight:700;letter-spacing:.5px}
+
+/* --- RESPONSIVE --- */
+@media(max-width:768px){
+    .hero{height:400px}
+    .hero-title{font-size:2rem}
+    .film-grid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px}
+    .film-card{min-width:140px}
+    .modal-hero{height:250px}
+    .modal-hero .poster-main{width:120px;height:180px;left:20px}
+    .modal-hero-info{left:160px;right:20px}
+    .modal-hero-info h2{font-size:1.3rem}
+    .modal-body{padding:40px 20px 20px}
+    .modal-stats{grid-template-columns:repeat(2,1fr)}
+    .admin-sidebar{width:60px}
+    .admin-sidebar a span{display:none}
+    .admin-main{margin-left:60px;padding:16px}
+    .admin-stats{grid-template-columns:repeat(2,1fr)}
+    .search-box{width:180px}
+    .nav-links{gap:12px}
+}
+    </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+    <div class="header-inner">
+        <a href="#" class="logo" onclick="showCatalog()">Strani<span>Flix</span></a>
+        <nav class="nav-links">
+            <a href="#" class="active" onclick="showCatalog()" id="nav-catalog">Catalogo</a>
+            <a href="#" onclick="filterByGenre('Documentario')" id="nav-docs">Documentari</a>
+            <a href="#" onclick="filterByGenre('Festival')" id="nav-fest">Festival</a>
+            <a href="#" onclick="showCatalog()" id="nav-new">Novità</a>
+        </nav>
+        <div class="search-box">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" placeholder="Cerca film, registi, generi..." id="searchInput" oninput="handleSearch(this.value)">
+        </div>
+        <button class="admin-btn" onclick="toggleAdmin()" id="adminToggle">Pannello Admin</button>
+    </div>
+</header>
+
+<!-- MAIN CONTENT -->
+<main class="main-content" id="mainContent">
+
+    <!-- HERO -->
+    <section class="hero" id="heroSection">
+        <div class="hero-bg" id="heroBg"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div class="hero-info">
+                <span class="hero-badge" id="heroBadge">In Evidenza</span>
+                <h1 class="hero-title" id="heroTitle"></h1>
+                <div class="hero-meta" id="heroMeta"></div>
+                <p class="hero-desc" id="heroDesc"></p>
+                <div class="hero-actions">
+                    <button class="btn btn-primary" onclick="openFilmModal(heroFilmId)">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21"/></svg>
+                        Scheda Film
+                    </button>
+                    <button class="btn btn-outline">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+                        Salva
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FILTERS -->
+    <div class="filters">
+        <div class="filters-row">
+            <span class="filter-label">Genere:</span>
+            <button class="filter-btn active" onclick="filterByGenre('all')">Tutti</button>
+            <button class="filter-btn" onclick="filterByGenre('Dramma')">Dramma</button>
+            <button class="filter-btn" onclick="filterByGenre('Documentario')">Documentario</button>
+            <button class="filter-btn" onclick="filterByGenre('Commedia')">Commedia</button>
+            <button class="filter-btn" onclick="filterByGenre('Thriller')">Thriller</button>
+            <button class="filter-btn" onclick="filterByGenre('Biografico')">Biografico</button>
+            <button class="filter-btn" onclick="filterByGenre('Azione')">Azione</button>
+            <div class="filter-sep"></div>
+            <span class="filter-label">Anno:</span>
+            <button class="filter-btn" onclick="filterByYear('all')">Tutti</button>
+            <button class="filter-btn" onclick="filterByYear(2024)">2024</button>
+            <button class="filter-btn" onclick="filterByYear(2022)">2022</button>
+            <button class="filter-btn" onclick="filterByYear(2020)">2020</button>
+            <button class="filter-btn" onclick="filterByYear(2018)">2018</button>
+            <button class="filter-btn" onclick="filterByYear(2016)">2016</button>
+        </div>
+    </div>
+
+    <!-- STRANI FILM SECTION -->
+    <section class="section">
+        <div class="section-header">
+            <h2 class="section-title">Produzioni <span>Strani Film</span></h2>
+            <a href="#" class="see-all">Vedi tutti</a>
+        </div>
+        <div class="film-grid" id="straniGrid"></div>
+    </section>
+
+    <!-- CATALOGO COMPLETO -->
+    <section class="section">
+        <div class="section-header">
+            <h2 class="section-title">Cinema <span>Indipendente Italiano</span></h2>
+            <a href="#" class="see-all">Vedi tutti</a>
+        </div>
+        <div class="film-grid" id="italianoGrid"></div>
+    </section>
+
+    <!-- DOCUMENTARI -->
+    <section class="section">
+        <div class="section-header">
+            <h2 class="section-title"><span>Documentari</span> & Storie Vere</h2>
+            <a href="#" class="see-all">Vedi tutti</a>
+        </div>
+        <div class="film-grid" id="docGrid"></div>
+    </section>
+
+    <!-- TUTTI I FILM (search/filter results) -->
+    <section class="section" id="allFilmsSection" style="display:none">
+        <div class="section-header">
+            <h2 class="section-title" id="allFilmsTitle">Risultati</h2>
+        </div>
+        <div class="film-grid" id="allFilmsGrid"></div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <p>StraniFlix &mdash; Piattaforma di cinema indipendente italiano</p>
+        <span class="demo-badge">DEMO &mdash; Proposta progetto per Paolo Cavenaghi &mdash; Realizzato da Andrea Vacchini</span>
+    </footer>
+</main>
+
+<!-- ADMIN PANEL -->
+<div class="admin-panel" id="adminPanel">
+    <div class="admin-sidebar">
+        <div class="sidebar-label">Gestione</div>
+        <a href="#" class="active"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg><span>Dashboard</span></a>
+        <a href="#"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="M4 9h16"/></svg><span>Film</span></a>
+        <a href="#"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg><span>Utenti</span></a>
+        <a href="#"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><span>Recensioni</span></a>
+        <div class="sidebar-label">Sistema</div>
+        <a href="#"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg><span>Impostazioni</span></a>
+    </div>
+    <div class="admin-main">
+        <div class="admin-header">
+            <h2>Dashboard</h2>
+            <button class="btn btn-primary" onclick="alert('Demo: qui si apre il form per aggiungere un nuovo film')">+ Aggiungi Film</button>
+        </div>
+        <div class="admin-stats">
+            <div class="admin-stat-card"><div class="num pink" id="adminTotalFilms">0</div><div class="desc">Film in catalogo</div></div>
+            <div class="admin-stat-card"><div class="num gold">847</div><div class="desc">Recensioni totali</div></div>
+            <div class="admin-stat-card"><div class="num cyan">12.4K</div><div class="desc">Visite questo mese</div></div>
+            <div class="admin-stat-card"><div class="num green">94%</div><div class="desc">Feedback positivi</div></div>
+        </div>
+        <h3 style="margin-bottom:16px;font-size:1.1rem">Gestione Film</h3>
+        <table class="admin-table">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Titolo</th>
+                    <th>Anno</th>
+                    <th>Genere</th>
+                    <th>Voto</th>
+                    <th>Stato</th>
+                    <th>Azioni</th>
+                </tr>
+            </thead>
+            <tbody id="adminTableBody"></tbody>
+        </table>
+    </div>
+</div>
+
+<!-- FILM DETAIL MODAL -->
+<div class="modal-backdrop" id="filmModal" onclick="if(event.target===this)closeModal()">
+    <div class="modal">
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+        <div class="modal-hero">
+            <div class="poster-bg" id="modalBg"></div>
+            <div class="modal-hero-overlay"></div>
+            <div class="poster-main" id="modalPoster"></div>
+            <div class="modal-hero-info">
+                <h2 id="modalTitle"></h2>
+                <div class="meta" id="modalMeta"></div>
+            </div>
+        </div>
+        <div class="modal-body">
+            <div class="modal-stats" id="modalStats"></div>
+            <div class="modal-section">
+                <h3>Trama</h3>
+                <p id="modalDesc"></p>
+            </div>
+            <div class="modal-section">
+                <h3>Generi</h3>
+                <div class="modal-tags" id="modalTags"></div>
+            </div>
+            <div class="modal-section" id="modalFestSection">
+                <h3>Festival & Premi</h3>
+                <p id="modalFest"></p>
+            </div>
+            <div class="modal-section">
+                <h3>Cast & Crew</h3>
+                <div class="modal-cast" id="modalCast"></div>
+            </div>
+            <div class="modal-section">
+                <h3>Trailer</h3>
+                <div class="modal-trailer" onclick="alert('Demo: qui si apre il trailer YouTube/Vimeo')">
+                    <div class="play-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21"/></svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// ============================================
+// FILM DATABASE
+// ============================================
+const films = [
+    // --- STRANI FILM ---
+    {
+        id: 1,
+        title: "La memoria del mondo",
+        year: 2022,
+        director: "Mirko Locatelli",
+        genres: ["Documentario", "Festival"],
+        rating: 7.8,
+        duration: "95 min",
+        badge: "festival",
+        badgeText: "Festival",
+        color: "#1a3a2a",
+        desc: "Un viaggio attraverso le memorie collettive e individuali che plasmano la nostra identità. Il documentario esplora come i ricordi personali si intrecciano con la storia, creando un tessuto unico di esperienze umane che definisce chi siamo.",
+        festivals: "Festival del Cinema di Roma 2022 — Menzione Speciale della Giuria. Selezionato al Biografilm Festival di Bologna.",
+        cast: [{name:"Mirko Locatelli",role:"Regia"},{name:"Fabio Cavenaghi",role:"Produttore"},{name:"Paolo Cavenaghi",role:"Produttore"},{name:"Giuditta Tarantelli",role:"Produttrice"}],
+        production: "Strani Film S.r.l.",
+        country: "Italia",
+        language: "Italiano",
+        poster: null,
+    },
+    {
+        id: 2,
+        title: "Isabelle",
+        year: 2018,
+        director: "Mirko Locatelli",
+        genres: ["Dramma", "Festival"],
+        rating: 7.2,
+        duration: "102 min",
+        badge: "festival",
+        badgeText: "Festival",
+        color: "#2a1a3a",
+        desc: "La storia intima di una donna alla ricerca della propria identità in un mondo che sembra averla dimenticata. Tra silenzi eloquenti e paesaggi interiori, Isabelle affronta il suo passato per costruire un nuovo futuro.",
+        festivals: "Festival di Locarno 2018 — Selezione Ufficiale. Premio del Pubblico al Festival di Annecy.",
+        cast: [{name:"Mirko Locatelli",role:"Regia"},{name:"Fabio Cavenaghi",role:"Produttore"},{name:"Paolo Cavenaghi",role:"Produttore"},{name:"Giuditta Tarantelli",role:"Sceneggiatura"}],
+        production: "Strani Film S.r.l.",
+        country: "Italia / Francia",
+        language: "Italiano, Francese",
+        poster: null,
+    },
+    {
+        id: 3,
+        title: "I cormorani",
+        year: 2016,
+        director: "Fabio Ferrara",
+        genres: ["Dramma", "Festival"],
+        rating: 7.0,
+        duration: "89 min",
+        badge: "festival",
+        badgeText: "Festival",
+        color: "#1a2a3a",
+        desc: "Un'estate in una piccola città costiera diventa il palcoscenico di un dramma familiare. Due fratelli, separati dalla vita, si ritrovano e devono fare i conti con un legame che il tempo non è riuscito a spezzare.",
+        festivals: "Torino Film Festival 2016 — Concorso Ufficiale. Festival del Cinema Europeo di Lecce — Premio Speciale.",
+        cast: [{name:"Fabio Ferrara",role:"Regia"},{name:"Mirko Locatelli",role:"Sceneggiatura"},{name:"Paolo Cavenaghi",role:"Produttore"},{name:"Fabio Cavenaghi",role:"Produttore"}],
+        production: "Strani Film S.r.l.",
+        country: "Italia",
+        language: "Italiano",
+        poster: null,
+    },
+    {
+        id: 4,
+        title: "I corpi estranei",
+        year: 2013,
+        director: "Mirko Locatelli",
+        genres: ["Dramma", "Festival"],
+        rating: 7.5,
+        duration: "106 min",
+        badge: "festival",
+        badgeText: "Venezia",
+        color: "#3a2a1a",
+        desc: "Antonio, un padre di famiglia del Sud Italia, si trasferisce a Milano per curare il figlio gravemente malato. In una città ostile e fredda, trova un'inaspettata solidarietà in Piotr, un immigrato polacco. Un film sulla fragilità umana e sulla capacità di trovare famiglia dove meno ce lo si aspetta.",
+        festivals: "Mostra del Cinema di Venezia 2013 — Giornate degli Autori. Premio FEDIC — Miglior Film. Candidato ai David di Donatello 2014.",
+        cast: [{name:"Mirko Locatelli",role:"Regia"},{name:"Filippo Timi",role:"Antonio"},{name:"Jamal Adinani",role:"Piotr"},{name:"Paolo Cavenaghi",role:"Produttore"}],
+        production: "Strani Film S.r.l.",
+        country: "Italia",
+        language: "Italiano",
+        poster: null,
+    },
+    // --- CINEMA INDIPENDENTE ITALIANO ---
+    {
+        id: 5,
+        title: "Lazzaro Felice",
+        year: 2018,
+        director: "Alice Rohrwacher",
+        genres: ["Dramma", "Festival"],
+        rating: 8.1,
+        duration: "127 min",
+        badge: "festival",
+        badgeText: "Cannes",
+        color: "#2a3a1a",
+        desc: "La storia di Lazzaro, un giovane contadino di infinita bontà, sfruttato da tutti ma incapace di provare rancore. Un racconto magico e realista che attraversa epoche diverse, esplorando l'innocenza in un mondo corrotto.",
+        festivals: "Festival di Cannes 2018 — Premio per la Miglior Sceneggiatura. European Film Awards — Miglior Film.",
+        cast: [{name:"Alice Rohrwacher",role:"Regia"},{name:"Adriano Tardiolo",role:"Lazzaro"},{name:"Alba Rohrwacher",role:"Antonia"},{name:"Nicoletta Braschi",role:"Marchesa"}],
+        production: "Tempesta Film",
+        country: "Italia / Svizzera / Francia / Germania",
+        language: "Italiano",
+        poster: null,
+    },
+    {
+        id: 6,
+        title: "Dogman",
+        year: 2018,
+        director: "Matteo Garrone",
+        genres: ["Thriller", "Dramma", "Festival"],
+        rating: 7.9,
+        duration: "103 min",
+        badge: "festival",
+        badgeText: "Cannes",
+        color: "#3a1a2a",
+        desc: "Marcello è un toelettatore di cani mite e gentile che vive in una periferia degradata. La sua vita viene stravolta dalla relazione tossica con Simoncino, un ex pugile violento e cocainomane. Ispirato a fatti realmente accaduti.",
+        festivals: "Festival di Cannes 2018 — Premio per il Miglior Attore (Marcello Fonte). David di Donatello 2019 — 9 premi incluso Miglior Film.",
+        cast: [{name:"Matteo Garrone",role:"Regia"},{name:"Marcello Fonte",role:"Marcello"},{name:"Edoardo Pesce",role:"Simoncino"}],
+        production: "Archimede Film",
+        country: "Italia / Francia",
+        language: "Italiano",
+        poster: null,
+    },
+    {
+        id: 7,
+        title: "Perfetti sconosciuti",
+        year: 2016,
+        director: "Paolo Genovese",
+        genres: ["Commedia", "Dramma"],
+        rating: 7.8,
+        duration: "97 min",
+        badge: "new",
+        badgeText: "Cult",
+        color: "#1a1a3a",
+        desc: "Sette amici si ritrovano a cena e decidono di giocare a un gioco: mettere i cellulari sul tavolo e condividere ogni messaggio, chiamata e notifica. Quella che doveva essere una serata divertente si trasforma in un incubo di segreti rivelati.",
+        festivals: "David di Donatello 2016 — Miglior Film. Film italiano più adattato al mondo: 25 remake internazionali.",
+        cast: [{name:"Paolo Genovese",role:"Regia"},{name:"Marco Giallini",role:"Rocco"},{name:"Kasia Smutniak",role:"Eva"},{name:"Valerio Mastandrea",role:"Lele"},{name:"Alba Rohrwacher",role:"Bianca"}],
+        production: "Medusa Film",
+        country: "Italia",
+        language: "Italiano",
+        poster: null,
+    },
+    {
+        id: 8,
+        title: "Lo chiamavano Jeeg Robot",
+        year: 2015,
+        director: "Gabriele Mainetti",
+        genres: ["Azione", "Dramma"],
+        rating: 7.6,
+        duration: "112 min",
+        badge: "exclusive",
+        badgeText: "Esclusivo",
+        color: "#2a2a1a",
+        desc: "Enzo Ceccotti, un piccolo criminale romano, acquisisce una forza sovrumana dopo essere entrato in contatto con una sostanza radioattiva nel Tevere. L'incontro con Alessia, una ragazza fragile convinta che lui sia un supereroe manga, cambierà la sua vita per sempre.",
+        festivals: "David di Donatello 2016 — 7 premi incluso Miglior Film Esordiente. Nastri d'Argento — Miglior Regia Esordiente.",
+        cast: [{name:"Gabriele Mainetti",role:"Regia"},{name:"Claudio Santamaria",role:"Enzo"},{name:"Luca Marinelli",role:"Lo Zingaro"},{name:"Ilenia Pastorelli",role:"Alessia"}],
+        production: "Goon Films",
+        country: "Italia",
+        language: "Italiano",
+        poster: null,
+    },
+    {
+        id: 9,
+        title: "Sulla mia pelle",
+        year: 2018,
+        director: "Alessio Cremonini",
+        genres: ["Dramma", "Biografico"],
+        rating: 7.7,
+        duration: "100 min",
+        badge: null,
+        color: "#2a1a1a",
+        desc: "Gli ultimi sette giorni di vita di Stefano Cucchi, arrestato per possesso di droga e morto in custodia cautelare. Un film crudo e necessario che racconta una delle pagine più buie della giustizia italiana.",
+        festivals: "Mostra del Cinema di Venezia 2018 — Selezione Ufficiale. David di Donatello 2019 — Candidato come Miglior Film.",
+        cast: [{name:"Alessio Cremonini",role:"Regia"},{name:"Alessandro Borghi",role:"Stefano Cucchi"},{name:"Jasmine Trinca",role:"Ilaria Cucchi"}],
+        production: "Lucky Red",
+        country: "Italia",
+        language: "Italiano",
+        poster: null,
+    },
+    {
+        id: 10,
+        title: "Il traditore",
+        year: 2019,
+        director: "Marco Bellocchio",
+        genres: ["Dramma", "Biografico", "Festival"],
+        rating: 7.9,
+        duration: "145 min",
+        badge: "festival",
+        badgeText: "Cannes",
+        color: "#3a2a2a",
+        desc: "La storia vera di Tommaso Buscetta, il primo grande pentito di mafia, che negli anni '80 decide di collaborare con il giudice Giovanni Falcone e rompere il muro di omertà di Cosa Nostra, cambiando per sempre la lotta alla criminalità organizzata.",
+        festivals: "Festival di Cannes 2019 — Selezione Ufficiale. David di Donatello 2020 — 6 premi. Candidatura italiana all'Oscar come Miglior Film Internazionale.",
+        cast: [{name:"Marco Bellocchio",role:"Regia"},{name:"Pierfrancesco Favino",role:"Tommaso Buscetta"},{name:"Maria Fernanda Cândido",role:"Maria Cristina"}],
+        production: "IBC Movie / Kavac Film",
+        country: "Italia / Francia / Brasile / Germania",
+        language: "Italiano",
+        poster: null,
+    },
+    {
+        id: 11,
+        title: "Volevo nascondermi",
+        year: 2020,
+        director: "Giorgio Diritti",
+        genres: ["Biografico", "Dramma", "Festival"],
+        rating: 7.4,
+        duration: "120 min",
+        badge: "festival",
+        badgeText: "Berlino",
+        color: "#1a3a3a",
+        desc: "La vita di Antonio Ligabue, pittore naif di origini svizzere, emarginato e incompreso, che attraverso la sua arte tormentata riuscì a esprimere il dolore e la bellezza dell'esistenza umana, diventando uno dei più grandi artisti italiani del Novecento.",
+        festivals: "Festival di Berlino 2020 — Orso d'Argento per il Miglior Attore (Elio Germano). David di Donatello 2021 — 7 premi incluso Miglior Film.",
+        cast: [{name:"Giorgio Diritti",role:"Regia"},{name:"Elio Germano",role:"Antonio Ligabue"},{name:"Oliver Malanchini",role:"Antonio giovane"}],
+        production: "Palomar / Rai Cinema",
+        country: "Italia",
+        language: "Italiano",
+        poster: null,
+    },
+    {
+        id: 12,
+        title: "Ferrante Fever",
+        year: 2017,
+        director: "Giacomo Durzi",
+        genres: ["Documentario"],
+        rating: 6.8,
+        duration: "80 min",
+        badge: null,
+        color: "#2a3a2a",
+        desc: "Un documentario che esplora il fenomeno letterario globale di Elena Ferrante, l'autrice misteriosa che ha conquistato milioni di lettori nel mondo con la saga de L'Amica Geniale. Interviste esclusive a traduttori, editori e lettori appassionati.",
+        festivals: "TIFF — Toronto International Film Festival 2017.",
+        cast: [{name:"Giacomo Durzi",role:"Regia"},{name:"Elena Ferrante",role:"Soggetto (in absentia)"}],
+        production: "Minnie Ferrara & Associati",
+        country: "Italia / USA",
+        language: "Italiano, Inglese",
+        poster: null,
+    },
+    {
+        id: 13,
+        title: "La pazza gioia",
+        year: 2016,
+        director: "Paolo Virzì",
+        genres: ["Commedia", "Dramma"],
+        rating: 7.5,
+        duration: "118 min",
+        badge: null,
+        color: "#3a3a1a",
+        desc: "Beatrice e Donatella si incontrano in una comunità terapeutica per donne con disturbi mentali. Due personalità opposte — una aristocratica e l'altra fragile — che trovano nella fuga un momento di libertà assoluta e di pazza, appunto, gioia.",
+        festivals: "Festival di Cannes 2016 — Quinzaine des Réalisateurs. David di Donatello 2017 — 5 premi incluso Miglior Film.",
+        cast: [{name:"Paolo Virzì",role:"Regia"},{name:"Valeria Bruni Tedeschi",role:"Beatrice"},{name:"Micaela Ramazzotti",role:"Donatella"}],
+        production: "Lotus Production",
+        country: "Italia / Francia",
+        language: "Italiano",
+        poster: null,
+    },
+    {
+        id: 14,
+        title: "Veloce come il vento",
+        year: 2016,
+        director: "Matteo Rovere",
+        genres: ["Azione", "Dramma"],
+        rating: 7.3,
+        duration: "119 min",
+        badge: null,
+        color: "#3a1a1a",
+        desc: "Giulia De Martino ha 17 anni ed è una pilota di rally. Quando il padre muore, deve convincere il fratello maggiore Loris, un tossicodipendente con un talento naturale per la guida, a tornare in pista per salvare la scuderia di famiglia.",
+        festivals: "David di Donatello 2017 — Miglior Attore (Stefano Accorsi). Nastri d'Argento 2016.",
+        cast: [{name:"Matteo Rovere",role:"Regia"},{name:"Stefano Accorsi",role:"Loris"},{name:"Matilda De Angelis",role:"Giulia"}],
+        production: "Fandango / Rai Cinema",
+        country: "Italia",
+        language: "Italiano",
+        poster: null,
+    },
+];
+
+let heroFilmId = 4; // I corpi estranei as hero
+
+// ============================================
+// RENDER FUNCTIONS
+// ============================================
+function createFilmCard(film) {
+    const badgeHTML = film.badge
+        ? `<span class="film-badge badge-${film.badge}">${film.badgeText}</span>`
+        : '';
+    return `
+        <div class="film-card" onclick="openFilmModal(${film.id})" data-genres='${JSON.stringify(film.genres)}' data-year="${film.year}">
+            <div class="film-poster">
+                <div class="poster-placeholder" style="background:linear-gradient(135deg,${film.color},${film.color}dd,#0a0e1a)">${film.title}</div>
+                ${badgeHTML}
+                <span class="film-rating">&#9733; ${film.rating}</span>
+                <div class="overlay"><div class="overlay-info">${film.director} &bull; ${film.duration}</div></div>
+            </div>
+            <div class="film-info">
+                <div class="film-title">${film.title}</div>
+                <div class="film-meta">${film.year} &bull; ${film.genres[0]}</div>
+            </div>
+        </div>`;
+}
+
+function renderGrids() {
+    // Strani Film
+    const strani = films.filter(f => f.production === 'Strani Film S.r.l.');
+    document.getElementById('straniGrid').innerHTML = strani.map(createFilmCard).join('');
+
+    // Italian indie (non-Strani, non-documentary)
+    const italiano = films.filter(f => f.production !== 'Strani Film S.r.l.' && !f.genres.includes('Documentario'));
+    document.getElementById('italianoGrid').innerHTML = italiano.map(createFilmCard).join('');
+
+    // Documentaries
+    const docs = films.filter(f => f.genres.includes('Documentario'));
+    document.getElementById('docGrid').innerHTML = docs.map(createFilmCard).join('');
+}
+
+function renderHero() {
+    const film = films.find(f => f.id === heroFilmId);
+    if (!film) return;
+    document.getElementById('heroBg').style.background = `linear-gradient(135deg,${film.color},${film.color}aa,#0a0e1a)`;
+    document.getElementById('heroBadge').textContent = film.production === 'Strani Film S.r.l.' ? 'Produzione Strani Film' : 'In Evidenza';
+    document.getElementById('heroTitle').textContent = film.title;
+    document.getElementById('heroMeta').innerHTML = `
+        <span>${film.year}</span> &bull;
+        <span>${film.duration}</span> &bull;
+        <span>${film.director}</span> &bull;
+        <span class="stars">&#9733; ${film.rating}/10</span>`;
+    document.getElementById('heroDesc').textContent = film.desc.substring(0, 200) + '...';
+}
+
+function renderAdmin() {
+    document.getElementById('adminTotalFilms').textContent = films.length;
+    const tbody = document.getElementById('adminTableBody');
+    tbody.innerHTML = films.map(f => `
+        <tr>
+            <td><div class="poster-thumb"><div class="poster-placeholder" style="background:linear-gradient(135deg,${f.color},#0a0e1a);font-size:.45rem;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.5)">${f.title.substring(0,3)}</div></div></td>
+            <td><strong>${f.title}</strong><br><span style="font-size:.75rem;color:var(--text2)">${f.director}</span></td>
+            <td>${f.year}</td>
+            <td>${f.genres[0]}</td>
+            <td><span style="color:var(--gold)">&#9733;</span> ${f.rating}</td>
+            <td><span class="status-badge status-published">Pubblicato</span></td>
+            <td><div class="admin-actions"><button class="edit-btn" onclick="event.stopPropagation();alert('Demo: modifica ${f.title}')">Modifica</button><button class="del-btn" onclick="event.stopPropagation();alert('Demo: elimina ${f.title}')">Elimina</button></div></td>
+        </tr>`).join('');
+}
+
+// ============================================
+// MODAL
+// ============================================
+function openFilmModal(id) {
+    const film = films.find(f => f.id === id);
+    if (!film) return;
+
+    document.getElementById('modalBg').style.background = `linear-gradient(135deg,${film.color},${film.color}aa,#0a0e1a)`;
+    document.getElementById('modalPoster').innerHTML = `<div class="poster-placeholder" style="background:linear-gradient(135deg,${film.color},#0a0e1a);height:100%;display:flex;align-items:center;justify-content:center;padding:12px;text-align:center;font-size:.85rem">${film.title}</div>`;
+    document.getElementById('modalTitle').textContent = film.title;
+    document.getElementById('modalMeta').innerHTML = `
+        <span>${film.year}</span> &bull;
+        <span>${film.duration}</span> &bull;
+        <span>${film.director}</span> &bull;
+        <span>${film.country}</span> &bull;
+        <span style="color:var(--gold)">&#9733; ${film.rating}/10</span>`;
+    document.getElementById('modalDesc').textContent = film.desc;
+    document.getElementById('modalTags').innerHTML = film.genres.map(g => `<span class="modal-tag">${g}</span>`).join('');
+
+    const festSection = document.getElementById('modalFestSection');
+    if (film.festivals) {
+        festSection.style.display = 'block';
+        document.getElementById('modalFest').textContent = film.festivals;
+    } else {
+        festSection.style.display = 'none';
+    }
+
+    document.getElementById('modalCast').innerHTML = film.cast.map(c =>
+        `<div class="cast-item"><div class="cast-avatar">${c.name.split(' ').map(n=>n[0]).join('')}</div><div class="cast-name">${c.name}</div><div class="cast-role">${c.role}</div></div>`
+    ).join('');
+
+    document.getElementById('modalStats').innerHTML = `
+        <div class="modal-stat"><div class="val">${film.rating}</div><div class="label">Voto</div></div>
+        <div class="modal-stat"><div class="val">${film.duration.replace(' min','')}</div><div class="label">Minuti</div></div>
+        <div class="modal-stat"><div class="val">${film.year}</div><div class="label">Anno</div></div>
+        <div class="modal-stat"><div class="val">${film.language === 'Italiano' ? 'IT' : 'Multi'}</div><div class="label">Lingua</div></div>`;
+
+    document.getElementById('filmModal').classList.add('show');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+    document.getElementById('filmModal').classList.remove('show');
+    document.body.style.overflow = '';
+}
+
+// ============================================
+// FILTERS & SEARCH
+// ============================================
+function filterByGenre(genre) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+
+    if (genre === 'all') {
+        document.querySelectorAll('.section').forEach(s => s.style.display = '');
+        document.getElementById('allFilmsSection').style.display = 'none';
+        document.getElementById('heroSection').style.display = '';
+        event.target.classList.add('active');
+        return;
+    }
+
+    const filtered = films.filter(f => f.genres.some(g => g.toLowerCase().includes(genre.toLowerCase())));
+    showFilteredResults(filtered, `Genere: ${genre}`);
+}
+
+function filterByYear(year) {
+    if (year === 'all') {
+        document.querySelectorAll('.section').forEach(s => s.style.display = '');
+        document.getElementById('allFilmsSection').style.display = 'none';
+        document.getElementById('heroSection').style.display = '';
+        return;
+    }
+
+    const filtered = films.filter(f => f.year === year);
+    showFilteredResults(filtered, `Anno: ${year}`);
+}
+
+function handleSearch(query) {
+    if (query.length < 2) {
+        document.querySelectorAll('.section').forEach(s => s.style.display = '');
+        document.getElementById('allFilmsSection').style.display = 'none';
+        document.getElementById('heroSection').style.display = '';
+        return;
+    }
+
+    const q = query.toLowerCase();
+    const filtered = films.filter(f =>
+        f.title.toLowerCase().includes(q) ||
+        f.director.toLowerCase().includes(q) ||
+        f.genres.some(g => g.toLowerCase().includes(q)) ||
+        f.desc.toLowerCase().includes(q)
+    );
+    showFilteredResults(filtered, `Risultati per "${query}"`);
+}
+
+function showFilteredResults(filtered, title) {
+    // Hide category sections, show all-films section
+    document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
+    document.getElementById('heroSection').style.display = 'none';
+    const section = document.getElementById('allFilmsSection');
+    section.style.display = '';
+    document.getElementById('allFilmsTitle').innerHTML = `${title} <span style="color:var(--text2);font-size:.9rem">(${filtered.length} film)</span>`;
+    document.getElementById('allFilmsGrid').innerHTML = filtered.length
+        ? filtered.map(createFilmCard).join('')
+        : '<p style="color:var(--text2);padding:40px 0">Nessun film trovato.</p>';
+}
+
+// ============================================
+// ADMIN TOGGLE
+// ============================================
+function toggleAdmin() {
+    const panel = document.getElementById('adminPanel');
+    const main = document.getElementById('mainContent');
+    const btn = document.getElementById('adminToggle');
+
+    if (panel.classList.contains('show')) {
+        panel.classList.remove('show');
+        main.classList.remove('hidden');
+        btn.textContent = 'Pannello Admin';
+    } else {
+        panel.classList.add('show');
+        main.classList.add('hidden');
+        btn.textContent = 'Torna al Catalogo';
+        renderAdmin();
+    }
+}
+
+function showCatalog() {
+    const panel = document.getElementById('adminPanel');
+    const main = document.getElementById('mainContent');
+    const btn = document.getElementById('adminToggle');
+    panel.classList.remove('show');
+    main.classList.remove('hidden');
+    btn.textContent = 'Pannello Admin';
+
+    // Reset filters
+    document.querySelectorAll('.section').forEach(s => s.style.display = '');
+    document.getElementById('allFilmsSection').style.display = 'none';
+    document.getElementById('heroSection').style.display = '';
+    document.getElementById('searchInput').value = '';
+}
+
+// ESC to close modal
+document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeModal();
+});
+
+// ============================================
+// INIT
+// ============================================
+renderGrids();
+renderHero();
+</script>
+
+</body>
+</html>
