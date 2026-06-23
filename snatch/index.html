@@ -145,15 +145,17 @@ h1,h2,h3 { font-family:'Space Grotesk',sans-serif; font-weight:600; letter-spaci
 .btn-sm { padding:10px 22px; font-size:14px; }
 
 /* ===== HERO ===== */
-.hero { position:relative; min-height:100vh; display:flex; align-items:center; overflow:hidden; }
-#webgl { position:absolute; inset:0; width:100%; height:100%; display:block; z-index:0; }
+.hero { position:relative; min-height:100vh; display:flex; align-items:center; overflow:hidden; background:#0b0a0c; }
+.hero-photo { position:absolute; inset:0; z-index:0; background:url('assets/photos/hero-crowd.jpg') center/cover no-repeat; opacity:0.44; filter:saturate(1.08) contrast(1.03); transform:scale(1.05); }
+#webgl { position:absolute; inset:0; width:100%; height:100%; display:block; z-index:1; }
 .hero::after {
-  content:""; position:absolute; inset:0; z-index:1; pointer-events:none;
+  content:""; position:absolute; inset:0; z-index:2; pointer-events:none;
   background:
-    radial-gradient(ellipse 60% 50% at 50% 118%, rgba(11,10,12,0.92), transparent 60%),
-    linear-gradient(to bottom, rgba(11,10,12,0.35), rgba(11,10,12,0) 28%, rgba(11,10,12,0) 60%, var(--bg) 98%);
+    radial-gradient(ellipse 62% 52% at 50% 118%, rgba(11,10,12,0.94), transparent 60%),
+    radial-gradient(ellipse 85% 60% at 50% 44%, transparent, rgba(11,10,12,0.45)),
+    linear-gradient(to bottom, rgba(11,10,12,0.55), rgba(11,10,12,0.18) 26%, rgba(11,10,12,0.32) 62%, var(--bg) 98%);
 }
-.hero-content { position:relative; z-index:2; width:100%; padding:150px 0 120px; text-align:center; }
+.hero-content { position:relative; z-index:3; width:100%; padding:150px 0 120px; text-align:center; }
 .hero-eyebrow {
   display:inline-flex; align-items:center; gap:10px;
   font-size:13px; font-weight:600; letter-spacing:0.16em; text-transform:uppercase;
@@ -169,7 +171,7 @@ h1,h2,h3 { font-family:'Space Grotesk',sans-serif; font-weight:600; letter-spaci
 .hero p.lead { font-size:clamp(17px,2vw,21px); color:var(--text-dim); max-width:640px; margin:0 auto 44px; font-weight:300; }
 .hero-cta { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; }
 .hero-scroll {
-  position:absolute; bottom:34px; left:50%; transform:translateX(-50%); z-index:2;
+  position:absolute; bottom:34px; left:50%; transform:translateX(-50%); z-index:3;
   display:flex; flex-direction:column; align-items:center; gap:8px;
   font-size:11px; letter-spacing:0.22em; text-transform:uppercase; color:var(--text-muted);
 }
@@ -264,11 +266,19 @@ section { padding:130px 0; position:relative; }
 .rotor { position:relative; width:min(520px,100%); margin:0 auto; display:grid; place-items:center; }
 .rotor-glow {
   position:absolute; width:80%; aspect-ratio:1; border-radius:50%; z-index:0;
-  background:radial-gradient(circle, rgba(226,0,26,0.55), rgba(255,90,60,0.18) 46%, transparent 68%);
-  filter:blur(48px); animation:rotorpulse 5s ease-in-out infinite;
+  background:radial-gradient(circle, rgba(226,0,26,0.42), rgba(255,90,60,0.14) 48%, transparent 70%);
+  filter:blur(54px); animation:rotorpulse 5s ease-in-out infinite;
 }
-@keyframes rotorpulse { 0%,100%{opacity:.78; transform:scale(1)} 50%{opacity:1; transform:scale(1.07)} }
-#rotor-canvas { position:relative; z-index:1; width:100%; aspect-ratio:1/1; height:auto; display:block; }
+@keyframes rotorpulse { 0%,100%{opacity:.5; transform:scale(1)} 50%{opacity:.72; transform:scale(1.08)} }
+.rotor-video {
+  position:relative; z-index:1; width:100%; aspect-ratio:4/3; height:auto; display:block; margin:0 auto;
+  object-fit:cover;
+  -webkit-mask:radial-gradient(ellipse 74% 76% at 50% 47%, #000 52%, transparent 80%);
+          mask:radial-gradient(ellipse 74% 76% at 50% 47%, #000 52%, transparent 80%);
+  animation:rotorfloat 6s ease-in-out infinite;
+}
+@keyframes rotorfloat { 0%,100%{transform:translateY(0) scale(1)} 50%{transform:translateY(-10px) scale(1.012)} }
+@media (prefers-reduced-motion: reduce) { .rotor-video { animation:none; } }
 .rotor-hint { position:absolute; bottom:-30px; left:0; right:0; z-index:2; text-align:center; font-size:11px; letter-spacing:0.22em; text-transform:uppercase; color:var(--text-muted); }
 @media (prefers-reduced-motion: reduce) { .rotor-glow { animation:none; } }
 
@@ -291,6 +301,27 @@ section { padding:130px 0; position:relative; }
 .b4 { grid-column:span 3; }
 .b5 { grid-column:span 7; }
 .b6 { grid-column:span 5; }
+
+/* ===== STRISCIA FOTO (marquee infinito) ===== */
+.marquee { padding:70px 0 84px; overflow:hidden; position:relative; }
+.marquee .container { margin-bottom:42px; }
+.marquee-track { display:flex; gap:18px; width:max-content; animation:scrollx 48s linear infinite; }
+.marquee:hover .marquee-track { animation-play-state:paused; }
+.marquee-track .ph { flex:0 0 auto; height:230px; width:340px; border-radius:14px; overflow:hidden; border:1px solid var(--border); box-shadow:inset 0 1px 0 rgba(255,255,255,0.06); position:relative; }
+.marquee-track .ph img { width:100%; height:100%; object-fit:cover; filter:saturate(1.06) brightness(0.9); transition:transform .6s, filter .4s; }
+.marquee-track .ph:hover img { transform:scale(1.06); filter:saturate(1.15) brightness(1); }
+@keyframes scrollx { from { transform:translateX(0); } to { transform:translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) { .marquee-track { animation:none; } }
+
+/* ===== BANDA LETTERE (full-bleed) ===== */
+.brandband { position:relative; min-height:64vh; display:flex; align-items:flex-end; overflow:hidden; }
+.brandband-bg { position:absolute; inset:0; z-index:0; background:url('assets/photos/letters.jpg') center/cover no-repeat; filter:saturate(1.05); transform:scale(1.04); }
+.brandband::after { content:""; position:absolute; inset:0; z-index:1; pointer-events:none;
+  background:linear-gradient(to right, rgba(11,10,12,0.4), rgba(11,10,12,0.12) 55%),
+            linear-gradient(to top, rgba(11,10,12,0.97), rgba(11,10,12,0.15) 58%, transparent); }
+.brandband .container { position:relative; z-index:2; padding-bottom:64px; padding-top:90px; }
+.brandband h2 { font-size:clamp(30px,4.4vw,54px); margin-bottom:14px; }
+.brandband p { color:var(--text-dim); font-weight:300; font-size:17px; max-width:560px; }
 
 /* ===== RENT ME ===== */
 .rent { position:relative; overflow:hidden; }
@@ -407,6 +438,7 @@ footer { border-top:1px solid var(--border); padding:54px 0 40px; }
 
 <!-- HERO -->
 <header class="hero">
+  <div class="hero-photo"></div>
   <canvas id="webgl"></canvas>
   <div class="container hero-content">
     <div class="hero-eyebrow rv on"><span class="dot"></span>Dal 2002 nei migliori locali italiani</div>
@@ -431,6 +463,36 @@ footer { border-top:1px solid var(--border); padding:54px 0 40px; }
     </div>
   </div>
 </div>
+
+<!-- STRISCIA FOTO LOCALI -->
+<section class="marquee">
+  <div class="container sec-head center rv">
+    <span class="kicker">Installato in tutta Italia</span>
+    <h2>Dove la notte<br /><span class="grad">diventa business</span></h2>
+  </div>
+  <div class="marquee-track">
+    <div class="ph"><img src="assets/photos/wall/01.jpg" alt="Locale notturno con SNATCH" loading="lazy" /></div>
+    <div class="ph"><img src="assets/photos/wall/02.jpg" alt="Discoteca con SNATCH" loading="lazy" /></div>
+    <div class="ph"><img src="assets/photos/wall/03.jpg" alt="Club con SNATCH" loading="lazy" /></div>
+    <div class="ph"><img src="assets/photos/wall/04.jpg" alt="Evento con SNATCH" loading="lazy" /></div>
+    <div class="ph"><img src="assets/photos/wall/05.jpg" alt="Serata con SNATCH" loading="lazy" /></div>
+    <div class="ph"><img src="assets/photos/wall/06.jpg" alt="Locale con SNATCH" loading="lazy" /></div>
+    <div class="ph"><img src="assets/photos/wall/07.jpg" alt="Festa con SNATCH" loading="lazy" /></div>
+    <div class="ph"><img src="assets/photos/wall/08.jpg" alt="Ingresso locale con SNATCH" loading="lazy" /></div>
+    <div class="ph"><img src="assets/photos/wall/09.jpg" alt="Disco bar con SNATCH" loading="lazy" /></div>
+    <div class="ph"><img src="assets/photos/wall/10.jpg" alt="Privé con SNATCH" loading="lazy" /></div>
+    <div class="ph"><img src="assets/photos/wall/01.jpg" alt="" aria-hidden="true" loading="lazy" /></div>
+    <div class="ph"><img src="assets/photos/wall/02.jpg" alt="" aria-hidden="true" loading="lazy" /></div>
+    <div class="ph"><img src="assets/photos/wall/03.jpg" alt="" aria-hidden="true" loading="lazy" /></div>
+    <div class="ph"><img src="assets/photos/wall/04.jpg" alt="" aria-hidden="true" loading="lazy" /></div>
+    <div class="ph"><img src="assets/photos/wall/05.jpg" alt="" aria-hidden="true" loading="lazy" /></div>
+    <div class="ph"><img src="assets/photos/wall/06.jpg" alt="" aria-hidden="true" loading="lazy" /></div>
+    <div class="ph"><img src="assets/photos/wall/07.jpg" alt="" aria-hidden="true" loading="lazy" /></div>
+    <div class="ph"><img src="assets/photos/wall/08.jpg" alt="" aria-hidden="true" loading="lazy" /></div>
+    <div class="ph"><img src="assets/photos/wall/09.jpg" alt="" aria-hidden="true" loading="lazy" /></div>
+    <div class="ph"><img src="assets/photos/wall/10.jpg" alt="" aria-hidden="true" loading="lazy" /></div>
+  </div>
+</section>
 
 <!-- PROBLEMI -->
 <section>
@@ -544,8 +606,13 @@ footer { border-top:1px solid var(--border); padding:54px 0 40px; }
     <div class="screen-stage">
       <div class="rotor">
         <div class="rotor-glow"></div>
-        <canvas id="rotor-canvas" aria-label="Terminale SMALL SNATCH in rotazione a 360 gradi"></canvas>
-        <span class="rotor-hint">Scorri per ruotare la cassa ↓</span>
+        <video id="rotor-video" class="rotor-video" autoplay muted loop playsinline preload="auto"
+               poster="assets/video/small-poster.jpg"
+               aria-label="Terminale SMALL SNATCH in rotazione a 360 gradi">
+          <source src="assets/video/small.webm" type="video/webm" />
+          <source src="assets/video/small.mp4" type="video/mp4" />
+        </video>
+        <span class="rotor-hint">SMALL · la cassa a 360°</span>
       </div>
     </div>
     <div class="small-info">
@@ -606,6 +673,16 @@ footer { border-top:1px solid var(--border); padding:54px 0 40px; }
         <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span><b>Vantaggio fiscale.</b> Il canone di locazione è interamente deducibile, anche per periodi più brevi del minimo fiscale.</span></li>
       </ul>
     </div>
+  </div>
+</section>
+
+<!-- BANDA LETTERE SNATCH -->
+<section class="brandband">
+  <div class="brandband-bg"></div>
+  <div class="container">
+    <span class="kicker">SNATCH S.r.L.</span>
+    <h2>Sistemi, Servizi &amp; Soluzioni<br /><span class="grad">dal 2002</span></h2>
+    <p>Nati per portare nei locali italiani sistemi gestionali su misura. Vent'anni dopo, lo stesso marchio appeso al muro e la stessa passione di sempre.</p>
   </div>
 </section>
 
@@ -859,102 +936,7 @@ function animate() {
 animate();
 </script>
 
-<!-- ============ MODELLO 3D SMALL (rotazione 360 su scroll) ============ -->
-<script type="module">
-import * as THREE from 'three';
-import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
-
-const sec = document.getElementById('small');
-const canvas = document.getElementById('rotor-canvas');
-if (sec && canvas) {
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  renderer.outputColorSpace = THREE.SRGBColorSpace;
-
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(33, 1, 0.1, 100);
-  camera.position.set(0, 0.6, 6.6);
-  camera.lookAt(0, 0, 0);
-
-  // materiali
-  const white = new THREE.MeshPhysicalMaterial({ color: 0xf1eff3, roughness: 0.38, metalness: 0.0, clearcoat: 0.6, clearcoatRoughness: 0.45 });
-  const dark  = new THREE.MeshStandardMaterial({ color: 0x121116, roughness: 0.45, metalness: 0.3 });
-  const bezelMat = new THREE.MeshStandardMaterial({ color: 0x0e0d12, roughness: 0.4, metalness: 0.35 });
-
-  // schermo (texture disegnata)
-  const sc = document.createElement('canvas'); sc.width = 512; sc.height = 400;
-  const g = sc.getContext('2d');
-  g.fillStyle = '#070710'; g.fillRect(0, 0, 512, 400);
-  const grd = g.createLinearGradient(0, 12, 0, 104); grd.addColorStop(0, '#3247c8'); grd.addColorStop(1, '#16216e');
-  g.fillStyle = grd; g.fillRect(14, 14, 484, 92);
-  g.textBaseline = 'middle';
-  g.fillStyle = '#eaf0ff'; g.font = 'bold 38px Arial'; g.textAlign = 'left'; g.fillText('€', 30, 60);
-  g.font = 'bold 70px Arial'; g.textAlign = 'right'; g.fillText('43,00', 490, 58);
-  g.textAlign = 'center';
-  g.fillStyle = '#e2001a'; g.font = 'bold 92px Arial'; g.fillText('( S )', 256, 228);
-  g.fillStyle = '#d6d6de'; g.font = 'bold 50px Arial'; g.fillText('SNATCH', 256, 300);
-  g.fillStyle = '#74747f'; g.font = '18px Arial'; g.fillText('www.snatchsystem.it', 256, 360);
-  const screenTex = new THREE.CanvasTexture(sc); screenTex.colorSpace = THREE.SRGBColorSpace;
-  const screenMat = new THREE.MeshBasicMaterial({ map: screenTex });
-
-  // modello — cabinato unico bianco, fronte arrotondato + scanalatura centrale
-  const small = new THREE.Group();
-  small.add(new THREE.Mesh(new RoundedBoxGeometry(2.3, 1.55, 1.85, 8, 0.34), white));
-  const groove = new THREE.Mesh(new THREE.BoxGeometry(0.05, 1.2, 0.1), dark); groove.position.set(0, -0.05, 0.93); small.add(groove);
-  const slot = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.04, 0.04), dark); slot.position.set(0.55, 0.45, 0.94); small.add(slot);
-  const knob = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.08, 0.05, 24), dark);
-  knob.rotation.z = Math.PI / 2; knob.position.set(1.18, -0.2, 0.4); small.add(knob);
-
-  const neck = new THREE.Mesh(new THREE.BoxGeometry(1.1, 0.5, 0.55), dark);
-  neck.position.set(0, 0.86, -0.05); small.add(neck);
-
-  const head = new THREE.Group();
-  head.position.set(0, 1.32, 0.02); head.rotation.x = -0.26;
-  head.add(new THREE.Mesh(new RoundedBoxGeometry(2.12, 1.5, 0.13, 5, 0.08), bezelMat));
-  const screen = new THREE.Mesh(new THREE.PlaneGeometry(1.88, 1.3), screenMat);
-  screen.position.z = 0.071; head.add(screen);
-  small.add(head);
-
-  small.position.y = -0.05;
-  small.rotation.y = -0.62;
-  scene.add(small);
-
-  // luci (bianche, rim rosso contenuto)
-  scene.add(new THREE.HemisphereLight(0xffffff, 0x201a20, 0.55));
-  const key = new THREE.DirectionalLight(0xffffff, 1.9); key.position.set(3.5, 5, 4); scene.add(key);
-  const fill = new THREE.DirectionalLight(0xdfe4ff, 0.3); fill.position.set(-4, 1.5, 3); scene.add(fill);
-  const red = new THREE.PointLight(0xff2a2a, 2.0, 16, 2); red.position.set(2.6, -1.4, 2.2); scene.add(red);
-  const red2 = new THREE.PointLight(0xff4633, 1.1, 16, 2); red2.position.set(-2.7, 0.8, -2); scene.add(red2);
-
-  function resize() {
-    const w = canvas.clientWidth, h = canvas.clientHeight;
-    if (!w || !h) return;
-    renderer.setSize(w, h, false);
-    camera.aspect = w / h; camera.updateProjectionMatrix();
-  }
-  resize();
-  window.addEventListener('resize', resize);
-  window.addEventListener('load', resize);
-
-  let visible = true;
-  new IntersectionObserver(([e]) => { visible = e.isIntersecting; }, { threshold: 0.01 }).observe(sec);
-
-  let curRot = -0.62;
-  const clock = new THREE.Clock();
-  function tick() {
-    requestAnimationFrame(tick);
-    if (!visible) return;
-    const total = sec.offsetHeight - window.innerHeight;
-    const prog = total > 0 ? Math.min(1, Math.max(0, -sec.getBoundingClientRect().top / total)) : 0;
-    const target = -0.62 + prog * Math.PI * 2;
-    curRot += (target - curRot) * 0.12;
-    small.rotation.y = curRot;
-    small.position.y = -0.05 + Math.sin(clock.getElapsedTime() * 1.1) * 0.04;
-    renderer.render(scene, camera);
-  }
-  tick();
-}
-</script>
+<!-- ============ SMALL: video reale della cassa (sostituisce il vecchio modello 3D) ============ -->
 
 <!-- ============ UI ============ -->
 <script>
@@ -980,7 +962,7 @@ document.querySelectorAll('.mod').forEach(card => {
   card.addEventListener('pointerleave', () => { card.style.transform = ''; });
 });
 
-// (la rotazione 360° della cassa SMALL è gestita dal modulo Three.js più in basso)
+// (la cassa SMALL ora è un video reale in loop: assets/video/small.webm|mp4)
 </script>
 </body>
 </html>
