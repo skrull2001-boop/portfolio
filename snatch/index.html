@@ -271,10 +271,10 @@ section { padding:130px 0; position:relative; }
 }
 @keyframes rotorpulse { 0%,100%{opacity:.5; transform:scale(1)} 50%{opacity:.72; transform:scale(1.08)} }
 .rotor-video {
-  position:relative; z-index:1; width:100%; aspect-ratio:4/3; height:auto; display:block; margin:0 auto;
+  position:relative; z-index:1; width:100%; aspect-ratio:1/1; height:auto; display:block; margin:0 auto;
   object-fit:cover;
-  -webkit-mask:radial-gradient(ellipse 74% 76% at 50% 47%, #000 52%, transparent 80%);
-          mask:radial-gradient(ellipse 74% 76% at 50% 47%, #000 52%, transparent 80%);
+  -webkit-mask:radial-gradient(ellipse 76% 78% at 50% 50%, #000 54%, transparent 82%);
+          mask:radial-gradient(ellipse 76% 78% at 50% 50%, #000 54%, transparent 82%);
   animation:rotorfloat 6s ease-in-out infinite;
 }
 @keyframes rotorfloat { 0%,100%{transform:translateY(0) scale(1)} 50%{transform:translateY(-10px) scale(1.012)} }
@@ -417,6 +417,40 @@ footer { border-top:1px solid var(--border); padding:54px 0 40px; }
   .bento { grid-template-columns:1fr; }
   .bento .b1 { grid-column:span 1 !important; grid-row:span 2 !important; }
 }
+/* ===== MODULI CLICCABILI + MODALE DETTAGLIO ===== */
+.mod { cursor:pointer; }
+.mod .mod-more { display:inline-flex; align-items:center; gap:6px; margin-top:16px; font-size:12.5px; font-weight:600; letter-spacing:.04em; color:var(--red); opacity:.85; transition:gap .25s, opacity .25s; }
+.mod:hover .mod-more { gap:11px; opacity:1; }
+.mod:focus-visible { outline:2px solid var(--red); outline-offset:3px; }
+
+.modal-back { position:fixed; inset:0; z-index:300; display:flex; align-items:center; justify-content:center; padding:24px;
+  background:rgba(6,5,8,0.74); backdrop-filter:blur(9px); opacity:0; visibility:hidden; transition:opacity .3s, visibility .3s; }
+.modal-back.open { opacity:1; visibility:visible; }
+.modal-card { position:relative; width:min(620px,100%); max-height:88vh; overflow-y:auto; border-radius:22px;
+  background:linear-gradient(180deg,#1a151c,#120f15); border:1px solid var(--border);
+  box-shadow:0 40px 120px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.06);
+  padding:38px 38px 34px; transform:translateY(18px) scale(.985); transition:transform .32s cubic-bezier(.2,.8,.2,1); }
+.modal-back.open .modal-card { transform:none; }
+.modal-card .m-ico { width:62px; height:62px; border-radius:15px; display:grid; place-items:center; background:rgba(255,255,255,0.05); border:1px solid var(--border); margin-bottom:18px; }
+.modal-card .m-ico img { width:34px; height:34px; object-fit:contain; }
+.modal-card .m-tag { font-size:12px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--text-muted); }
+.modal-card h3 { font-family:'Space Grotesk'; font-size:clamp(28px,4vw,36px); letter-spacing:-0.02em; margin:6px 0 14px; }
+.modal-card .m-intro { color:var(--text-dim); font-size:16px; line-height:1.7; margin-bottom:22px; }
+.modal-card ul { list-style:none; display:grid; gap:12px; margin:0 0 24px; padding:0; }
+.modal-card li { position:relative; padding-left:26px; color:var(--text-dim); font-size:14.5px; line-height:1.6; }
+.modal-card li::before { content:""; position:absolute; left:3px; top:8px; width:8px; height:8px; border-radius:50%; background:var(--gradient); }
+.modal-card .m-siae { display:inline-block; font-size:12.5px; color:var(--red); border:1px solid rgba(226,0,26,0.4); border-radius:999px; padding:6px 15px; }
+.modal-close { position:absolute; top:15px; right:15px; width:38px; height:38px; border-radius:50%; border:1px solid var(--border); background:rgba(255,255,255,0.04); color:var(--text); font-size:21px; line-height:1; cursor:pointer; display:grid; place-items:center; transition:background .2s, transform .25s; }
+.modal-close:hover { background:rgba(255,255,255,0.1); transform:rotate(90deg); }
+@media (prefers-reduced-motion: reduce) { .modal-card, .modal-close { transition:opacity .2s; } }
+
+/* ===== LOGO 3D IN CIMA ALL'HERO ===== */
+.hero-logo { display:block; width:clamp(176px,21vw,246px); height:auto; margin:0 auto 32px;
+  filter:drop-shadow(0 12px 26px rgba(0,0,0,0.6)) drop-shadow(0 2px 0 rgba(255,255,255,0.12)) drop-shadow(0 0 46px rgba(226,0,26,0.28));
+  animation:heroLogoIn 1.05s cubic-bezier(.2,.8,.2,1) both; }
+@keyframes heroLogoIn { from{opacity:0; transform:translateY(-14px) scale(.95)} to{opacity:1; transform:none} }
+@media (prefers-reduced-motion: reduce) { .hero-logo { animation:none; } }
+@media (max-width:600px){ .hero-logo { margin-bottom:24px; } }
 </style>
 </head>
 <body>
@@ -441,11 +475,11 @@ footer { border-top:1px solid var(--border); padding:54px 0 40px; }
   <div class="hero-photo"></div>
   <canvas id="webgl"></canvas>
   <div class="container hero-content">
-    <div class="hero-eyebrow rv on"><span class="dot"></span>Dal 2002 nei migliori locali italiani</div>
+    <img class="hero-logo" src="assets/logo-hero.png" alt="SNATCH — Sistemi Servizi & Soluzioni" />
+    <div class="hero-eyebrow rv on"><span class="dot"></span>Dal 2002 a fianco dei gestori, non dei locali</div>
     <h1 class="rv on">La regia digitale<br />della <span class="grad">tua notte</span></h1>
-    <p class="lead rv on rv-d1">Cashless, biglietteria S.I.A.E., tavoli, accessi e fiscalità. Un'unica piattaforma che governa ogni euro e ogni ingresso del tuo locale, in tempo reale.</p>
+    <p class="lead rv on rv-d1">Un'unica piattaforma che governa il tuo locale, in tempo reale.</p>
     <div class="hero-cta rv on rv-d2">
-      <a href="#contatti" class="btn btn-primary">Richiedi una demo</a>
       <a href="#applicazioni" class="btn btn-ghost">Scopri le applicazioni</a>
     </div>
   </div>
@@ -459,7 +493,7 @@ footer { border-top:1px solid var(--border); padding:54px 0 40px; }
       <div class="stat rv"><div class="num grad">Dal 2002</div><div class="lbl">al fianco dei locali</div></div>
       <div class="stat rv rv-d1"><div class="num grad">Centinaia</div><div class="lbl">di installazioni in Italia</div></div>
       <div class="stat rv rv-d2"><div class="num grad">8</div><div class="lbl">applicazioni gestionali</div></div>
-      <div class="stat rv rv-d3"><div class="num grad">24/7</div><div class="lbl">assistenza in italiano</div></div>
+      <div class="stat rv rv-d3"><div class="num grad">Weekend</div><div class="lbl">assistenza in italiano</div></div>
     </div>
   </div>
 </div>
@@ -505,7 +539,7 @@ footer { border-top:1px solid var(--border); padding:54px 0 40px; }
       <div class="prob rv">
         <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="3"/><path d="M6 12h.01M18 12h.01"/></svg></div>
         <h3>Troppo contante in cassa</h3>
-        <p>Errori, ammanchi, rischi di sicurezza e zero tracciabilità. Ogni serata è una scommessa sui conti di fine notte.</p>
+        <p>Errori, ammanchi, rischi di sicurezza e zero tracciabilità. Ogni notte è una scommessa sui conti di fine serata.</p>
       </div>
       <div class="prob rv rv-d1">
         <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
@@ -612,11 +646,10 @@ footer { border-top:1px solid var(--border); padding:54px 0 40px; }
           <source src="assets/video/small.webm" type="video/webm" />
           <source src="assets/video/small.mp4" type="video/mp4" />
         </video>
-        <span class="rotor-hint">SMALL · la cassa a 360°</span>
+        <span class="rotor-hint">SMALL · la cassa reale</span>
       </div>
     </div>
     <div class="small-info">
-      <span class="kicker rv">Il terminale</span>
       <h2 class="rv" style="font-size:clamp(30px,4vw,48px)">Conosci <span class="grad">SMALL</span></h2>
       <p class="small-slogan rv rv-d1">Piccola come il suo nome. Grande dentro.</p>
       <div class="small-feats">
@@ -705,9 +738,9 @@ footer { border-top:1px solid var(--border); padding:54px 0 40px; }
         <p>Nati per creare e commercializzare direttamente sistemi gestionali per discoteche. Oggi centinaia di installazioni in locali di ogni tipo e dimensione in tutta Italia.</p>
       </div>
       <div class="trust rv rv-d2">
-        <div class="big grad">24/7</div>
+        <div class="big grad">Weekend</div>
         <h3>Persone, non un call center</h3>
-        <p>Il tuo locale lavora di notte e nei festivi. Anche noi. Assistenza in italiano da persone che conoscono il settore, con passione e disponibilità giorno e notte.</p>
+        <p>Il tuo locale lavora nei weekend e nei festivi. Anche noi. Assistenza in italiano da persone che conoscono il settore, al tuo fianco quando il locale è aperto.</p>
       </div>
     </div>
   </div>
@@ -938,6 +971,19 @@ animate();
 
 <!-- ============ SMALL: video reale della cassa (sostituisce il vecchio modello 3D) ============ -->
 
+<!-- MODALE DETTAGLIO MODULO -->
+<div class="modal-back" id="modModal" role="dialog" aria-modal="true" aria-labelledby="modTitle">
+  <div class="modal-card">
+    <button class="modal-close" id="modClose" aria-label="Chiudi">&times;</button>
+    <div class="m-ico"><img id="modIco" src="" alt="" /></div>
+    <span class="m-tag" id="modTag"></span>
+    <h3 id="modTitle"></h3>
+    <p class="m-intro" id="modIntro"></p>
+    <ul id="modList"></ul>
+    <span class="m-siae" id="modSiae"></span>
+  </div>
+</div>
+
 <!-- ============ UI ============ -->
 <script>
 // navbar
@@ -963,6 +1009,64 @@ document.querySelectorAll('.mod').forEach(card => {
 });
 
 // (la cassa SMALL ora è un video reale in loop: assets/video/small.webm|mp4)
+
+// Moduli applicazioni: click sul quadratino -> modale con descrizione analitica (testi ufficiali)
+const MOD_DETAIL = {
+  CLUB: { tag:'Cashless · Card', icon:'assets/icons/CLUB.png', siae:'Ingresso libero + consumazione',
+    intro:"L'applicazione SNATCH per eliminare la circolazione del contante nel locale: il gestionale più completo per il controllo dell'attività, dal piccolo club alla maxi-discoteca.",
+    items:["Regime S.I.A.E. «Ingresso libero con consumazione obbligatoria»","All'ingresso ogni cliente riceve una card: il personale vi carica in modo indelebile il valore di consumazioni e servizi","Controllo totale e costante sul lavoro del personale","Incassi e certificazioni fiscali ai punti cassa, con rilascio del «PASS» per l'uscita","Statistiche complete su consumazioni e servizi del locale"] },
+  HAPPY: { tag:'Ingresso · Benvenuti e buon divertimento', icon:'assets/icons/HAPPY.png', siae:'Regime S.I.A.E.',
+    intro:"Nessun biglietto da pagare prima di entrare: il cliente entra libero con una Fiches Enter e salda comodamente al banco.",
+    items:["Regime S.I.A.E. «Ingresso libero con consumazione obbligatoria»","Alla cassa il sistema rilascia Fiches Exit (certifica il pagamento), Titolo d'Accesso S.I.A.E. e Coupon consumazione","Coupon singoli per ogni altro drink o servizio, con relativo scontrino fiscale","Visione statistica completa su accessi, consumazioni, titoli e scontrini emessi"] },
+  PARTY: { tag:'Vendite · Coupon', icon:'assets/icons/PARTY.png', siae:'Scontrino fiscale integrato',
+    intro:"Per eventi e manifestazioni con vendita di prodotti o servizi: acquisti una volta e ritiri quando vuoi durante l'evento.",
+    items:["Coupon personalizzati stampati singolarmente al momento dell'acquisto","Controllo totale su quantità, tipologia e denaro movimentato","Si interfaccia con apparecchiature fiscali per scontrini e ricevute","Ideale per disco-bar, eventi e festival con punti di somministrazione separati"] },
+  EASY: { tag:'Tavoli · Privé', icon:'assets/icons/EASY.png', siae:'Statistiche live',
+    intro:"Gestione di tavoli e privé in modo semplice e rapido, con il lay-out grafico del tuo locale su ogni dispositivo.",
+    items:["Lay-out del locale con nome cliente o P.R. direttamente sul tavolo","Conti separati, unione tavoli e segnalazione dei tavoli inattivi","Gestione delle percentuali P.R. sui prodotti venduti in sala","Listini differenziati per tipologia/posizione del tavolo, fascia oraria o servizio","Adatto anche alla ristorazione classica del pre-serata"] },
+  CASH: { tag:'Biglietteria · Accessi', icon:'assets/icons/CASH.png', siae:'WINTIC JDK 3.1.1 omologato Ag. Entrate',
+    intro:"Controllo accessi con pagamento del biglietto S.I.A.E. prima dell'ingresso, per qualsiasi tipo di locale pubblico.",
+    items:["WINTIC JDK 3.1.1 – SNATCH DK, omologato dall'Agenzia delle Entrate (provv. 2016/35364 del 07/03/2016)","Emissione Titoli d'Accesso S.I.A.E. e calcolo dei diritti (riproduzione meccanica o musica dal vivo)","Numero illimitato di sale e spettacoli gestiti contemporaneamente","Distinte d'incasso automatiche e invio telematico alla S.I.A.E.","Coupon prodotti e Free Drink personalizzati; interfaccia con apparecchi fiscali"] },
+  MASTER: { tag:'Reportistica · Tutto sotto controllo', icon:'assets/icons/MASTER.png', siae:'Real-time · Mobile',
+    intro:"Una sola banca dati raccoglie ogni punto cassa del locale: tutto comodamente sotto controllo.",
+    items:["Andamento economico e fiscale della gestione in tempo reale","Serate della settimana configurabili e inviate a tutte le casse SNATCH","Statistiche e informazioni immediatamente disponibili","Consultabile in mobilità da qualsiasi dispositivo iOS o Android"] },
+  WOWTICKET: { tag:'Biglietteria conto terzi', icon:'assets/icons/WOWTICKET.png', siae:'Senza impianto di proprietà',
+    intro:"Stampa di Titoli d'Accesso S.I.A.E. conto terzi: in regola con la normativa anche senza un impianto di biglietteria omologato.",
+    items:["Stessa fruibilità di un vero impianto installato nel locale","Nessuna responsabilità amministrativa verso la S.I.A.E.","Serve solo il permesso S.I.A.E. dell'evento e una linea ADSL/LAN funzionante","Soluzione economica per locali stagionali e manifestazioni di pochi giorni"] },
+  MYTICKET: { tag:'Vendita online', icon:'assets/icons/MYTICKET.png', siae:'Pagamento sul tuo conto',
+    intro:"Vendita online dei biglietti del tuo locale, direttamente da Facebook o dal sito.",
+    items:["Un link sulla pagina Facebook o sul sito reindirizza il cliente alla piattaforma MyTicket","Il cliente vede gli eventi in programmazione e acquista il biglietto ufficiale S.I.A.E.","Biglietto elettronico GREEN con QR Code univoco sullo smartphone, senza stampa cartacea","Incasso anticipato versato direttamente sul tuo conto bancario"] }
+};
+(function(){
+  const modal = document.getElementById('modModal');
+  if (!modal) return;
+  const elIco=document.getElementById('modIco'), elTag=document.getElementById('modTag'),
+        elTitle=document.getElementById('modTitle'), elIntro=document.getElementById('modIntro'),
+        elList=document.getElementById('modList'), elSiae=document.getElementById('modSiae');
+  let lastFocus=null;
+  function openModal(key, name){
+    const d=MOD_DETAIL[key]; if(!d) return;
+    elIco.src=d.icon; elIco.alt=name; elTag.textContent=d.tag; elTitle.textContent=name;
+    elIntro.textContent=d.intro; elSiae.textContent=d.siae;
+    elList.innerHTML=''; d.items.forEach(t=>{ const li=document.createElement('li'); li.textContent=t; elList.appendChild(li); });
+    lastFocus=document.activeElement;
+    modal.classList.add('open'); document.body.style.overflow='hidden';
+    document.getElementById('modClose').focus();
+  }
+  function closeModal(){ modal.classList.remove('open'); document.body.style.overflow=''; if(lastFocus) lastFocus.focus(); }
+  document.querySelectorAll('.mod').forEach(card=>{
+    const h3=card.querySelector('h3'); if(!h3) return;
+    const name=h3.textContent.trim(), key=name.toUpperCase();
+    if(!MOD_DETAIL[key]) return;
+    card.tabIndex=0; card.setAttribute('role','button'); card.setAttribute('aria-label', name+' — scopri di più');
+    const hint=document.createElement('span'); hint.className='mod-more'; hint.textContent='Scopri di più →'; card.appendChild(hint);
+    card.addEventListener('click', ()=>openModal(key, name));
+    card.addEventListener('keydown', e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); openModal(key, name); }});
+  });
+  document.getElementById('modClose').addEventListener('click', closeModal);
+  modal.addEventListener('click', e=>{ if(e.target===modal) closeModal(); });
+  document.addEventListener('keydown', e=>{ if(e.key==='Escape' && modal.classList.contains('open')) closeModal(); });
+})();
 </script>
 </body>
 </html>
