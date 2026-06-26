@@ -271,10 +271,9 @@ section { padding:130px 0; position:relative; }
 }
 @keyframes rotorpulse { 0%,100%{opacity:.5; transform:scale(1)} 50%{opacity:.72; transform:scale(1.08)} }
 .rotor-video {
-  position:relative; z-index:1; width:100%; aspect-ratio:1/1; height:auto; display:block; margin:0 auto;
-  object-fit:cover;
-  -webkit-mask:radial-gradient(ellipse 76% 78% at 50% 50%, #000 54%, transparent 82%);
-          mask:radial-gradient(ellipse 76% 78% at 50% 50%, #000 54%, transparent 82%);
+  position:relative; z-index:1; width:100%; aspect-ratio:4/3; height:auto; display:block; margin:0 auto;
+  object-fit:cover; background:#f4f4f6; border-radius:20px;
+  box-shadow:0 30px 80px rgba(0,0,0,0.55), 0 0 64px rgba(226,0,26,0.20), inset 0 0 0 1px rgba(0,0,0,0.06);
   animation:rotorfloat 6s ease-in-out infinite;
 }
 @keyframes rotorfloat { 0%,100%{transform:translateY(0) scale(1)} 50%{transform:translateY(-10px) scale(1.012)} }
