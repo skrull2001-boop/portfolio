@@ -146,15 +146,36 @@ h1,h2,h3 { font-family:'Space Grotesk',sans-serif; font-weight:600; letter-spaci
 
 /* ===== HERO ===== */
 .hero { position:relative; min-height:100vh; display:flex; align-items:center; overflow:hidden; background:#0b0a0c; }
-.hero-photo { position:absolute; inset:0; z-index:0; background:url('assets/photos/hero-crowd.jpg') center/cover no-repeat; opacity:0.44; filter:saturate(1.08) contrast(1.03); transform:scale(1.05); }
-#webgl { position:absolute; inset:0; width:100%; height:100%; display:block; z-index:1; }
+.hero-photo { display:none; }
+.hero-bgvideo { position:absolute; inset:0; z-index:0; width:100%; height:100%; object-fit:cover;
+  opacity:0.85; filter:saturate(1.15) contrast(1.08) brightness(0.96);
+  animation:bgZoom 24s ease-in-out infinite alternate; will-change:transform; }
+@keyframes bgZoom { from{transform:scale(1.06)} to{transform:scale(1.16) translateY(-1.5%)} }
+.hero-aura { position:absolute; inset:-25%; z-index:1; pointer-events:none; mix-blend-mode:screen; opacity:.55;
+  background:
+    radial-gradient(32% 28% at 22% 30%, rgba(226,0,26,0.45), transparent 60%),
+    radial-gradient(28% 24% at 80% 24%, rgba(255,90,60,0.32), transparent 60%),
+    radial-gradient(40% 34% at 66% 80%, rgba(176,0,18,0.42), transparent 62%),
+    radial-gradient(24% 22% at 34% 86%, rgba(226,0,26,0.30), transparent 60%);
+  animation:auraDrift 24s ease-in-out infinite alternate; }
+@keyframes auraDrift { 0%{transform:translate3d(-2%,-1%,0) scale(1)} 50%{transform:translate3d(2%,2%,0) scale(1.09)} 100%{transform:translate3d(-1%,1%,0) scale(1.04)} }
+.hero-beams { position:absolute; inset:0; z-index:1; pointer-events:none; overflow:hidden; mix-blend-mode:screen; opacity:.3; }
+.hero-beams::before, .hero-beams::after { content:""; position:absolute; top:-45%; left:50%; width:52vw; height:170%;
+  background:linear-gradient(to bottom, rgba(255,120,90,0.18), transparent 68%); filter:blur(10px); transform-origin:top center; }
+.hero-beams::before { transform:translateX(-95%) rotate(15deg); animation:beam 9s ease-in-out infinite alternate; }
+.hero-beams::after  { transform:translateX(-5%) rotate(-13deg); animation:beam 12s ease-in-out infinite alternate-reverse; }
+@keyframes beam { from{opacity:.3} to{opacity:.85} }
+#webgl { position:absolute; inset:0; width:100%; height:100%; display:block; z-index:3; }
 .hero::after {
   content:""; position:absolute; inset:0; z-index:2; pointer-events:none;
   background:
-    radial-gradient(ellipse 62% 52% at 50% 118%, rgba(11,10,12,0.94), transparent 60%),
-    radial-gradient(ellipse 85% 60% at 50% 44%, transparent, rgba(11,10,12,0.45)),
-    linear-gradient(to bottom, rgba(11,10,12,0.55), rgba(11,10,12,0.18) 26%, rgba(11,10,12,0.32) 62%, var(--bg) 98%);
+    radial-gradient(ellipse 58% 48% at 50% 122%, rgba(11,10,12,0.97), transparent 60%),
+    radial-gradient(ellipse 120% 80% at 50% 42%, transparent 34%, rgba(11,10,12,0.6)),
+    linear-gradient(to bottom, rgba(11,10,12,0.5), rgba(11,10,12,0.14) 24%, rgba(11,10,12,0.3) 60%, var(--bg) 98%);
 }
+.hero-content { z-index:4 !important; }
+.hero-scroll { z-index:4 !important; }
+@media (prefers-reduced-motion: reduce){ .hero-bgvideo{animation:none} }
 .hero-content { position:relative; z-index:3; width:100%; padding:150px 0 120px; text-align:center; }
 .hero-eyebrow {
   display:inline-flex; align-items:center; gap:10px;
@@ -483,6 +504,12 @@ footer { border-top:1px solid var(--border); padding:54px 0 40px; }
 <!-- HERO -->
 <header class="hero">
   <div class="hero-photo"></div>
+  <video class="hero-bgvideo" autoplay muted loop playsinline preload="auto" poster="assets/video/hero-bg-poster.jpg" aria-hidden="true">
+    <source src="assets/video/hero-bg.webm" type="video/webm" />
+    <source src="assets/video/hero-bg.mp4" type="video/mp4" />
+  </video>
+  <div class="hero-aura"></div>
+  <div class="hero-beams"></div>
   <canvas id="webgl"></canvas>
   <div class="container hero-content">
     <img class="hero-logo" src="assets/logo-hero.png" alt="SNATCH — Sistemi Servizi & Soluzioni" />
@@ -899,13 +926,19 @@ const geo = new THREE.BufferGeometry();
 geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
 geo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
+function makeGlow(){
+  const c=document.createElement('canvas'); c.width=c.height=64;
+  const g=c.getContext('2d'); const gr=g.createRadialGradient(32,32,0,32,32,32);
+  gr.addColorStop(0,'rgba(255,255,255,1)'); gr.addColorStop(0.10,'rgba(255,230,210,0.98)');
+  gr.addColorStop(0.34,'rgba(255,120,90,0.30)'); gr.addColorStop(1,'rgba(255,90,60,0)');
+  g.fillStyle=gr; g.fillRect(0,0,64,64);
+  const t=new THREE.CanvasTexture(c); t.colorSpace=THREE.SRGBColorSpace; return t;
+}
+const glowTex = makeGlow();
 const mat = new THREE.PointsMaterial({
-  size: 0.05,
-  vertexColors: true,
-  transparent: true,
-  opacity: 0.9,
-  blending: THREE.AdditiveBlending,
-  depthWrite: false
+  size: 0.085, map: glowTex,
+  vertexColors: true, transparent: true, opacity: 0.95,
+  blending: THREE.AdditiveBlending, depthWrite: false
 });
 const wave = new THREE.Points(geo, mat);
 wave.position.y = -1.2;
@@ -922,10 +955,28 @@ for (let i = 0; i < dustCount; i++) {
 const dustGeo = new THREE.BufferGeometry();
 dustGeo.setAttribute('position', new THREE.BufferAttribute(dustPos, 3));
 const dust = new THREE.Points(dustGeo, new THREE.PointsMaterial({
-  size: 0.03, color: 0xff6a4d, transparent: true, opacity: 0.5,
+  size: 0.08, map: glowTex, color: 0xff8a5d, transparent: true, opacity: 0.6,
   blending: THREE.AdditiveBlending, depthWrite: false
 }));
 scene.add(dust);
+
+// ---- Braci che salgono (embers) ----
+const embCount = 150;
+const embPos = new Float32Array(embCount * 3);
+const embVel = new Float32Array(embCount);
+for (let i = 0; i < embCount; i++) {
+  embPos[i*3]     = (Math.random() - 0.5) * 22;
+  embPos[i*3 + 1] = Math.random() * 13 - 2;
+  embPos[i*3 + 2] = (Math.random() - 0.5) * 16;
+  embVel[i] = 0.4 + Math.random() * 1.0;
+}
+const embGeo = new THREE.BufferGeometry();
+embGeo.setAttribute('position', new THREE.BufferAttribute(embPos, 3));
+const embers = new THREE.Points(embGeo, new THREE.PointsMaterial({
+  size: 0.14, map: glowTex, color: 0xff5a30, transparent: true, opacity: 0.9,
+  blending: THREE.AdditiveBlending, depthWrite: false, sizeAttenuation: true
+}));
+scene.add(embers);
 
 // ---- Resize ----
 function resize() {
@@ -975,6 +1026,15 @@ function animate() {
   geo.attributes.position.needsUpdate = true;
 
   dust.rotation.y = t * 0.012;
+
+  // braci che salgono
+  const ep = embGeo.attributes.position.array;
+  for (let i = 0; i < embCount; i++) {
+    ep[i*3 + 1] += embVel[i] * 0.016;
+    ep[i*3]     += Math.sin(t * 0.5 + i) * 0.0025;
+    if (ep[i*3 + 1] > 11) { ep[i*3 + 1] = -2; ep[i*3] = (Math.random() - 0.5) * 22; ep[i*3 + 2] = (Math.random() - 0.5) * 16; }
+  }
+  embGeo.attributes.position.needsUpdate = true;
 
   mx += (tmx - mx) * 0.04;
   my += (tmy - my) * 0.04;
