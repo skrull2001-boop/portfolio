@@ -450,6 +450,21 @@ footer { border-top:1px solid var(--border); padding:54px 0 40px; }
 @keyframes heroLogoIn { from{opacity:0; transform:translateY(-14px) scale(.95)} to{opacity:1; transform:none} }
 @media (prefers-reduced-motion: reduce) { .hero-logo { animation:none; } }
 @media (max-width:600px){ .hero-logo { margin-bottom:24px; } }
+
+/* ===== BARRA LOCALI CLIENTI ===== */
+.clients { padding:40px 0 32px; border-bottom:1px solid var(--border); overflow:hidden; background:rgba(255,255,255,0.018); position:relative; }
+.clients-label { text-align:center; font-size:12px; letter-spacing:0.2em; text-transform:uppercase; color:var(--text-muted); margin-bottom:28px; }
+.clients-viewport { position:relative; overflow:hidden; -webkit-mask:linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask:linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+.clients-track { display:flex; gap:54px; width:max-content; animation:clientsScroll 64s linear infinite; }
+.clients:hover .clients-track { animation-play-state:paused; }
+.client { flex:0 0 auto; display:flex; flex-direction:column; align-items:center; line-height:1.15; white-space:nowrap;
+  font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:21px; letter-spacing:0.03em; text-transform:uppercase;
+  color:var(--text-dim); opacity:0.62; transition:opacity .25s, color .25s, transform .25s; }
+.client em { font-style:normal; font-weight:500; font-size:10.5px; letter-spacing:0.14em; color:var(--text-muted); margin-top:5px; opacity:.85; }
+.client:hover { opacity:1; color:#fff; transform:translateY(-2px); }
+.client:hover em { color:var(--red-bright); }
+@keyframes clientsScroll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+@media (prefers-reduced-motion: reduce){ .clients-track{ animation:none; flex-wrap:wrap; justify-content:center; gap:28px 40px; } .clients-viewport{ -webkit-mask:none; mask:none; } }
 </style>
 </head>
 <body>
@@ -484,6 +499,14 @@ footer { border-top:1px solid var(--border); padding:54px 0 40px; }
   </div>
   <div class="hero-scroll"><span>Scorri</span><span class="line"></span></div>
 </header>
+
+<!-- LOCALI CLIENTI (barra scorrevole) -->
+<section class="clients">
+  <div class="container"><p class="clients-label">Scelti da centinaia di locali in tutta Italia</p></div>
+  <div class="clients-viewport">
+    <div class="clients-track"><span class="client">ONE CLUB<em>Padova</em></span><span class="client">NEXT CLUB<em>Padova</em></span><span class="client">RADIO LONDRA<em>Este</em></span><span class="client">BOYS VR<em>San Bonifacio</em></span><span class="client">BLUEROOM<em>Verona</em></span><span class="client">THE DOLLS<em>Verona</em></span><span class="client">ART CLUB<em>Desenzano</em></span><span class="client">ARENA<em>Castelfranco</em></span><span class="client">P1<em>Abano Terme</em></span><span class="client">TWEET<em>Bassano del Grappa</em></span><span class="client">COOKIES<em>Borso del Grappa</em></span><span class="client">SHANGAI<em>Longa (VI)</em></span><span class="client">BREAKS BEER<em>Roverbella</em></span><span class="client">TROPICAL<em>Rovigo</em></span><span class="client">PARTY CLUB<em>Porto Viro</em></span><span class="client">BLACK PHANTER<em>Vo' Euganeo</em></span><span class="client">TARGET<em>Dolo</em></span><span class="client">DOPPIO MALTO<em>Thiene</em></span><span class="client">BOYS<em>Vicenza</em></span><span class="client">KISS<em>Vicenza</em></span><span class="client">CLUB 24<em>Vicenza</em></span><span class="client">NU CLUB<em>Vicenza</em></span><span class="client">PLAZA<em>Vicenza</em></span><span class="client">PLANET FUN<em>Pordenone</em></span><span class="client">OPIUM CLUB<em>Pordenone</em></span><span class="client">NEW MILLE LIRE<em>Preganziol</em></span><span class="client">NOLITA<em>Oderzo</em></span><span class="client">DISCO EU<em>Oderzo</em></span><span class="client">VENUS<em>Lignano</em></span><span class="client">MR CHARLIE<em>Lignano</em></span><span class="client">DRAGO<em>Lignano</em></span><span class="client">AKYNI<em>Vicenza</em></span><span class="client" aria-hidden="true">ONE CLUB<em>Padova</em></span><span class="client" aria-hidden="true">NEXT CLUB<em>Padova</em></span><span class="client" aria-hidden="true">RADIO LONDRA<em>Este</em></span><span class="client" aria-hidden="true">BOYS VR<em>San Bonifacio</em></span><span class="client" aria-hidden="true">BLUEROOM<em>Verona</em></span><span class="client" aria-hidden="true">THE DOLLS<em>Verona</em></span><span class="client" aria-hidden="true">ART CLUB<em>Desenzano</em></span><span class="client" aria-hidden="true">ARENA<em>Castelfranco</em></span><span class="client" aria-hidden="true">P1<em>Abano Terme</em></span><span class="client" aria-hidden="true">TWEET<em>Bassano del Grappa</em></span><span class="client" aria-hidden="true">COOKIES<em>Borso del Grappa</em></span><span class="client" aria-hidden="true">SHANGAI<em>Longa (VI)</em></span><span class="client" aria-hidden="true">BREAKS BEER<em>Roverbella</em></span><span class="client" aria-hidden="true">TROPICAL<em>Rovigo</em></span><span class="client" aria-hidden="true">PARTY CLUB<em>Porto Viro</em></span><span class="client" aria-hidden="true">BLACK PHANTER<em>Vo' Euganeo</em></span><span class="client" aria-hidden="true">TARGET<em>Dolo</em></span><span class="client" aria-hidden="true">DOPPIO MALTO<em>Thiene</em></span><span class="client" aria-hidden="true">BOYS<em>Vicenza</em></span><span class="client" aria-hidden="true">KISS<em>Vicenza</em></span><span class="client" aria-hidden="true">CLUB 24<em>Vicenza</em></span><span class="client" aria-hidden="true">NU CLUB<em>Vicenza</em></span><span class="client" aria-hidden="true">PLAZA<em>Vicenza</em></span><span class="client" aria-hidden="true">PLANET FUN<em>Pordenone</em></span><span class="client" aria-hidden="true">OPIUM CLUB<em>Pordenone</em></span><span class="client" aria-hidden="true">NEW MILLE LIRE<em>Preganziol</em></span><span class="client" aria-hidden="true">NOLITA<em>Oderzo</em></span><span class="client" aria-hidden="true">DISCO EU<em>Oderzo</em></span><span class="client" aria-hidden="true">VENUS<em>Lignano</em></span><span class="client" aria-hidden="true">MR CHARLIE<em>Lignano</em></span><span class="client" aria-hidden="true">DRAGO<em>Lignano</em></span><span class="client" aria-hidden="true">AKYNI<em>Vicenza</em></span></div>
+  </div>
+</section>
 
 <!-- STATS -->
 <div class="stats">
