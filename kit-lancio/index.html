@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kit di lancio · prototipo di Andrea Vacchini</title>
+<meta name="description" content="Dalla scheda di un libro a una campagna di lancio completa. Prototipo di Andrea Vacchini.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Geist:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f3eee5; --paper-2:#ebe4d8; --card:#fbf8f2; --ink:#161512; --muted:#6f6a61; --line:#d9d1c3;
+  --red:#d9412b; --red-soft:rgba(217,65,43,.1); --ok:#2f7d4f;
+  --serif:"Newsreader",Georgia,serif; --sans:"Geist",system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font:400 16px/1.55 var(--sans);-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.wrap{max-width:1180px;margin:0 auto;padding-left:28px;padding-right:28px}
+
+/* top */
+.top{display:flex;justify-content:space-between;align-items:center;padding-top:22px;padding-bottom:22px;border-bottom:1px solid var(--line)}
+.brand{font:500 15px var(--sans);letter-spacing:.02em}
+.brand b{color:var(--red);font-weight:600}
+.by{font-size:14px;color:var(--muted)}
+.by a{color:var(--ink);text-underline-offset:3px}
+
+/* hero */
+.hero{padding-top:64px;padding-bottom:40px;display:grid;grid-template-columns:1.35fr 1fr;gap:48px;align-items:end}
+.eyebrow{font-size:13px;text-transform:uppercase;letter-spacing:.12em;color:var(--red);font-weight:600;margin-bottom:18px}
+h1{font:400 clamp(40px,5.6vw,72px)/1.02 var(--serif);letter-spacing:-.02em}
+h1 em{font-style:italic;color:var(--red)}
+.hero p{color:var(--muted);font-size:17px;max-width:460px}
+.stats{display:flex;gap:28px;margin-top:22px}
+.stats div{font-size:13px;color:var(--muted)}
+.stats b{display:block;font:500 26px/1.1 var(--serif);color:var(--ink)}
+
+/* step 1 */
+.stage{padding-bottom:36px}
+.label{display:flex;align-items:center;gap:10px;font-size:13px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:600;margin-bottom:16px}
+.label span{display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--ink);color:var(--paper);font-size:12px;letter-spacing:0}
+.books{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.book{display:flex;gap:16px;align-items:stretch;text-align:left;border:1px solid var(--line);background:var(--card);border-radius:10px;padding:14px;cursor:pointer;font:inherit;color:inherit;transition:border-color .2s,transform .2s,box-shadow .2s}
+.book:hover{transform:translateY(-2px);box-shadow:0 10px 30px -18px rgba(0,0,0,.35)}
+.book[aria-pressed="true"]{border-color:var(--ink);box-shadow:0 0 0 1px var(--ink)}
+.cover{flex:0 0 74px;height:108px;border-radius:3px 6px 6px 3px;padding:9px 8px;display:flex;flex-direction:column;justify-content:space-between;color:#fff;position:relative;overflow:hidden;box-shadow:inset 3px 0 0 rgba(0,0,0,.18)}
+.cover .ct{font:500 12.5px/1.1 var(--serif)}
+.cover .ca{font-size:8.5px;text-transform:uppercase;letter-spacing:.08em;opacity:.85}
+.book .meta{display:flex;flex-direction:column;gap:4px;min-width:0}
+.book .kind{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--red);font-weight:600}
+.book .t{font:500 19px/1.15 var(--serif)}
+.book .a{font-size:13px;color:var(--muted)}
+
+.sheet{margin-top:18px;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;background:var(--ink);color:var(--paper);border-radius:12px;padding:22px 24px}
+.sheet h3{font:500 13px var(--sans);text-transform:uppercase;letter-spacing:.1em;color:#a9a397;margin-bottom:8px}
+.sheet p{font:400 16px/1.5 var(--serif);color:#efe9dd}
+.sheet .fields{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.sheet .fields span{font-size:12.5px;border:1px solid #3a3833;border-radius:99px;padding:3px 10px;color:#cfc8ba}
+.go{background:var(--red);color:#fff;border:0;border-radius:99px;padding:16px 26px;font:600 16px var(--sans);cursor:pointer;white-space:nowrap;transition:transform .15s,filter .15s}
+.go:hover{transform:translateY(-1px);filter:brightness(1.05)}
+.go:disabled{opacity:.6;cursor:default;transform:none}
+
+/* pipeline */
+.pipe{display:grid;grid-template-columns:repeat(5,1fr);gap:0;border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.agent{padding:16px 16px 18px;border-left:1px solid var(--line);position:relative}
+.agent:first-child{border-left:0}
+.agent .n{font-size:12px;color:var(--muted);display:flex;justify-content:space-between}
+.agent .nm{font:500 17px var(--serif);margin:6px 0 4px}
+.agent .ds{font-size:13px;color:var(--muted);line-height:1.4;min-height:36px}
+.agent .st{margin-top:10px;font-size:12px;font-weight:600;color:var(--muted)}
+.agent .bar{position:absolute;left:0;bottom:0;height:3px;width:0;background:var(--red);transition:width .9s linear}
+.agent.run .st{color:var(--red)}
+.agent.run .bar{width:100%}
+.agent.done .st{color:var(--ok)}
+.agent.done .bar{width:100%;background:var(--ok)}
+.pipe-note{font-size:12.5px;color:var(--muted);margin-top:10px}
+
+/* output */
+.out{display:grid;grid-template-columns:230px 1fr;gap:28px;margin-top:8px;opacity:.35;pointer-events:none;transition:opacity .5s}
+.out.ready{opacity:1;pointer-events:auto}
+.tabs{display:flex;flex-direction:column;gap:2px;position:sticky;top:18px;align-self:start}
+.tab{text-align:left;border:0;background:transparent;font:500 15px var(--sans);color:var(--muted);padding:10px 14px;border-radius:8px;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+.tab small{font-size:11.5px;color:var(--muted);font-weight:400}
+.tab:hover{background:var(--paper-2);color:var(--ink)}
+.tab[aria-selected="true"]{background:var(--ink);color:var(--paper)}
+.tab[aria-selected="true"] small{color:#a9a397}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:30px 32px;min-height:460px}
+.panel h2{font:400 32px/1.1 var(--serif);letter-spacing:-.01em;margin-bottom:6px}
+.panel .why{color:var(--muted);font-size:14.5px;margin-bottom:22px;max-width:640px}
+.block{border-top:1px solid var(--line);padding:18px 0}
+.block:first-of-type{border-top:0;padding-top:4px}
+.block-h{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:8px}
+.block-h h4{font:600 13px var(--sans);text-transform:uppercase;letter-spacing:.08em;color:var(--red)}
+.copy{border:1px solid var(--line);background:transparent;border-radius:99px;padding:4px 12px;font:500 12.5px var(--sans);cursor:pointer;color:var(--muted)}
+.copy:hover{border-color:var(--ink);color:var(--ink)}
+.txt{white-space:pre-line;font:400 17px/1.55 var(--serif)}
+.txt.sans{font:400 15.5px/1.55 var(--sans)}
+.slides{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.slide{aspect-ratio:4/5;border-radius:8px;padding:14px;display:flex;flex-direction:column;justify-content:space-between;font:500 15px/1.25 var(--serif);color:#fff}
+.slide small{font:500 10px var(--sans);letter-spacing:.1em;text-transform:uppercase;opacity:.8}
+.personas{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.persona{border:1px solid var(--line);border-radius:10px;padding:14px;background:var(--paper)}
+.persona b{display:block;font:500 17px var(--serif);margin-bottom:4px}
+.persona span{font-size:14px;color:var(--muted)}
+.timeline{list-style:none;border-left:2px solid var(--line);margin-left:6px}
+.timeline li{position:relative;padding:0 0 16px 22px}
+.timeline li::before{content:"";position:absolute;left:-7px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--card);border:2px solid var(--red)}
+.timeline b{font:600 13px var(--sans);color:var(--red);text-transform:uppercase;letter-spacing:.06em;margin-right:8px}
+.checks{list-style:none;display:grid;gap:10px}
+.checks li{display:flex;gap:12px;align-items:flex-start;font-size:15.5px}
+.checks li::before{content:"✓";flex:0 0 22px;height:22px;border-radius:50%;display:grid;place-items:center;background:rgba(47,125,79,.12);color:var(--ok);font-weight:700;font-size:12px}
+.checks li.warn::before{content:"!";background:var(--red-soft);color:var(--red)}
+.ab{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.ab div{border:1px solid var(--line);border-radius:10px;padding:12px 14px;background:var(--paper);font:500 16px var(--serif)}
+.ab small{display:block;font:600 11px var(--sans);letter-spacing:.1em;color:var(--muted);margin-bottom:4px}
+.caret::after{content:"▍";color:var(--red);animation:blink .8s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+
+/* how */
+.how{padding-top:80px;padding-bottom:40px;display:grid;grid-template-columns:1fr 1.3fr;gap:48px;border-top:1px solid var(--line);margin-top:70px}
+.how h2{font:400 38px/1.08 var(--serif);letter-spacing:-.01em}
+.how p{color:#3b3832;margin-bottom:14px;font-size:16.5px}
+.how .note{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--red);border-radius:8px;padding:14px 16px;font-size:14.5px;color:var(--muted)}
+footer{border-top:1px solid var(--line);padding-top:22px;padding-bottom:40px;display:flex;justify-content:space-between;gap:16px;font-size:14px;color:var(--muted)}
+footer a{color:var(--ink)}
+
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--paper);padding:10px 18px;border-radius:99px;font-size:14px;opacity:0;transition:.25s;pointer-events:none}
+.toast.on{opacity:1;transform:translateX(-50%)}
+
+@media (max-width:900px){
+  .hero,.how{grid-template-columns:1fr;gap:24px}
+  .books{grid-template-columns:1fr}
+  .pipe{grid-template-columns:1fr 1fr}
+  .agent{border-left:0;border-top:1px solid var(--line)}
+  .out{grid-template-columns:1fr}
+  .tabs{position:static;flex-direction:row;overflow-x:auto;padding-bottom:4px}
+  .tab{white-space:nowrap}
+  .tab small{display:none}
+  .slides{grid-template-columns:repeat(2,1fr)}
+  .personas,.ab{grid-template-columns:1fr}
+  .sheet{grid-template-columns:1fr}
+}
+@media (max-width:560px){
+  .wrap{padding-left:16px;padding-right:16px}
+  .panel{padding:22px 18px}
+  .by{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+
+<header class="wrap top">
+  <div class="brand">Kit di lancio <b>·</b> prototipo per PLAI</div>
+  <div class="by">di <a href="https://www.linkedin.com/in/andrea-vacchini-it" target="_blank" rel="noopener">Andrea Vacchini</a></div>
+</header>
+
+<section class="wrap hero">
+  <div>
+    <p class="eyebrow">Editoria · IA generativa · agenti</p>
+    <h1>Dalla scheda di un libro a una <em>campagna di lancio</em> completa.</h1>
+  </div>
+  <div>
+    <p>Cinque agenti, ognuno con un compito preciso, trasformano una scheda editoriale in tutto quello che serve al marketing: posizionamento, social, newsletter, scheda store, intervista, piano di uscita. Con un controllo finale prima che qualcuno pubblichi.</p>
+    <div class="stats">
+      <div><b>8</b>materiali per libro</div>
+      <div><b>5</b>agenti in sequenza</div>
+      <div><b>1</b>persona che approva</div>
+    </div>
+  </div>
+</section>
+
+<section class="wrap stage">
+  <div class="label"><span>1</span>Scegli un libro</div>
+  <div class="books" id="books"></div>
+  <div class="sheet">
+    <div>
+      <h3>Scheda in ingresso</h3>
+      <p id="sheetText"></p>
+      <div class="fields" id="sheetFields"></div>
+    </div>
+    <button class="go" id="go">Genera il kit →</button>
+  </div>
+</section>
+
+<section class="wrap stage">
+  <div class="label"><span>2</span>Gli agenti al lavoro</div>
+  <div class="pipe" id="pipe"></div>
+  <p class="pipe-note">Riproduzione dimostrativa: i contenuti di questa pagina sono stati generati con Claude a partire dalle schede. Dal vivo, il kit si genera su qualsiasi libro.</p>
+</section>
+
+<section class="wrap stage">
+  <div class="label"><span>3</span>Il kit, pronto da rivedere</div>
+  <div class="out" id="out">
+    <nav class="tabs" id="tabs" role="tablist"></nav>
+    <article class="panel" id="panel" role="tabpanel"></article>
+  </div>
+</section>
+
+<section class="wrap how">
+  <div>
+    <p class="eyebrow">Perché l'ho costruito</p>
+    <h2>Un giorno e mezzo, dall'idea al prototipo.</h2>
+  </div>
+  <div>
+    <p>Nell'annuncio per il Product Builder AI di PLAI c'è una frase che mi ha colpito: la filiera dall'idea al prototipo è passata da un mese e mezzo a un giorno e mezzo. Invece di raccontare come lavoro, ho provato a farlo: un bisogno concreto di una casa editrice, un prototipo funzionante, nello stesso tempo.</p>
+    <p>La logica è quella che uso con i clienti: ogni agente ha un solo compito e scrive il suo risultato per il successivo; l'ultimo controlla spoiler, affermazioni da verificare e tono. Niente va online senza una persona che approva.</p>
+    <p class="note">Costruito da Andrea Vacchini guidando Claude Code. Non sono un programmatore tradizionale: il codice lo scrive l'IA, io decido cosa costruire, collaudo e rispondo del risultato. Prototipo indipendente, non affiliato al Gruppo Mondadori.</p>
+  </div>
+</section>
+
+<footer class="wrap">
+  <span>Andrea Vacchini · Milano · <a href="mailto:vacchiniandrea2001@gmail.com">vacchiniandrea2001@gmail.com</a> · +39 331 251 0052</span>
+  <a href="https://www.linkedin.com/in/andrea-vacchini-it" target="_blank" rel="noopener">LinkedIn ↗</a>
+</footer>
+
+<div class="toast" id="toast">Copiato</div>
+
+<script>
+const BOOKS = [
+{
+  id:"follett", kind:"Rilancio catalogo", title:"I pilastri della terra", author:"Ken Follett",
+  cover:["#5b2a1f","#8a4a2c"],
+  sheet:"Romanzo storico, 1989. Inghilterra, XII secolo: la costruzione di una cattedrale a Kingsbridge intreccia le vite di un costruttore, di un priore, di una nobile decaduta e di un giovane scalpellino, tra guerre civili e ambizioni di potere.",
+  fields:["Obiettivo: riportarlo in classifica","Pubblico: lettori 25-45 e BookTok","Canali: Instagram, TikTok, newsletter, store","Tono: epico ma accessibile"],
+  positioning:{
+    pitch:"Mille pagine che si leggono come una serie tv: una cattedrale da costruire, quarant'anni di intrighi e personaggi che non si dimenticano.",
+    angle:"Presentarlo non come \"classico\" ma come la serie da divorare in autunno: la lunghezza diventa una promessa, non un ostacolo.",
+    personas:[
+      ["Chi guarda serie storiche","Ha amato le saghe in costume in tv e cerca una storia lunga in cui perdersi."],
+      ["BookTok \"chunky books\"","Colleziona libri enormi e ne mostra la mole: il volume è parte del piacere."],
+      ["Lettore di ritorno","Lo ha lasciato a metà anni fa: va convinto che questa volta lo finisce."]
+    ]
+  },
+  instagram:{
+    slides:["Mille pagine.\nZero noia.","XII secolo.\nUna cattedrale\nda costruire.","Un costruttore\nche sogna in pietra.","Un priore,\nun'erede,\nun apprendista.","Scorri meno.\nLeggi di più."],
+    caption:"Ci sono libri che si leggono e libri in cui si abita. I pilastri della terra è il secondo tipo: quarant'anni, una cattedrale, personaggi che ti restano addosso.\n\nSei team \"l'ho finito in una settimana\" o team \"lo leggo da tre anni\"? 👇\n\n#ipilastridellaterra #kenfollett #romanzostorico #booktokitalia #libridaleggere"
+  },
+  booktok:"[0-3s] Libro sbattuto sul tavolo, rumore sordo. Testo a schermo: \"Questo libro pesa più del mio gatto.\"\n[3-10s] \"E l'ho finito in nove giorni. Parla di… una cattedrale. Sì, lo so.\"\n[10-20s] Tre flash: \"Un cantiere che dura quarant'anni. Un priore che fa politica meglio di un re. Il cattivo che odierai più di chiunque altro.\"\n[20-27s] \"Se ti mancano le serie storiche che guardavi tutte d'un fiato, questo è il tuo prossimo errore di tempo.\"\n[27-30s] Copertina in primo piano. Testo: \"Link in bio. Ringraziami a pagina 400.\"",
+  newsletter:{
+    a:"Il libro da mille pagine che si legge in una settimana",
+    b:"Cosa leggere quando finisce la tua serie preferita",
+    body:"Ci sono storie che chiedono tempo e lo restituiscono tutto.\n\nI pilastri della terra racconta quarant'anni nell'Inghilterra del XII secolo attraverso un cantiere: quello di una cattedrale che nessuno dei protagonisti è sicuro di vedere finita. Dentro ci sono ambizione, fede, vendette e un'idea semplicissima: costruire qualcosa che ci sopravviva.\n\nSe cerchi un libro da portarti dietro per tutto l'autunno, è questo.\n\n→ Scopri il libro"
+  },
+  store:{
+    seo:"I pilastri della terra di Ken Follett: il romanzo storico sulla cattedrale di Kingsbridge",
+    meta:"Inghilterra, XII secolo: una cattedrale da costruire e quarant'anni di intrighi. Il romanzo storico di Ken Follett amato da milioni di lettori.",
+    bullets:"• Per chi ama le saghe storiche e le serie in costume\n• Una storia lunga, corale, che si legge d'un fiato\n• Ideale da regalare a chi \"non trova il libro giusto\""
+  },
+  interview:"1. La cattedrale è il vero protagonista del romanzo: quando ha capito che una costruzione poteva reggere una storia intera?\n2. Tom, Philip, Aliena, Jack: da quale personaggio è partito?\n3. Che cosa rende ancora attuale una storia di muratori e monaci di novecento anni fa?\n4. Molti lettori dicono di averlo lasciato e ripreso: che consiglio darebbe a chi è a pagina 200?\n5. Se la storia di Kingsbridge diventasse oggi un progetto, cosa costruirebbe?",
+  plan:[["G-14","Teaser social: \"Il libro che pesa più del tuo gatto\". Raccolta contenuti BookTok."],["G-7","Newsletter A/B sul pubblico catalogo. Seeding a 10 creator \"chunky books\"."],["G-3","Carosello Instagram + vetrina store con fascetta \"Leggilo in una settimana\"."],["G0","Challenge \"#9giorniaKingsbridge\": diario di lettura condiviso."],["G+7","Rilancio con i contenuti migliori degli utenti e citazioni dei lettori."]],
+  checks:[["ok","Nessuno spoiler oltre l'ambientazione e i personaggi principali"],["ok","Tono coerente sui canali: epico nei titoli, leggero nei social"],["ok","Hashtag verificati come in uso nella community italiana"],["warn","Da verificare prima di pubblicare: dati di vendita e numero di lettori citati nella meta description"],["ok","Nessuna immagine protetta usata: copertina e visual dal materiale ufficiale"]]
+},
+{
+  id:"calvino", kind:"Rilancio catalogo", title:"Le città invisibili", author:"Italo Calvino",
+  cover:["#1f3a4d","#2f5e6e"],
+  sheet:"Romanzo, 1972. Marco Polo descrive all'imperatore Kublai Khan le città che ha visitato nel suo impero: cinquantacinque città immaginarie, sospese tra memoria, desiderio e segni, che raccontano in realtà il modo in cui viviamo le nostre.",
+  fields:["Obiettivo: nuovi lettori under 30","Pubblico: studenti, architetti, lettori di poesia","Canali: Instagram, newsletter, scuole","Tono: poetico, mai scolastico"],
+  positioning:{
+    pitch:"Cinquantacinque città che non esistono e che conosci benissimo: il libro da aprire a caso, una pagina alla volta.",
+    angle:"Toglierlo dallo scaffale \"lettura obbligatoria\": è il libro perfetto per chi dice di non avere tempo, perché si legge a frammenti.",
+    personas:[
+      ["Studenti di architettura e design","Lo citano i professori; va mostrato come fonte di idee, non come esame."],
+      ["Lettori di poesia sui social","Amano le frasi da condividere: ogni città è una citazione pronta."],
+      ["Chi viaggia","Cerca un libro da portare in viaggio che parli di città senza essere una guida."]
+    ]
+  },
+  instagram:{
+    slides:["55 città.\nNessuna esiste.","Tutte ti sembrano\nfamiliari.","Un viaggiatore.\nUn imperatore.\nUna conversazione.","Si legge\na pezzi.\nAnche in metro.","In quale città\nvivi tu?"],
+    caption:"Marco Polo racconta a Kublai Khan le città del suo impero. Nessuna è reale, eppure in ognuna c'è qualcosa della tua.\n\nApri Le città invisibili a caso e dicci in quale sei capitato. 👇\n\n#lecittàinvisibili #italocalvino #libridaleggere #citazioni #bookstagramitalia"
+  },
+  booktok:"[0-3s] Mano che apre il libro a caso. Testo: \"Apro questo libro a caso finché non trovo la mia città.\"\n[3-12s] Lettura a voce bassa di due righe, su immagini di una metro di notte.\n[12-20s] \"Calvino ha scritto 55 città che non esistono. Il trucco è che le riconosci tutte.\"\n[20-27s] \"È il libro per chi dice 'non ho tempo di leggere': una città, due pagine, fermata successiva.\"\n[27-30s] Testo: \"Commenta con la tua fermata. Io sono capitato a…\"",
+  newsletter:{
+    a:"Il libro da leggere due pagine alla volta",
+    b:"Cinquantacinque città che non esistono (e una è la tua)",
+    body:"C'è un libro che non devi leggere dall'inizio alla fine.\n\nIn Le città invisibili Marco Polo descrive all'imperatore Kublai Khan le città del suo regno. Sono città impossibili, fatte di ricordi, desideri e segni, e ogni lettore finisce per riconoscerci la propria.\n\nAprilo a caso stasera: due pagine bastano per partire.\n\n→ Scopri il libro"
+  },
+  store:{
+    seo:"Le città invisibili di Italo Calvino: il libro delle città immaginarie",
+    meta:"Marco Polo racconta a Kublai Khan cinquantacinque città immaginarie. Il libro di Italo Calvino da leggere a frammenti, in viaggio o in metro.",
+    bullets:"• Per chi ama la poesia, l'architettura e i viaggi\n• Si legge a frammenti: ideale per chi ha poco tempo\n• Un regalo che dura: si rilegge a ogni età"
+  },
+  interview:"Per un incontro in libreria o a scuola, con un docente o un architetto:\n1. Quale città del libro assomiglia di più a Milano oggi?\n2. Perché un libro senza trama tiene incollati i lettori da cinquant'anni?\n3. Che cosa possono imparare da Calvino chi progetta città e chi progetta prodotti digitali?\n4. Come si legge un libro che si può aprire a caso?\n5. Se doveste aggiungere la cinquantaseiesima città, come si chiamerebbe?",
+  plan:[["G-14","Campagna \"Apri a caso\": 10 citazioni illustrate, una al giorno."],["G-7","Newsletter A/B + kit per insegnanti (3 attività in classe)."],["G-3","Collaborazione con 5 account di architettura e design."],["G0","Evento in libreria: lettura collettiva, ognuno sceglie una città."],["G+7","Raccolta delle \"città dei lettori\" in un carosello finale."]],
+  checks:[["ok","Nessuna citazione lunga del testo: solo frasi originali di marketing"],["ok","Tono poetico ma non scolastico, come richiesto dalla scheda"],["ok","Kit scuole separato dai contenuti social"],["warn","Da verificare: disponibilità dell'edizione e dei diritti per le citazioni illustrate"],["ok","Nessuna affermazione su premi o vendite non verificata"]]
+},
+{
+  id:"naviglio", kind:"Nuova uscita · titolo di fantasia", title:"La casa sul Naviglio", author:"Giulia Ferrante (autrice immaginaria)",
+  cover:["#2c4a2f","#6b8f5a"],
+  sheet:"Esordio, romanzo familiare contemporaneo. Tre sorelle tornano a Milano per vendere la casa di ringhiera della nonna sul Naviglio Pavese. Hanno un'estate per svuotarla, e ogni stanza riapre una storia che la famiglia ha preferito dimenticare.",
+  fields:["Obiettivo: far conoscere un'esordiente","Pubblico: lettrici 30-55, club del libro","Canali: Instagram, newsletter, librerie di Milano","Tono: caldo, ironico, milanese"],
+  positioning:{
+    pitch:"Tre sorelle, una casa di ringhiera da svuotare in un'estate, e i segreti che la nonna aveva nascosto nei cassetti.",
+    angle:"Puntare sulla città: è il romanzo di Milano che non sta nelle cartoline. Le librerie milanesi come primo motore del passaparola.",
+    personas:[
+      ["Club del libro","Cercano un romanzo che faccia discutere: ognuno si schiera con una sorella."],
+      ["Milanesi e ex milanesi","Riconoscono la città, i cortili, l'estate che svuota i quartieri."],
+      ["Lettrici di saghe familiari","Amano storie di donne e generazioni, con ironia e un segreto da scoprire."]
+    ]
+  },
+  instagram:{
+    slides:["Tre sorelle.\nUna casa.\nUn'estate.","Ogni stanza\nha un segreto.","La nonna\nnon buttava\nniente.","Milano,\nquella senza\ncartolina.","Da che parte\nstai?"],
+    caption:"Hanno un'estate per svuotare la casa della nonna sul Naviglio. Non sanno che ogni cassetto contiene una storia che nessuno ha mai raccontato.\n\nLa casa sul Naviglio, l'esordio di Giulia Ferrante. Tu con quale sorella andresti d'accordo? 👇\n\n#lacasasulnaviglio #esordio #milano #romanzo #clubdellibro"
+  },
+  booktok:"[0-3s] Chiavi che girano in una porta di ringhiera. Testo: \"Pov: devi svuotare la casa di tua nonna con le tue sorelle.\"\n[3-12s] Tre oggetti inquadrati uno dopo l'altro: una lettera, una foto strappata, un biglietto del tram del 1978.\n[12-22s] \"Tre sorelle, un'estate a Milano, e una nonna che non buttava niente. Neanche i segreti.\"\n[22-30s] Testo: \"Il libro che il tuo club del libro litigherà a discutere. Tag la sorella che nasconde qualcosa.\"",
+  newsletter:{
+    a:"Tre sorelle, una casa da svuotare e un segreto nel cassetto",
+    b:"Il romanzo di Milano che non sta nelle cartoline",
+    body:"Ci sono case che non si svuotano mai davvero.\n\nIn La casa sul Naviglio tre sorelle tornano a Milano per vendere l'appartamento della nonna. Hanno un'estate, un cortile di ringhiera e una montagna di scatole. Ogni stanza riapre qualcosa: una lettera, una fotografia, una storia che la famiglia ha scelto di non raccontare.\n\nUn esordio caldo e ironico, per chi ha una famiglia complicata. Cioè tutti.\n\n→ Scopri il libro"
+  },
+  store:{
+    seo:"La casa sul Naviglio: il romanzo di tre sorelle e di una casa di ringhiera a Milano",
+    meta:"Tre sorelle hanno un'estate per svuotare la casa della nonna sul Naviglio. Un esordio caldo e ironico su famiglia, memoria e Milano.",
+    bullets:"• Per chi ama le saghe familiari e le storie di sorelle\n• Milano vera: cortili, ringhiere, estate in città\n• Perfetto per i club del libro: ognuno sceglie la sua sorella"
+  },
+  interview:"1. Perché proprio una casa di ringhiera sul Naviglio?\n2. Le tre sorelle sono molto diverse: in quale si riconosce di più?\n3. Quanto c'è della sua famiglia in questa storia?\n4. Che cosa si scopre di una persona svuotando i suoi cassetti?\n5. Che cosa vorrebbe che i lettori portassero via dopo l'ultima pagina?",
+  plan:[["G-14","Invio bozze a 15 librerie indipendenti di Milano e a 10 club del libro."],["G-7","Newsletter A/B + mappa illustrata dei luoghi del romanzo."],["G-3","Carosello e reel \"Pov: svuoti la casa della nonna\"."],["G0","Presentazione in una libreria sul Naviglio, con passeggiata nei luoghi."],["G+7","Rilancio con le recensioni dei club del libro e le foto dei lettori."]],
+  checks:[["ok","Titolo e autrice segnalati come di fantasia: esempio dimostrativo"],["ok","Nessun riferimento a persone o luoghi privati reali"],["ok","Tono caldo e ironico coerente su tutti i canali"],["warn","Da verificare con l'ufficio stampa: data e libreria della presentazione"],["ok","Kit pronto per l'approvazione dell'editor"]]
+}];
+
+const AGENTS = [
+  ["Analisi","Legge la scheda, estrae temi, tono e cosa non va svelato.","0,8 s"],
+  ["Pubblico","Individua i lettori a cui parlare e l'angolo giusto.","1,1 s"],
+  ["Canali","Decide cosa serve su ogni canale e in che formato.","0,9 s"],
+  ["Testi","Scrive social, newsletter, scheda store e intervista.","3,4 s"],
+  ["Controllo","Cerca spoiler, affermazioni da verificare e incoerenze.","1,2 s"]
+];
+
+const TABS = [
+  ["pos","Posizionamento","pitch e pubblico"],
+  ["ig","Instagram","carosello e caption"],
+  ["tt","BookTok","script 30 secondi"],
+  ["nl","Newsletter","oggetto A/B e testo"],
+  ["st","Scheda store","SEO e punti chiave"],
+  ["iv","Intervista","5 domande"],
+  ["pl","Piano 14 giorni","calendario"],
+  ["qc","Controlli","prima di pubblicare"]
+];
+
+const $ = s => document.querySelector(s);
+const esc = s => s.replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+let current = BOOKS[0], tab = "pos", generated = {};
+
+function renderBooks(){
+  $("#books").innerHTML = BOOKS.map(b => `
+    <button class="book" data-id="${b.id}" aria-pressed="${b.id===current.id}">
+      <div class="cover" style="background:linear-gradient(160deg,${b.cover[0]},${b.cover[1]})">
+        <div class="ct">${esc(b.title)}</div><div class="ca">${esc(b.author.split(" (")[0])}</div>
+      </div>
+      <div class="meta"><span class="kind">${esc(b.kind)}</span><span class="t">${esc(b.title)}</span><span class="a">${esc(b.author)}</span></div>
+    </button>`).join("");
+  document.querySelectorAll(".book").forEach(el => el.onclick = () => {
+    current = BOOKS.find(b => b.id === el.dataset.id);
+    renderBooks(); renderSheet();
+    if (generated[current.id]) { resetPipe(true); renderOut(); } else { resetPipe(false); lockOut(); }
+  });
+}
+function renderSheet(){
+  $("#sheetText").textContent = current.sheet;
+  $("#sheetFields").innerHTML = current.fields.map(f => `<span>${esc(f)}</span>`).join("");
+}
+function resetPipe(done){
+  $("#pipe").innerHTML = AGENTS.map((a,i) => `
+    <div class="agent ${done?"done":""}" id="ag${i}">
+      <div class="n"><span>Agente ${i+1}</span><span>${a[2]}</span></div>
+      <div class="nm">${a[0]}</div><div class="ds">${a[1]}</div>
+      <div class="st">${done?"Completato":"In attesa"}</div><div class="bar"></div>
+    </div>`).join("");
+}
+function lockOut(){ $("#out").classList.remove("ready"); renderOut(true); }
+
+async function run(){
+  const btn = $("#go"); btn.disabled = true; btn.textContent = "Generazione…";
+  resetPipe(false); lockOut();
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  for (let i = 0; i < AGENTS.length; i++){
+    const el = $("#ag"+i); el.classList.add("run"); el.querySelector(".st").textContent = "Al lavoro…";
+    await new Promise(r => setTimeout(r, reduce ? 50 : 950));
+    el.classList.remove("run"); el.classList.add("done"); el.querySelector(".st").textContent = "Completato";
+  }
+  generated[current.id] = true;
+  $("#out").classList.add("ready"); renderOut(false, !reduce);
+  btn.disabled = false; btn.textContent = "Rigenera →";
+  $("#out").scrollIntoView({behavior: reduce ? "auto" : "smooth", block:"start"});
+}
+
+function block(title, text, cls="txt"){
+  return `<div class="block"><div class="block-h"><h4>${title}</h4><button class="copy" data-copy="${esc(text)}">Copia</button></div><div class="${cls}">${esc(text)}</div></div>`;
+}
+function panelHTML(b){
+  const bg = `linear-gradient(160deg,${b.cover[0]},${b.cover[1]})`;
+  switch(tab){
+    case "pos": return `<h2>Posizionamento</h2><p class="why">Il punto di partenza per tutti gli altri materiali: una frase, un angolo, tre pubblici.</p>
+      ${block("In una frase", b.positioning.pitch)}${block("Angolo di comunicazione", b.positioning.angle, "txt sans")}
+      <div class="block"><div class="block-h"><h4>A chi parliamo</h4></div><div class="personas">${b.positioning.personas.map(p=>`<div class="persona"><b>${esc(p[0])}</b><span>${esc(p[1])}</span></div>`).join("")}</div></div>`;
+    case "ig": return `<h2>Instagram</h2><p class="why">Carosello di cinque slide e caption con domanda finale per far commentare.</p>
+      <div class="block"><div class="block-h"><h4>Carosello</h4></div><div class="slides">${b.instagram.slides.map((s,i)=>`<div class="slide" style="background:${bg}"><small>${i+1}/5</small><span>${esc(s).replace(/\n/g,"<br>")}</span><small>${esc(b.title)}</small></div>`).join("")}</div></div>
+      ${block("Caption", b.instagram.caption, "txt sans")}`;
+    case "tt": return `<h2>BookTok</h2><p class="why">Script da 30 secondi, pensato per chi lo gira con il telefono.</p>${block("Script", b.booktok, "txt sans")}`;
+    case "nl": return `<h2>Newsletter</h2><p class="why">Due oggetti da testare su metà lista ciascuno, poi il testo.</p>
+      <div class="block"><div class="block-h"><h4>Oggetto A/B</h4></div><div class="ab"><div><small>VERSIONE A</small>${esc(b.newsletter.a)}</div><div><small>VERSIONE B</small>${esc(b.newsletter.b)}</div></div></div>
+      ${block("Testo", b.newsletter.body)}`;
+    case "st": return `<h2>Scheda store</h2><p class="why">Titolo e descrizione per i motori di ricerca, punti chiave per la pagina prodotto.</p>
+      ${block("Titolo SEO", b.store.seo, "txt sans")}${block("Meta description", b.store.meta, "txt sans")}${block("Punti chiave", b.store.bullets, "txt sans")}`;
+    case "iv": return `<h2>Intervista</h2><p class="why">Domande per ufficio stampa, podcast o presentazione in libreria.</p>${block("Domande", b.interview)}`;
+    case "pl": return `<h2>Piano 14 giorni</h2><p class="why">Il calendario delle attività intorno al giorno di lancio (G0).</p>
+      <div class="block"><ul class="timeline">${b.plan.map(p=>`<li><b>${esc(p[0])}</b>${esc(p[1])}</li>`).join("")}</ul></div>`;
+    case "qc": return `<h2>Controlli</h2><p class="why">L'ultimo agente non scrive: controlla. Quello che non può verificare lo segnala a una persona.</p>
+      <div class="block"><ul class="checks">${b.checks.map(c=>`<li class="${c[0]==="warn"?"warn":""}">${esc(c[1])}</li>`).join("")}</ul></div>`;
+  }
+}
+function renderOut(locked=false, animate=false){
+  $("#tabs").innerHTML = TABS.map(t => `<button class="tab" role="tab" aria-selected="${t[0]===tab}" data-t="${t[0]}">${t[1]}<small>${t[2]}</small></button>`).join("");
+  document.querySelectorAll(".tab").forEach(el => el.onclick = () => { tab = el.dataset.t; renderOut(); });
+  const panel = $("#panel");
+  panel.innerHTML = locked ? `<h2>Il kit comparirà qui</h2><p class="why">Scegli un libro e premi “Genera il kit”.</p>` : panelHTML(current);
+  panel.querySelectorAll(".copy").forEach(btn => btn.onclick = () => {
+    navigator.clipboard?.writeText(btn.dataset.copy).then(() => { const t=$("#toast"); t.classList.add("on"); setTimeout(()=>t.classList.remove("on"),1200); }).catch(()=>{});
+  });
+  if (animate) typeIn(panel);
+}
+function typeIn(panel){
+  const nodes = [...panel.querySelectorAll(".txt")];
+  nodes.forEach(n => { n.dataset.full = n.textContent; n.textContent = ""; });
+  let i = 0;
+  const next = () => {
+    if (i >= nodes.length) return;
+    const n = nodes[i], full = n.dataset.full; let k = 0; n.classList.add("caret");
+    const step = () => { k = Math.min(full.length, k + Math.max(2, Math.round(full.length/45))); n.textContent = full.slice(0,k);
+      if (k < full.length) requestAnimationFrame(step); else { n.classList.remove("caret"); i++; next(); } };
+    step();
+  };
+  next();
+}
+
+$("#go").onclick = run;
+renderBooks(); renderSheet(); resetPipe(false); lockOut();
+const q = new URLSearchParams(location.search);
+if (q.has("libro")) { const b = BOOKS.find(x => x.id === q.get("libro")); if (b) { current = b; renderBooks(); renderSheet(); } }
+if (q.has("tab")) tab = q.get("tab");
+if (q.has("auto")) setTimeout(() => { const t = tab; run().then(() => { tab = q.get("tab") || t; renderOut(); }); }, 400);
+</script>
+</body>
+</html>
