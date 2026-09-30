@@ -12,7 +12,7 @@
 <style>
 :root{
   --paper:#f3eee5; --paper-2:#ebe4d8; --card:#fbf8f2; --ink:#161512; --muted:#6f6a61; --line:#d9d1c3;
-  --red:#d9412b; --red-soft:rgba(217,65,43,.1); --ok:#2f7d4f;
+  --red:#b8341f; --red-soft:rgba(217,65,43,.1); --ok:#2f7d4f;
   --serif:"Newsreader",Georgia,serif; --sans:"Geist",system-ui,sans-serif;
 }
 *{box-sizing:border-box;margin:0;padding:0}
@@ -145,7 +145,7 @@ footer a{color:var(--ink)}
 @media (max-width:560px){
   .wrap{padding-left:16px;padding-right:16px}
   .panel{padding:22px 18px}
-  .by{display:none}
+  .by{font-size:13px}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
@@ -153,13 +153,13 @@ footer a{color:var(--ink)}
 <body>
 
 <header class="wrap top">
-  <div class="brand">Kit di lancio <b>·</b> prototipo per PLAI</div>
+  <div class="brand">Kit di lancio <b>·</b> prototipo proposto a PLAI</div>
   <div class="by">di <a href="https://www.linkedin.com/in/andrea-vacchini-it" target="_blank" rel="noopener">Andrea Vacchini</a></div>
 </header>
 
 <section class="wrap hero">
   <div>
-    <p class="eyebrow">Editoria · IA generativa · agenti</p>
+    <p class="eyebrow">Costruito in un pomeriggio · candidatura Product Builder AI</p>
     <h1>Dalla scheda di un libro a una <em>campagna di lancio</em> completa.</h1>
   </div>
   <div>
@@ -188,7 +188,7 @@ footer a{color:var(--ink)}
 <section class="wrap stage">
   <div class="label"><span>2</span>Gli agenti al lavoro</div>
   <div class="pipe" id="pipe"></div>
-  <p class="pipe-note">Riproduzione dimostrativa: i contenuti di questa pagina sono stati generati con Claude a partire dalle schede. Dal vivo, il kit si genera su qualsiasi libro.</p>
+  <p class="pipe-note">Riproduzione dimostrativa: i contenuti di questa pagina sono stati generati con Claude a partire dalle schede. La versione collegata al modello la mostro dal vivo.</p>
 </section>
 
 <section class="wrap stage">
@@ -202,21 +202,22 @@ footer a{color:var(--ink)}
 <section class="wrap how">
   <div>
     <p class="eyebrow">Perché l'ho costruito</p>
-    <h2>Un giorno e mezzo, dall'idea al prototipo.</h2>
+    <h2>Dall'idea al prototipo in un pomeriggio.</h2>
   </div>
   <div>
-    <p>Nell'annuncio per il Product Builder AI di PLAI c'è una frase che mi ha colpito: la filiera dall'idea al prototipo è passata da un mese e mezzo a un giorno e mezzo. Invece di raccontare come lavoro, ho provato a farlo: un bisogno concreto di una casa editrice, un prototipo funzionante, nello stesso tempo.</p>
+    <p>Nell'annuncio per il Product Builder AI di PLAI c'è una frase che mi ha colpito: la filiera dall'idea al prototipo è passata da un mese e mezzo a un giorno e mezzo. Invece di raccontare come lavoro, ho provato a farlo: un bisogno concreto di una casa editrice, un prototipo funzionante, in un pomeriggio.</p>
     <p>La logica è quella che uso con i clienti: ogni agente ha un solo compito e scrive il suo risultato per il successivo; l'ultimo controlla spoiler, affermazioni da verificare e tono. Niente va online senza una persona che approva.</p>
     <p class="note">Costruito da Andrea Vacchini guidando Claude Code. Non sono un programmatore tradizionale: il codice lo scrive l'IA, io decido cosa costruire, collaudo e rispondo del risultato. Prototipo indipendente, non affiliato al Gruppo Mondadori.</p>
+    <p><a class="go" style="display:inline-block;text-decoration:none;margin-top:6px" href="mailto:vacchiniandrea2001@gmail.com?subject=Kit%20di%20lancio%20-%20demo%20dal%20vivo">Parliamone: 20 minuti per vederlo dal vivo →</a></p>
   </div>
 </section>
 
 <footer class="wrap">
-  <span>Andrea Vacchini · Milano · <a href="mailto:vacchiniandrea2001@gmail.com">vacchiniandrea2001@gmail.com</a> · +39 331 251 0052</span>
+  <span>Andrea Vacchini · Milano · <a href="mailto:vacchiniandrea2001@gmail.com">vacchiniandrea2001@gmail.com</a> · prototipo indipendente, non affiliato al Gruppo Mondadori</span>
   <a href="https://www.linkedin.com/in/andrea-vacchini-it" target="_blank" rel="noopener">LinkedIn ↗</a>
 </footer>
 
-<div class="toast" id="toast">Copiato</div>
+<div class="toast" id="toast" role="status" aria-live="polite">Copiato</div>
 
 <script>
 const BOOKS = [
@@ -226,37 +227,37 @@ const BOOKS = [
   sheet:"Romanzo storico, 1989. Inghilterra, XII secolo: la costruzione di una cattedrale a Kingsbridge intreccia le vite di un costruttore, di un priore, di una nobile decaduta e di un giovane scalpellino, tra guerre civili e ambizioni di potere.",
   fields:["Obiettivo: riportarlo in classifica","Pubblico: lettori 25-45 e BookTok","Canali: Instagram, TikTok, newsletter, store","Tono: epico ma accessibile"],
   positioning:{
-    pitch:"Mille pagine che si leggono come una serie tv: una cattedrale da costruire, quarant'anni di intrighi e personaggi che non si dimenticano.",
+    pitch:"Mille pagine che si leggono come una serie tv: una cattedrale da costruire, decenni di intrighi e personaggi che non si dimenticano.",
     angle:"Presentarlo non come \"classico\" ma come la serie da divorare in autunno: la lunghezza diventa una promessa, non un ostacolo.",
     personas:[
       ["Chi guarda serie storiche","Ha amato le saghe in costume in tv e cerca una storia lunga in cui perdersi."],
       ["BookTok \"chunky books\"","Colleziona libri enormi e ne mostra la mole: il volume è parte del piacere."],
-      ["Lettore di ritorno","Lo ha lasciato a metà anni fa: va convinto che questa volta lo finisce."]
+      ["Lettore di ritorno","Lo ha lasciato a metà anni fa: va convinto che questa volta lo finirà."]
     ]
   },
   instagram:{
     slides:["Mille pagine.\nZero noia.","XII secolo.\nUna cattedrale\nda costruire.","Un costruttore\nche sogna in pietra.","Un priore,\nun'erede,\nun apprendista.","Scorri meno.\nLeggi di più."],
-    caption:"Ci sono libri che si leggono e libri in cui si abita. I pilastri della terra è il secondo tipo: quarant'anni, una cattedrale, personaggi che ti restano addosso.\n\nSei team \"l'ho finito in una settimana\" o team \"lo leggo da tre anni\"? 👇\n\n#ipilastridellaterra #kenfollett #romanzostorico #booktokitalia #libridaleggere"
+    caption:"Un cantiere che dura decenni, una cattedrale da tirare su pietra dopo pietra e un cattivo che odierai più di chiunque altro.\n\nSei team \"l'ho finito in nove giorni\" o team \"lo leggo da tre anni\"? 👇\n\n#ipilastridellaterra #kenfollett #romanzostorico #booktokitalia #libridaleggere"
   },
-  booktok:"[0-3s] Libro sbattuto sul tavolo, rumore sordo. Testo a schermo: \"Questo libro pesa più del mio gatto.\"\n[3-10s] \"E l'ho finito in nove giorni. Parla di… una cattedrale. Sì, lo so.\"\n[10-20s] Tre flash: \"Un cantiere che dura quarant'anni. Un priore che fa politica meglio di un re. Il cattivo che odierai più di chiunque altro.\"\n[20-27s] \"Se ti mancano le serie storiche che guardavi tutte d'un fiato, questo è il tuo prossimo errore di tempo.\"\n[27-30s] Copertina in primo piano. Testo: \"Link in bio. Ringraziami a pagina 400.\"",
+  booktok:"[0-3s] Libro sbattuto sul tavolo, rumore sordo. Testo a schermo: \"Questo libro pesa più del mio gatto.\"\n[3-10s] \"E l'ho finito in nove giorni. Parla di… una cattedrale. Sì, lo so.\"\n[10-20s] Tre flash: \"Un cantiere che dura decenni. Un priore che fa politica meglio di un re. Il cattivo che odierai più di chiunque altro.\"\n[20-27s] \"Se ti mancano le serie storiche che guardavi tutte d'un fiato, questa è la tua prossima ossessione.\"\n[27-30s] Copertina in primo piano. Testo: \"Link in bio. Ringraziami a pagina 400.\"",
   newsletter:{
-    a:"Il libro da mille pagine che si legge in una settimana",
+    a:"Il libro da mille pagine che si legge in nove giorni",
     b:"Cosa leggere quando finisce la tua serie preferita",
-    body:"Ci sono storie che chiedono tempo e lo restituiscono tutto.\n\nI pilastri della terra racconta quarant'anni nell'Inghilterra del XII secolo attraverso un cantiere: quello di una cattedrale che nessuno dei protagonisti è sicuro di vedere finita. Dentro ci sono ambizione, fede, vendette e un'idea semplicissima: costruire qualcosa che ci sopravviva.\n\nSe cerchi un libro da portarti dietro per tutto l'autunno, è questo.\n\n→ Scopri il libro"
+    body:"Mille pagine fanno paura. Poi arrivi a pagina cinquanta e non ti fermi più.\n\nI pilastri della terra racconta decenni di storia nell'Inghilterra del XII secolo attraverso un cantiere: quello di una cattedrale che nessuno dei protagonisti è sicuro di vedere finita. Dentro ci sono ambizione, fede, vendette e un'idea semplicissima: costruire qualcosa che ci sopravviva.\n\nSe cerchi un libro da portarti dietro per tutto l'autunno, è questo.\n\n→ Scopri il libro"
   },
   store:{
     seo:"I pilastri della terra di Ken Follett: il romanzo storico sulla cattedrale di Kingsbridge",
-    meta:"Inghilterra, XII secolo: una cattedrale da costruire e quarant'anni di intrighi. Il romanzo storico di Ken Follett amato da milioni di lettori.",
+    meta:"Inghilterra, XII secolo: una cattedrale da costruire e decenni di intrighi. Il romanzo storico di Ken Follett tra i più letti di sempre.",
     bullets:"• Per chi ama le saghe storiche e le serie in costume\n• Una storia lunga, corale, che si legge d'un fiato\n• Ideale da regalare a chi \"non trova il libro giusto\""
   },
-  interview:"1. La cattedrale è il vero protagonista del romanzo: quando ha capito che una costruzione poteva reggere una storia intera?\n2. Tom, Philip, Aliena, Jack: da quale personaggio è partito?\n3. Che cosa rende ancora attuale una storia di muratori e monaci di novecento anni fa?\n4. Molti lettori dicono di averlo lasciato e ripreso: che consiglio darebbe a chi è a pagina 200?\n5. Se la storia di Kingsbridge diventasse oggi un progetto, cosa costruirebbe?",
-  plan:[["G-14","Teaser social: \"Il libro che pesa più del tuo gatto\". Raccolta contenuti BookTok."],["G-7","Newsletter A/B sul pubblico catalogo. Seeding a 10 creator \"chunky books\"."],["G-3","Carosello Instagram + vetrina store con fascetta \"Leggilo in una settimana\"."],["G0","Challenge \"#9giorniaKingsbridge\": diario di lettura condiviso."],["G+7","Rilancio con i contenuti migliori degli utenti e citazioni dei lettori."]],
-  checks:[["ok","Nessuno spoiler oltre l'ambientazione e i personaggi principali"],["ok","Tono coerente sui canali: epico nei titoli, leggero nei social"],["ok","Hashtag verificati come in uso nella community italiana"],["warn","Da verificare prima di pubblicare: dati di vendita e numero di lettori citati nella meta description"],["ok","Nessuna immagine protetta usata: copertina e visual dal materiale ufficiale"]]
+  interview:"1. La cattedrale è il vero protagonista del romanzo: quando ha capito che una costruzione poteva reggere una storia intera?\n2. Tom, Philip, Aliena, Jack: da quale personaggio è partito?\n3. Che cosa rende ancora attuale una storia di muratori e monaci di novecento anni fa?\n4. Molti lettori dicono di averlo lasciato e ripreso: che consiglio darebbe a chi è a pagina 200?\n5. Se ambientasse oggi la storia in un cantiere moderno, quale sceglierebbe?",
+  plan:[["G-14","Teaser social: \"Il libro che pesa più del tuo gatto\". Raccolta contenuti BookTok."],["G-7","Newsletter A/B ai lettori del catalogo. Seeding a 10 creator \"chunky books\"."],["G-3","Carosello Instagram + vetrina store con fascetta \"Leggilo in nove giorni\"."],["G0","Challenge \"#9giorniaKingsbridge\": diario di lettura condiviso."],["G+7","Rilancio con i contenuti migliori degli utenti e citazioni dei lettori."]],
+  checks:[["ok","Nessuno spoiler oltre l'ambientazione e i personaggi principali"],["ok","Tono coerente sui canali: epico nei titoli, leggero nei social"],["warn","Da verificare: hashtag attivi e pertinenti nella community italiana"],["warn","Da verificare prima di pubblicare: l'affermazione \"tra i più letti di sempre\" nella meta description"],["warn","Usare solo copertina e visual forniti dall'editore"]]
 },
 {
   id:"calvino", kind:"Rilancio catalogo", title:"Le città invisibili", author:"Italo Calvino",
   cover:["#1f3a4d","#2f5e6e"],
-  sheet:"Romanzo, 1972. Marco Polo descrive all'imperatore Kublai Khan le città che ha visitato nel suo impero: cinquantacinque città immaginarie, sospese tra memoria, desiderio e segni, che raccontano in realtà il modo in cui viviamo le nostre.",
+  sheet:"Opera narrativa, 1972. Marco Polo descrive all'imperatore Kublai Khan le città che ha visitato nel suo impero: cinquantacinque città immaginarie, sospese tra memoria, desiderio e segni, che raccontano in realtà il modo in cui viviamo le nostre.",
   fields:["Obiettivo: nuovi lettori under 30","Pubblico: studenti, architetti, lettori di poesia","Canali: Instagram, newsletter, scuole","Tono: poetico, mai scolastico"],
   positioning:{
     pitch:"Cinquantacinque città che non esistono e che conosci benissimo: il libro da aprire a caso, una pagina alla volta.",
@@ -269,7 +270,7 @@ const BOOKS = [
   },
   instagram:{
     slides:["55 città.\nNessuna esiste.","Tutte ti sembrano\nfamiliari.","Un viaggiatore.\nUn imperatore.\nUna conversazione.","Si legge\na pezzi.\nAnche in metro.","In quale città\nvivi tu?"],
-    caption:"Marco Polo racconta a Kublai Khan le città del suo impero. Nessuna è reale, eppure in ognuna c'è qualcosa della tua.\n\nApri Le città invisibili a caso e dicci in quale sei capitato. 👇\n\n#lecittàinvisibili #italocalvino #libridaleggere #citazioni #bookstagramitalia"
+    caption:"Marco Polo racconta a Kublai Khan le città del suo impero. Nessuna è reale, eppure in ognuna c'è qualcosa della tua.\n\nApri Le città invisibili a caso e dicci in quale sei capitato. 👇\n\n#lecittainvisibili #italocalvino #libridaleggere #citazioni #bookstagramitalia"
   },
   booktok:"[0-3s] Mano che apre il libro a caso. Testo: \"Apro questo libro a caso finché non trovo la mia città.\"\n[3-12s] Lettura a voce bassa di due righe, su immagini di una metro di notte.\n[12-20s] \"Calvino ha scritto 55 città che non esistono. Il trucco è che le riconosci tutte.\"\n[20-27s] \"È il libro per chi dice 'non ho tempo di leggere': una città, due pagine, fermata successiva.\"\n[27-30s] Testo: \"Commenta con la tua fermata. Io sono capitato a…\"",
   newsletter:{
@@ -282,7 +283,7 @@ const BOOKS = [
     meta:"Marco Polo racconta a Kublai Khan cinquantacinque città immaginarie. Il libro di Italo Calvino da leggere a frammenti, in viaggio o in metro.",
     bullets:"• Per chi ama la poesia, l'architettura e i viaggi\n• Si legge a frammenti: ideale per chi ha poco tempo\n• Un regalo che dura: si rilegge a ogni età"
   },
-  interview:"Per un incontro in libreria o a scuola, con un docente o un architetto:\n1. Quale città del libro assomiglia di più a Milano oggi?\n2. Perché un libro senza trama tiene incollati i lettori da cinquant'anni?\n3. Che cosa possono imparare da Calvino chi progetta città e chi progetta prodotti digitali?\n4. Come si legge un libro che si può aprire a caso?\n5. Se doveste aggiungere la cinquantaseiesima città, come si chiamerebbe?",
+  interview:"Per un incontro in libreria o a scuola, con un docente o un architetto:\n1. Quale città del libro assomiglia di più a Milano oggi?\n2. Perché un libro senza trama tiene incollati i lettori da cinquant'anni?\n3. Che cosa può imparare da Calvino chi progetta città, e chi progetta prodotti digitali?\n4. Come si legge un libro che si può aprire a caso?\n5. Se doveste aggiungere la cinquantaseiesima città, come si chiamerebbe?",
   plan:[["G-14","Campagna \"Apri a caso\": 10 citazioni illustrate, una al giorno."],["G-7","Newsletter A/B + kit per insegnanti (3 attività in classe)."],["G-3","Collaborazione con 5 account di architettura e design."],["G0","Evento in libreria: lettura collettiva, ognuno sceglie una città."],["G+7","Raccolta delle \"città dei lettori\" in un carosello finale."]],
   checks:[["ok","Nessuna citazione lunga del testo: solo frasi originali di marketing"],["ok","Tono poetico ma non scolastico, come richiesto dalla scheda"],["ok","Kit scuole separato dai contenuti social"],["warn","Da verificare: disponibilità dell'edizione e dei diritti per le citazioni illustrate"],["ok","Nessuna affermazione su premi o vendite non verificata"]]
 },
@@ -296,7 +297,7 @@ const BOOKS = [
     angle:"Puntare sulla città: è il romanzo di Milano che non sta nelle cartoline. Le librerie milanesi come primo motore del passaparola.",
     personas:[
       ["Club del libro","Cercano un romanzo che faccia discutere: ognuno si schiera con una sorella."],
-      ["Milanesi e ex milanesi","Riconoscono la città, i cortili, l'estate che svuota i quartieri."],
+      ["Milanesi ed ex milanesi","Riconoscono la città, i cortili, l'estate che svuota i quartieri."],
       ["Lettrici di saghe familiari","Amano storie di donne e generazioni, con ironia e un segreto da scoprire."]
     ]
   },
@@ -304,11 +305,11 @@ const BOOKS = [
     slides:["Tre sorelle.\nUna casa.\nUn'estate.","Ogni stanza\nha un segreto.","La nonna\nnon buttava\nniente.","Milano,\nquella senza\ncartolina.","Da che parte\nstai?"],
     caption:"Hanno un'estate per svuotare la casa della nonna sul Naviglio. Non sanno che ogni cassetto contiene una storia che nessuno ha mai raccontato.\n\nLa casa sul Naviglio, l'esordio di Giulia Ferrante. Tu con quale sorella andresti d'accordo? 👇\n\n#lacasasulnaviglio #esordio #milano #romanzo #clubdellibro"
   },
-  booktok:"[0-3s] Chiavi che girano in una porta di ringhiera. Testo: \"Pov: devi svuotare la casa di tua nonna con le tue sorelle.\"\n[3-12s] Tre oggetti inquadrati uno dopo l'altro: una lettera, una foto strappata, un biglietto del tram del 1978.\n[12-22s] \"Tre sorelle, un'estate a Milano, e una nonna che non buttava niente. Neanche i segreti.\"\n[22-30s] Testo: \"Il libro che il tuo club del libro litigherà a discutere. Tag la sorella che nasconde qualcosa.\"",
+  booktok:"[0-3s] Chiavi che girano in una porta di ringhiera. Testo: \"Pov: devi svuotare la casa di tua nonna con le tue sorelle.\"\n[3-12s] Tre oggetti inquadrati uno dopo l'altro: una lettera, una foto strappata, un biglietto del tram del 1978.\n[12-22s] \"Tre sorelle, un'estate a Milano, e una nonna che non buttava niente. Neanche i segreti.\"\n[22-30s] Testo: \"Il libro su cui il tuo club del libro litigherà. Tagga la sorella che nasconde qualcosa.\"",
   newsletter:{
     a:"Tre sorelle, una casa da svuotare e un segreto nel cassetto",
     b:"Il romanzo di Milano che non sta nelle cartoline",
-    body:"Ci sono case che non si svuotano mai davvero.\n\nIn La casa sul Naviglio tre sorelle tornano a Milano per vendere l'appartamento della nonna. Hanno un'estate, un cortile di ringhiera e una montagna di scatole. Ogni stanza riapre qualcosa: una lettera, una fotografia, una storia che la famiglia ha scelto di non raccontare.\n\nUn esordio caldo e ironico, per chi ha una famiglia complicata. Cioè tutti.\n\n→ Scopri il libro"
+    body:"Svuotare la casa di una nonna dovrebbe essere il lavoro di un weekend. Per tre sorelle diventa un'estate.\n\nIn La casa sul Naviglio tre sorelle tornano a Milano per vendere l'appartamento della nonna. Hanno un'estate, un cortile di ringhiera e una montagna di scatole. Ogni stanza riapre qualcosa: una lettera, una fotografia, una storia che la famiglia ha scelto di non raccontare.\n\nUn esordio caldo e ironico, per chi ha una famiglia complicata. Cioè tutti.\n\n→ Scopri il libro"
   },
   store:{
     seo:"La casa sul Naviglio: il romanzo di tre sorelle e di una casa di ringhiera a Milano",
@@ -341,7 +342,7 @@ const TABS = [
 
 const $ = s => document.querySelector(s);
 const esc = s => s.replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-let current = BOOKS[0], tab = "pos", generated = {};
+let current = BOOKS[0], tab = "pos", generated = {}, running = false;
 
 function renderBooks(){
   $("#books").innerHTML = BOOKS.map(b => `
@@ -352,9 +353,12 @@ function renderBooks(){
       <div class="meta"><span class="kind">${esc(b.kind)}</span><span class="t">${esc(b.title)}</span><span class="a">${esc(b.author)}</span></div>
     </button>`).join("");
   document.querySelectorAll(".book").forEach(el => el.onclick = () => {
+    if (running) return;
     current = BOOKS.find(b => b.id === el.dataset.id);
     renderBooks(); renderSheet();
-    if (generated[current.id]) { resetPipe(true); renderOut(); } else { resetPipe(false); lockOut(); }
+    const btn = $("#go"); btn.textContent = generated[current.id] ? "Rigenera →" : "Genera il kit →";
+    if (generated[current.id]) { resetPipe(true); unlockOut(); renderOut(); } else { resetPipe(false); lockOut(); }
+    document.querySelector(`.book[data-id="${current.id}"]`)?.focus();
   });
 }
 function renderSheet(){
@@ -364,14 +368,16 @@ function renderSheet(){
 function resetPipe(done){
   $("#pipe").innerHTML = AGENTS.map((a,i) => `
     <div class="agent ${done?"done":""}" id="ag${i}">
-      <div class="n"><span>Agente ${i+1}</span><span>${a[2]}</span></div>
+      <div class="n"><span>Agente ${i+1}</span></div>
       <div class="nm">${a[0]}</div><div class="ds">${a[1]}</div>
       <div class="st">${done?"Completato":"In attesa"}</div><div class="bar"></div>
     </div>`).join("");
 }
-function lockOut(){ $("#out").classList.remove("ready"); renderOut(true); }
+function lockOut(){ const o = $("#out"); o.classList.remove("ready"); o.inert = true; renderOut(true); }
+function unlockOut(){ const o = $("#out"); o.classList.add("ready"); o.inert = false; }
 
-async function run(){
+async function run(auto=false){
+  if (running) return; running = true;
   const btn = $("#go"); btn.disabled = true; btn.textContent = "Generazione…";
   resetPipe(false); lockOut();
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -381,9 +387,9 @@ async function run(){
     el.classList.remove("run"); el.classList.add("done"); el.querySelector(".st").textContent = "Completato";
   }
   generated[current.id] = true;
-  $("#out").classList.add("ready"); renderOut(false, !reduce);
-  btn.disabled = false; btn.textContent = "Rigenera →";
-  $("#out").scrollIntoView({behavior: reduce ? "auto" : "smooth", block:"start"});
+  unlockOut(); renderOut(false, !reduce);
+  btn.disabled = false; btn.textContent = "Rigenera →"; running = false;
+  if (!auto) $("#out").scrollIntoView({behavior: reduce ? "auto" : "smooth", block:"start"});
 }
 
 function block(title, text, cls="txt"){
@@ -409,15 +415,22 @@ function panelHTML(b){
       <div class="block"><ul class="timeline">${b.plan.map(p=>`<li><b>${esc(p[0])}</b>${esc(p[1])}</li>`).join("")}</ul></div>`;
     case "qc": return `<h2>Controlli</h2><p class="why">L'ultimo agente non scrive: controlla. Quello che non può verificare lo segnala a una persona.</p>
       <div class="block"><ul class="checks">${b.checks.map(c=>`<li class="${c[0]==="warn"?"warn":""}">${esc(c[1])}</li>`).join("")}</ul></div>`;
+    default: tab = "pos"; return panelHTML(b);
   }
 }
 function renderOut(locked=false, animate=false){
   $("#tabs").innerHTML = TABS.map(t => `<button class="tab" role="tab" aria-selected="${t[0]===tab}" data-t="${t[0]}">${t[1]}<small>${t[2]}</small></button>`).join("");
-  document.querySelectorAll(".tab").forEach(el => el.onclick = () => { tab = el.dataset.t; renderOut(); });
+  document.querySelectorAll(".tab").forEach(el => el.onclick = () => {
+    if (!generated[current.id]) return;
+    tab = el.dataset.t; renderOut();
+    const sel = document.querySelector(`.tab[data-t="${tab}"]`); sel?.focus(); sel?.scrollIntoView({block:"nearest", inline:"nearest"});
+  });
   const panel = $("#panel");
   panel.innerHTML = locked ? `<h2>Il kit comparirà qui</h2><p class="why">Scegli un libro e premi “Genera il kit”.</p>` : panelHTML(current);
   panel.querySelectorAll(".copy").forEach(btn => btn.onclick = () => {
-    navigator.clipboard?.writeText(btn.dataset.copy).then(() => { const t=$("#toast"); t.classList.add("on"); setTimeout(()=>t.classList.remove("on"),1200); }).catch(()=>{});
+    const t = $("#toast"); const show = msg => { t.textContent = msg; t.classList.add("on"); setTimeout(()=>t.classList.remove("on"),1400); };
+    if (!navigator.clipboard) return show("Copia non riuscita");
+    navigator.clipboard.writeText(btn.dataset.copy).then(() => show("Copiato")).catch(() => show("Copia non riuscita"));
   });
   if (animate) typeIn(panel);
 }
@@ -439,8 +452,10 @@ $("#go").onclick = run;
 renderBooks(); renderSheet(); resetPipe(false); lockOut();
 const q = new URLSearchParams(location.search);
 if (q.has("libro")) { const b = BOOKS.find(x => x.id === q.get("libro")); if (b) { current = b; renderBooks(); renderSheet(); } }
-if (q.has("tab")) tab = q.get("tab");
-if (q.has("auto")) setTimeout(() => { const t = tab; run().then(() => { tab = q.get("tab") || t; renderOut(); }); }, 400);
+if (q.has("tab") && TABS.some(t => t[0] === q.get("tab"))) tab = q.get("tab");
+// parte da sola dopo un attimo, così chi apre il link vede subito il risultato
+let touched = false; addEventListener("pointerdown", () => touched = true, {once:true}); addEventListener("keydown", () => touched = true, {once:true});
+setTimeout(() => { if (q.has("auto") || !touched) run(true); }, q.has("auto") ? 400 : 1500);
 </script>
 </body>
 </html>
