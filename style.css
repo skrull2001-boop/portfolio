@@ -478,8 +478,8 @@ h2 { font-size: clamp(34px, 4vw, 52px); line-height: 1.08; letter-spacing: -.035
 .js-motion .rv { opacity: 0; transform: translateY(24px); transition: opacity .9s var(--ease), transform .9s var(--ease); }
 .js-motion .rv.in { opacity: 1; transform: none; }
 
-/* Hover della pila: solo con mouse e movimento consentito */
-@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+/* Hover della pila: solo con mouse (effetti avviati da chi guarda, attivi anche con movimento ridotto) */
+@media (hover: hover) and (pointer: fine) {
     .stack figure:hover { --up: -12px; --z: 160px; z-index: 5; }
     .stack figure:hover img { opacity: 1; }
     /* al passaggio sulla pila le lastre si aprono a ventaglio */
@@ -566,8 +566,8 @@ h2 { font-size: clamp(34px, 4vw, 52px); line-height: 1.08; letter-spacing: -.035
     .next { margin-top: 32px; }
 }
 
+/* Movimento ridotto: spente solo le animazioni automatiche; gli effetti avviati dal mouse restano */
 @media (prefers-reduced-motion: reduce) {
     html { scroll-behavior: auto; }
-    *, *::before, *::after { transition-duration: .01ms !important; animation: none !important; }
-    .btn:hover, .cl:hover { transform: none; }
+    .fl, .cue-arrow { animation: none !important; }
 }

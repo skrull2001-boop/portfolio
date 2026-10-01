@@ -321,7 +321,7 @@
     var finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
     // ---------- Lastre 3D: si sollevano e si inclinano verso il cursore (max ~8°) ----------
-    if (finePointer && !reduce) {
+    if (finePointer) {
         document.querySelectorAll('.card3d.tilt').forEach(function (card) {
             var frame = 0;
             card.addEventListener('mouseenter', function () { card.classList.add('lift'); });
@@ -355,7 +355,7 @@
     }
     function startScroll(sc) { measure(sc); sc.classList.add('scrolling'); }
     function stopScroll(sc) { sc.classList.remove('scrolling'); }
-    if (!reduce && scrollers.length) {
+    if (scrollers.length) {
         scrollers.forEach(function (sc) {
             var img = sc.querySelector('img');
             if (img && !img.complete) img.addEventListener('load', function () { measure(sc); });
@@ -370,7 +370,7 @@
                 box.addEventListener('focusout', function (e) { if (!box.contains(e.relatedTarget)) stopScroll(sc); });
             }
         });
-        if (!finePointer && 'IntersectionObserver' in window) {
+        if (!finePointer && !reduce && 'IntersectionObserver' in window) {
             var once = new IntersectionObserver(function (entries) {
                 entries.forEach(function (entry) {
                     if (!entry.isIntersecting) return;
@@ -422,10 +422,10 @@
         }).observe(graph);
     }
 
-    // ---------- Tilt della pila: solo con mouse e movimento consentito ----------
+    // ---------- Tilt della pila: solo con mouse (avviato da chi guarda) ----------
     var area = document.getElementById('stack-area');
     var stack = document.getElementById('stack');
-    if (area && stack && finePointer && !reduce) {
+    if (area && stack && finePointer) {
         area.addEventListener('mousemove', function (e) {
             var r = area.getBoundingClientRect();
             var x = (e.clientX - r.left) / r.width - 0.5;
