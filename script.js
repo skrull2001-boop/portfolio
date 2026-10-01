@@ -111,6 +111,7 @@
         'p9.prob': 'An Obsidian vault that ties together projects, clients, decisions, meetings and research, all linked, with visual maps of the studio and the trading lab.',
         'p9.what': "It's the memory the agents work from. With this system I chose the job openings I applied to.",
         'g.note': 'illustrative',
+        'hint': 'hover to scroll',
         'g.proj': 'Projects',
         'g.cli': 'Clients',
         'g.dec': 'Decisions',
@@ -342,6 +343,47 @@
                 ['--rx', '--ry', '--gx', '--gy'].forEach(function (p) { card.style.removeProperty(p); });
             });
         });
+    }
+
+    // ---------- Anteprime che scorrono: hover o focus da tastiera; su touch una volta sola ----------
+    var scrollers = document.querySelectorAll('.scroller');
+    function measure(sc) {
+        var track = sc.querySelector('.scroll-track');
+        var dist = Math.max(0, track.offsetHeight - sc.clientHeight);   // misure di layout, non toccate dal tilt
+        sc.style.setProperty('--dist', dist + 'px');
+        sc.style.setProperty('--dur', Math.min(8, Math.max(5, dist / 150)).toFixed(1) + 's');
+    }
+    function startScroll(sc) { measure(sc); sc.classList.add('scrolling'); }
+    function stopScroll(sc) { sc.classList.remove('scrolling'); }
+    if (!reduce && scrollers.length) {
+        scrollers.forEach(function (sc) {
+            var img = sc.querySelector('img');
+            if (img && !img.complete) img.addEventListener('load', function () { measure(sc); });
+            var card = sc.closest('.card3d');
+            var box = sc.closest('.show, .duo-item');
+            if (finePointer) {
+                card.addEventListener('mouseenter', function () { startScroll(sc); });
+                card.addEventListener('mouseleave', function () { stopScroll(sc); });
+            }
+            if (box) {
+                box.addEventListener('focusin', function () { startScroll(sc); });
+                box.addEventListener('focusout', function (e) { if (!box.contains(e.relatedTarget)) stopScroll(sc); });
+            }
+        });
+        if (!finePointer && 'IntersectionObserver' in window) {
+            var once = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    if (!entry.isIntersecting) return;
+                    var sc = entry.target;
+                    once.unobserve(sc);
+                    startScroll(sc);
+                    var ms = parseFloat(sc.style.getPropertyValue('--dur')) * 1000 || 6000;
+                    setTimeout(function () { stopScroll(sc); }, ms + 1200);
+                });
+            }, { threshold: 0.6 });
+            scrollers.forEach(function (sc) { once.observe(sc); });
+        }
+        window.addEventListener('resize', function () { scrollers.forEach(measure); });
     }
 
     // ---------- Grafo del secondo cervello: i nodi si muovono piano (spento con reduced-motion) ----------
