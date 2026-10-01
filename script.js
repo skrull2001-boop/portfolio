@@ -13,7 +13,7 @@
         'nav.background': 'Background',
         'nav.contact': 'Contact',
 
-        'hero.whoami': '→ Andrea Vacchini · AI Automation Specialist · Milan',
+        'hero.whoami': 'Andrea Vacchini · AI Automation Specialist · Milan',
         'hero.status': 'Open to roles and projects',
         'hero.title': 'I bring AI into <span class="grad">everyday work</span>.',
         'hero.sub': 'I watch how people work, find the step that eats their hours and build the tool that removes it. AI writes the code under my direction; I decide what to build, test it on real data and put it to work.',
