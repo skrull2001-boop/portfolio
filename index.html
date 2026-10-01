@@ -1,394 +1,374 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Andrea Vacchini | Developer & Creator</title>
+    <title>Andrea Vacchini · AI Automation Specialist</title>
+    <meta name="description" id="meta-desc" content="Andrea Vacchini, Milano. Porto l'IA nel lavoro di ogni giorno: strumenti collaudati su dati veri e messi in uso. Agenti IA, automazioni, siti.">
+    <meta name="theme-color" content="#0b1020">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
 
-    <!-- Open Graph (LinkedIn, social preview) -->
-    <meta property="og:title" content="Andrea Vacchini — Portfolio">
-    <meta property="og:description" content="Full-stack developer | 130+ trading bots, AI tools, web apps">
+    <meta property="og:title" content="Andrea Vacchini · AI Automation Specialist">
+    <meta property="og:description" content="Porto l'IA nel lavoro di ogni giorno. Strumenti collaudati su dati veri e messi in uso.">
     <meta property="og:image" content="https://skrull2001-boop.github.io/portfolio/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     <meta property="og:url" content="https://skrull2001-boop.github.io/portfolio/">
     <meta property="og:type" content="website">
-    <meta name="description" content="Andrea Vacchini — Full-stack developer. 130+ trading bots, AI tools, web apps.">
+    <meta property="og:locale" content="it_IT">
+    <meta property="og:locale:alternate" content="en_US">
+    <meta name="twitter:card" content="summary_large_image">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Animated background -->
-    <div class="bg-grid"></div>
-    <div class="bg-glow bg-glow-1"></div>
-    <div class="bg-glow bg-glow-2"></div>
-    <div class="bg-glow bg-glow-3"></div>
+    <a class="skip" href="#main" data-i18n="skip">Vai al contenuto</a>
+    <div class="progress" aria-hidden="true"><span id="progress-bar"></span></div>
 
-    <!-- Navigation -->
     <nav class="nav" id="nav">
-        <div class="nav-inner">
-            <a href="#" class="nav-logo">AV<span class="accent">.</span></a>
+        <div class="wrap nav-inner">
+            <a href="#top" class="logo" aria-label="Andrea Vacchini">AV<em>.</em></a>
             <div class="nav-links">
-                <a href="#about">About</a>
-                <a href="#projects">Projects</a>
-                <a href="#contact">Contact</a>
-                <div class="theme-toggle">
-                    <button class="theme-dot dark active" data-theme="dark" title="Dark mode"></button>
-                    <button class="theme-dot light" data-theme="light" title="Light mode"></button>
-                </div>
+                <a href="#progetti" data-sec="progetti" data-i18n="nav.work">Progetti</a>
+                <a href="#metodo" data-sec="metodo" data-i18n="nav.approach">Come lavoro</a>
+                <a href="#percorso" data-sec="percorso" data-i18n="nav.background">Percorso</a>
+                <a href="#contatti" data-sec="contatti" data-i18n="nav.contact">Contatti</a>
             </div>
+            <button type="button" class="lang" id="lang" aria-label="Lingua: italiano. Passa all'inglese">
+                <span data-l="it">IT</span><span class="sep">/</span><span data-l="en">EN</span>
+            </button>
         </div>
     </nav>
 
-    <!-- Hero -->
-    <section class="hero" id="hero">
-        <div class="hero-content">
-            <div class="hero-badge reveal">Python Developer & Automation Engineer</div>
-            <h1 class="hero-title reveal">
-                <span class="line">Hi, I'm <span class="accent">Andrea</span></span>
-                <span class="line">I build things that</span>
-                <span class="line"><span class="typed-wrapper">work<span class="cursor">|</span></span></span>
-            </h1>
-            <p class="hero-sub reveal">
-                From algorithmic trading bots to network tools and web apps &mdash;
-                I turn complex problems into clean, automated solutions.
-            </p>
-            <div class="hero-cta reveal">
-                <a href="#projects" class="btn btn-primary">View My Work</a>
-                <a href="#contact" class="btn btn-ghost">Get in Touch</a>
-            </div>
-            <div class="hero-stats reveal">
-                <div class="stat">
-                    <span class="stat-num" data-target="15">0</span><span class="accent">+</span>
-                    <span class="stat-label">Projects</span>
+    <main id="main">
+        <!-- Hero -->
+        <header class="hero dark" id="top">
+            <div class="wrap hero-inner">
+                <div class="hero-text">
+                    <p class="term"><span class="prompt">$ whoami</span> <span data-i18n="hero.whoami">→ Andrea Vacchini · AI Automation Specialist · Milano</span></p>
+                    <p class="avail"><span class="dot" aria-hidden="true"></span><span data-i18n="hero.status">Disponibile per ruoli e progetti</span></p>
+                    <h1 data-i18n="hero.title">Porto l'IA nel <span class="grad">lavoro di ogni giorno</span>.</h1>
+                    <p class="hero-sub" data-i18n="hero.sub">Guardo come lavorano le persone, trovo il passaggio che mangia ore e costruisco lo strumento che lo toglie. Il codice lo scrive l'IA sotto la mia guida; io decido cosa costruire, collaudo su dati veri e lo metto in uso.</p>
+                    <div class="hero-cta">
+                        <a href="#progetti" class="btn btn-solid" data-i18n="hero.cta">Guarda i progetti</a>
+                        <a href="mailto:vacchiniandrea2001@gmail.com" class="btn btn-line mono">vacchiniandrea2001@gmail.com</a>
+                    </div>
                 </div>
-                <div class="stat">
-                    <span class="stat-num" data-target="150">0</span><span class="accent">K+</span>
-                    <span class="stat-label">Lines of Code</span>
-                </div>
-                <div class="stat">
-                    <span class="stat-num" data-target="25">0</span><span class="accent">+</span>
-                    <span class="stat-label">Technologies</span>
-                </div>
-                <div class="stat">
-                    <span class="stat-num" data-target="500">0</span><span class="accent">M+</span>
-                    <span class="stat-label">AI Tokens Used</span>
+                <div class="hero-visual" id="stack-area">
+                    <div class="stack" id="stack">
+                        <figure class="f1">
+                            <img src="img/gp.jpg" width="1200" height="750" data-i18n-alt="alt.gp" alt="Pagina iniziale di GymPage">
+                            <figcaption data-i18n="cap.gp">GymPage · online</figcaption>
+                        </figure>
+                        <figure class="f2">
+                            <img src="img/rf.jpg" width="1200" height="500" data-i18n-alt="alt.rf" alt="Pagina iniziale di RispostaFacile">
+                            <figcaption data-i18n="cap.rf">RispostaFacile · online</figcaption>
+                        </figure>
+                        <figure class="f3">
+                            <img src="img/kit.jpg" width="1200" height="750" data-i18n-alt="alt.kit" alt="Prima schermata del kit di lancio per un libro">
+                            <figcaption data-i18n="cap.kit">Kit di lancio · prototipo</figcaption>
+                        </figure>
+                    </div>
                 </div>
             </div>
+            <a class="cue mono" href="#manifesto"><span data-i18n="cue">scorri</span> <span class="cue-arrow" aria-hidden="true">↓</span></a>
+        </header>
+
+        <!-- Manifesto -->
+        <section class="manifesto light" id="manifesto">
+            <div class="wrap">
+                <p class="mani" id="mani" data-i18n="mani">Il codice lo scrive l'IA. <em>Le decisioni le prendo io.</em></p>
+            </div>
+        </section>
+
+        <!-- Numeri -->
+        <section class="figures light" aria-label="In numeri" data-i18n-aria="numbers.aria">
+            <div class="wrap figures-row">
+                <div class="fig rv">
+                    <p class="lbl mono" data-i18n="n.a.l">Controllo fatture</p>
+                    <p class="fig-n" data-i18n="n.a.n">4.000</p>
+                    <p class="fig-t" data-i18n="n.a.t">coppie fattura-ordine collaudate prima della messa in uso</p>
+                </div>
+                <div class="fig rv">
+                    <p class="lbl mono">Studio</p>
+                    <p class="fig-n">12</p>
+                    <p class="fig-t" data-i18n="n.d.t">agenti IA, una persona che decide</p>
+                </div>
+                <div class="fig rv">
+                    <p class="lbl mono">Trading Lab</p>
+                    <p class="fig-n">120+</p>
+                    <p class="fig-t" data-i18n="n.f.t">bot costruiti e testati</p>
+                </div>
+                <div class="fig rv">
+                    <p class="lbl mono">IT</p>
+                    <p class="fig-n" data-i18n="n.h.n">6 <span class="unit">anni</span></p>
+                    <p class="fig-t" data-i18n="n.h.t">di infrastruttura, reti, Microsoft 365 e help desk</p>
+                </div>
+            </div>
+        </section>
+
+        <div id="progetti">
+            <section class="intro light">
+                <div class="wrap narrow rv">
+                    <h2 data-i18n="work.title">Progetti</h2>
+                    <p class="lead" data-i18n="work.sub">Strumenti veri: in uso, online o da provare.</p>
+                </div>
+            </section>
+
+            <!-- 01 Kit di lancio -->
+            <section class="show light" id="kit">
+                <div class="wrap show-grid">
+                    <figure class="media">
+                        <div class="card3d tilt"><div class="frame"><img src="img/kit.jpg" width="1200" height="750" loading="lazy" data-i18n-alt="alt.kit" alt="Prima schermata del kit di lancio per un libro"><span class="glare" aria-hidden="true"></span></div></div>
+                    </figure>
+                    <div class="copy rv">
+                        <p class="idx mono">01<span>/08</span></p>
+                        <p class="over mono" data-i18n="p1.over">Editoria · costruito in un pomeriggio</p>
+                        <h3 data-i18n="p1.title">Kit di lancio per un libro</h3>
+                        <p class="prob" data-i18n="p1.prob">Per lanciare un libro servono tanti materiali diversi, tutti coerenti con la stessa scheda.</p>
+                        <p data-i18n="p1.what">5 agenti in sequenza trasformano la scheda di un libro in 8 materiali di campagna; l'ultimo controlla spoiler e tono, poi approva una persona.</p>
+                        <div class="stat"><b data-i18n="n.e.n">1 pomeriggio</b><span data-i18n="n.e.t">dall'idea al prototipo funzionante</span></div>
+                        <div class="act"><span class="st st-proto" data-i18n="st.proto">Prototipo</span><a class="more" href="kit-lancio/" data-i18n="p1.link">Prova il prototipo →</a></div>
+                        <p class="small" data-i18n="p1.note">Proposto a PLAI. Prototipo indipendente, non affiliato al Gruppo Mondadori.</p>
+                    </div>
+                </div>
+                <div class="wrap"><a class="next mono" href="#fatture" data-i18n="next1">Prossimo: Controllo fatture e ordini →</a></div>
+            </section>
+
+            <!-- 02 Controllo fatture -->
+            <section class="show light rev" id="fatture">
+                <div class="wrap show-grid">
+                    <figure class="media">
+                        <div class="card3d tilt"><div class="frame invoice">
+                            <div class="inv-top"><span class="mono" data-i18n="inv.note">Dati illustrativi</span></div>
+                            <table>
+                                <caption class="sr" data-i18n="inv.caption">Esempio di controllo fattura e ordine, dati illustrativi</caption>
+                                <thead>
+                                    <tr><th scope="col" data-i18n="inv.h1">Fattura</th><th scope="col" data-i18n="inv.h2">Ordine</th><th scope="col" data-i18n="inv.h3">Esito</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td data-i18n="inv.r1a">INV&nbsp;2291 · €&nbsp;1.240,00</td><td data-i18n="inv.r1b">PO&nbsp;8812 · €&nbsp;1.240,00</td><td class="ok">ok</td></tr>
+                                    <tr><td data-i18n="inv.r2a">INV&nbsp;2292 · €&nbsp;318,50</td><td data-i18n="inv.r2b">PO&nbsp;8820 · €&nbsp;318,50</td><td class="ok">ok</td></tr>
+                                    <tr class="flag"><td data-i18n="inv.r3a">INV&nbsp;2293 · €&nbsp;96,00</td><td data-i18n="inv.r3b">PO&nbsp;8823 · €&nbsp;90,00</td><td class="ko" data-i18n="inv.diff">€&nbsp;6,00 di differenza</td></tr>
+                                    <tr><td data-i18n="inv.r4a">INV&nbsp;2294 · €&nbsp;2.015,30</td><td data-i18n="inv.r4b">PO&nbsp;8831 · €&nbsp;2.015,30</td><td class="ok">ok</td></tr>
+                                </tbody>
+                            </table>
+                        <span class="glare" aria-hidden="true"></span></div></div>
+                    </figure>
+                    <div class="copy rv">
+                        <p class="idx mono">02<span>/08</span></p>
+                        <p class="over mono" data-i18n="p3.over">Struttura ospedaliera vicino a Milano</p>
+                        <h3 data-i18n="p3.title">Controllo fatture e ordini</h3>
+                        <p class="prob" data-i18n="p3.prob">Chi liquida le fatture doveva confrontare a mano ogni fattura elettronica con il suo ordine.</p>
+                        <p data-i18n="p3.what">Abbina fatture e ordini in automatico e mostra solo le differenze da guardare. Funziona offline. Collaudato su 4.000 coppie.</p>
+                        <div class="stat"><b>~2 ms</b><span data-i18n="n.b.t">per fattura controllata</span></div>
+                        <div class="act"><span class="st st-use" data-i18n="st.use">In uso</span></div>
+                    </div>
+                </div>
+                <div class="wrap"><a class="next mono" href="#rispostafacile" data-i18n="next2">Prossimo: RispostaFacile →</a></div>
+            </section>
+
+            <!-- 03 RispostaFacile -->
+            <section class="show light" id="rispostafacile">
+                <div class="wrap show-grid">
+                    <figure class="media">
+                        <div class="card3d tilt"><div class="frame"><img src="img/rf.jpg" width="1200" height="500" loading="lazy" data-i18n-alt="alt.rf" alt="Pagina iniziale di RispostaFacile"><span class="glare" aria-hidden="true"></span></div></div>
+                    </figure>
+                    <div class="copy rv">
+                        <p class="idx mono">03<span>/08</span></p>
+                        <p class="over mono" data-i18n="p6.over">Studi commercialisti</p>
+                        <h3>RispostaFacile</h3>
+                        <p class="prob" data-i18n="p6.prob">I clienti fanno al commercialista le stesse domande tutto il giorno.</p>
+                        <p data-i18n="p6.what">Prepara la bozza di risposta; il commercialista la legge, la corregge se serve e la invia.</p>
+                        <div class="stat"><b>2</b><span data-i18n="n.c.t">prodotti online con dominio proprio</span></div>
+                        <div class="act"><span class="st st-live" data-i18n="st.live">Online</span><a class="more" href="https://www.rispostafacile.com" target="_blank" rel="noopener">rispostafacile.com ↗</a></div>
+                    </div>
+                </div>
+                <div class="wrap"><a class="next mono" href="#cervello" data-i18n="next3">Prossimo: Un secondo cervello con 12 agenti IA →</a></div>
+            </section>
+
+            <!-- 04 Secondo cervello (scuro) -->
+            <section class="show dark rev" id="cervello">
+                <div class="wrap show-grid">
+                    <figure class="media">
+                        <div class="constellation" id="constellation" aria-hidden="true">
+                            <svg viewBox="0 0 100 100" class="links"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22e3ff"/><stop offset="1" stop-color="#8b6bff"/></linearGradient></defs><circle class="ring" cx="50" cy="50" r="38"/><circle class="ring" cx="50" cy="50" r="22"/><line x1="50" y1="50" x2="50.0" y2="12.0" pathLength="1" style="--i:0"/><line x1="50" y1="50" x2="76.87" y2="23.13" pathLength="1" style="--i:1"/><line x1="50" y1="50" x2="88.0" y2="50.0" pathLength="1" style="--i:2"/><line x1="50" y1="50" x2="76.87" y2="76.87" pathLength="1" style="--i:3"/><line x1="50" y1="50" x2="50.0" y2="88.0" pathLength="1" style="--i:4"/><line x1="50" y1="50" x2="23.13" y2="76.87" pathLength="1" style="--i:5"/><line x1="50" y1="50" x2="12.0" y2="50.0" pathLength="1" style="--i:6"/><line x1="50" y1="50" x2="23.13" y2="23.13" pathLength="1" style="--i:7"/></svg>
+                            <ul class="nodes" data-i18n="roles.org">
+                                <li>Coordinamento</li><li>Commerciale</li><li>Progetti</li><li>Sviluppo</li><li>Qualità</li><li>Amministrazione</li><li>Rischi</li><li>Ricerca</li>
+                            </ul>
+                            <span class="core" data-i18n="roles.me">Andrea decide</span>
+                        </div>
+                    </figure>
+                    <div class="copy rv">
+                        <p class="idx mono">04<span>/08</span></p>
+                        <p class="over mono" data-i18n="p2.over">Il mio studio · Obsidian + agenti IA</p>
+                        <h3 data-i18n="p2.title">Un secondo cervello con 12 agenti IA</h3>
+                        <p class="prob" data-i18n="p2.prob">Da solo devo seguire vendite, progetti, conti, qualità e ricerca, senza perdere il filo delle decisioni.</p>
+                        <p data-i18n="p2.what">Un vault Obsidian dove 12 agenti con ruoli precisi preparano proposte, bozze e controlli e scrivono tutto: schede progetto, mappe visuali, registro delle decisioni, ricerca di trading. Decido io; niente esce senza il mio sì.</p>
+                        <p class="small" data-i18n="p2.extra">Lo uso anche per la mia ricerca di lavoro: ha selezionato le offerte a cui mi sono candidato.</p>
+                        <div class="act"><span class="st st-use" data-i18n="st.use">In uso</span></div>
+                    </div>
+                </div>
+                <div class="wrap"><a class="next mono" href="#trading" data-i18n="next4">Prossimo: Trading Lab →</a></div>
+            </section>
+
+            <!-- 05 Trading Lab (scuro) -->
+            <section class="show dark" id="trading">
+                <div class="wrap show-grid">
+                    <figure class="media">
+                        <div class="card3d tilt" aria-hidden="true"><div class="terminal mono">
+                            <div class="term-bar">~/trading-lab</div>
+                            <div class="term-body">
+                                <p><span class="prompt">$</span> lab status</p>
+                                <p>bots_tested: <b>120+</b></p>
+                                <p>lookahead_check: <b class="on">on</b></p>
+                                <p>auto_reconnect: <b class="on">on</b></p>
+                            </div>
+                        <span class="glare" aria-hidden="true"></span></div></div>
+                    </figure>
+                    <div class="copy rv">
+                        <p class="idx mono">05<span>/08</span></p>
+                        <p class="over mono" data-i18n="p5.over">Ricerca · sistemi automatici</p>
+                        <h3>Trading Lab</h3>
+                        <p class="prob" data-i18n="p5.prob">Nel trading automatico è facile ingannarsi: un test che "vede" dati del futuro fa sembrare buona qualsiasi strategia.</p>
+                        <p data-i18n="p5.what">Un laboratorio di ricerca con controllo anti-lookahead. Oltre 120 bot costruiti e testati: trend following, multi-timeframe, mean reversion, reinforcement learning. Monitoraggio con riconnessione automatica e un parser LLM che legge i segnali da Telegram.</p>
+                        <div class="act"><span class="st st-res" data-i18n="st.res">Ricerca</span></div>
+                    </div>
+                </div>
+                <div class="wrap"><a class="next mono" href="#lead" data-i18n="next5">Prossimo: Lead Pipeline →</a></div>
+            </section>
+
+            <!-- 06 Lead Pipeline -->
+            <section class="show light rev" id="lead">
+                <div class="wrap show-grid">
+                    <figure class="media">
+                        <div class="huge-fig">
+                            <span class="huge-n" data-i18n="n.g.n">2.800+</span>
+                            <span class="huge-t" data-i18n="n.g.t">attività locali trovate e qualificate da fonti pubbliche</span>
+                        </div>
+                    </figure>
+                    <div class="copy rv">
+                        <p class="idx mono">06<span>/08</span></p>
+                        <p class="over mono" data-i18n="p4.over">Automazione commerciale</p>
+                        <h3>Lead Pipeline</h3>
+                        <p class="prob" data-i18n="p4.prob">Trovare a mano le attività locali che hanno bisogno di un sito richiede ore di ricerca.</p>
+                        <p data-i18n="p4.what">Cerca da fonti pubbliche attività locali (parrucchieri, palestre) senza sito o con un sito vecchio, le qualifica e prepara una bozza del sito e del messaggio di contatto. Oltre 2.800 attività nel database. Il messaggio lo rivedo e lo mando io.</p>
+                        <div class="act"><span class="st st-int" data-i18n="st.int">Interno</span></div>
+                    </div>
+                </div>
+                <div class="wrap"><a class="next mono" href="#gympage" data-i18n="next6">Prossimo: GymPage →</a></div>
+            </section>
+
+            <!-- 07-08 GymPage e Catalogo, affiancati -->
+            <section class="duo light" id="gympage">
+                <div class="wrap duo-grid">
+                    <article class="duo-item">
+                    <figure class="media">
+                        <div class="card3d tilt"><div class="frame"><img src="img/gp.jpg" width="1200" height="750" loading="lazy" data-i18n-alt="alt.gp" alt="Pagina iniziale di GymPage"><span class="glare" aria-hidden="true"></span></div></div>
+                    </figure>
+                    <div class="copy rv">
+                        <p class="idx mono">07<span>/08</span></p>
+                        <p class="over mono" data-i18n="p7.over">Palestre e personal trainer</p>
+                        <h3>GymPage</h3>
+                        <p class="prob" data-i18n="p7.prob">Una palestra ha bisogno di un sito chiaro, senza dover seguire un progetto web.</p>
+                        <p data-i18n="p7.what">Siti pronti con servizi, orari, prezzi e contatti.</p>
+                        <div class="act"><span class="st st-live" data-i18n="st.live">Online</span><a class="more" href="https://gympage.it" target="_blank" rel="noopener">gympage.it ↗</a></div>
+                    </div>
+                </article>
+                    <article class="duo-item" id="catalogo">
+                    <figure class="media">
+                        <div class="card3d tilt"><div class="frame"><img src="img/cat.jpg" width="1200" height="750" loading="lazy" data-i18n-alt="alt.cat" alt="Catalogo demo di film indipendenti"><span class="glare" aria-hidden="true"></span></div></div>
+                    </figure>
+                    <div class="copy rv">
+                        <p class="idx mono">08<span>/08</span></p>
+                        <p class="over mono" data-i18n="p8.over">Casa di produzione</p>
+                        <h3 data-i18n="p8.title">Catalogo di film indipendenti</h3>
+                        <p class="prob" data-i18n="p8.prob">Il catalogo va aggiornato spesso, senza chiamare ogni volta uno sviluppatore.</p>
+                        <p data-i18n="p8.what">Ricerca, filtri per genere e anno, schede film con cast e festival e un pannello per aggiornarlo da soli.</p>
+                        <div class="act"><span class="st st-demo">Demo</span><a class="more" href="catalogo-demo.html" target="_blank" rel="noopener" data-i18n="p8.link">Apri la demo ↗</a></div>
+                    </div>
+                </article>
+                </div>
+            </section>
+
+            <!-- Altri progetti -->
+            <section class="others light" aria-labelledby="others-title">
+                <div class="wrap">
+                    <div class="others-head rv">
+                        <h3 id="others-title" data-i18n="others.title">Altri progetti</h3>
+                        <p class="mono cmd" data-i18n="others.cmd">$ ls ~/progetti</p>
+                    </div>
+                    <ul class="others-list rv">
+                        <li><div class="o-top"><b>Job Scanner</b><span class="st st-int" data-i18n="st.int">Interno</span></div><p data-i18n="o1">Raccoglie offerte da API pubbliche di annunci e le ordina rispetto a un profilo. Provato anche su profili non tecnici.</p></li>
+                        <li><div class="o-top"><b>Network Manager</b><span class="st st-int" data-i18n="st.int">Interno</span></div><p data-i18n="o2">App desktop per Windows che trova i dispositivi in rete e aiuta a gestire subnet e indirizzi IP.</p></li>
+                        <li><div class="o-top"><b data-i18n="o3.name">Hub dei progetti</b><span class="st st-int" data-i18n="st.int">Interno</span></div><p data-i18n="o3">Un'app che raccoglie e avvia tutti i miei progetti da un'unica finestra.</p></li>
+                    </ul>
+                </div>
+            </section>
         </div>
-    </section>
 
-    <!-- About -->
-    <section class="section" id="about">
-        <div class="container">
-            <h2 class="section-title reveal">
-                <span class="section-num">01.</span> About Me
-            </h2>
-            <div class="about-grid">
-                <div class="about-text reveal">
-                    <p>
-                        I'm a <strong>Python developer</strong> based in Italy with a passion for
-                        <strong>automation</strong>, <strong>algorithmic trading</strong>, and building
-                        tools that solve real problems.
-                    </p>
-                    <p>
-                        I specialize in creating systems that run autonomously &mdash; from trading bots
-                        that manage prop firm accounts 24/7, to email automation platforms, network
-                        management tools, and AI-powered job matching engines.
-                    </p>
-                    <p>
-                        My approach is simple: <em>understand the problem deeply, build the simplest
-                        solution that works, then iterate.</em> I believe in data-driven decisions,
-                        clean architecture, and code that you can trust to run unattended.
-                    </p>
+        <!-- Come lavoro -->
+        <section class="method light" id="metodo">
+            <div class="wrap">
+                <div class="narrow rv">
+                    <p class="mono cmd" data-i18n="ap.cmd">$ cat metodo.txt</p>
+                    <h2 data-i18n="ap.title">Come lavoro</h2>
                 </div>
-                <div class="about-card reveal">
-                    <div class="terminal">
-                        <div class="terminal-header">
-                            <span class="terminal-dot red"></span>
-                            <span class="terminal-dot yellow"></span>
-                            <span class="terminal-dot green"></span>
-                            <span class="terminal-title">andrea@dev ~</span>
-                        </div>
-                        <div class="terminal-body">
-                            <div class="term-line"><span class="term-prompt">$</span> cat about.json</div>
-                            <div class="term-line json">{</div>
-                            <div class="term-line json">&nbsp;&nbsp;"name": "<span class="accent">Andrea Vacchini</span>",</div>
-                            <div class="term-line json">&nbsp;&nbsp;"role": "<span class="str">Developer & Creator</span>",</div>
-                            <div class="term-line json">&nbsp;&nbsp;"location": "<span class="str">Italy</span>",</div>
-                            <div class="term-line json">&nbsp;&nbsp;"focus": [</div>
-                            <div class="term-line json">&nbsp;&nbsp;&nbsp;&nbsp;"<span class="str">Trading Bots</span>",</div>
-                            <div class="term-line json">&nbsp;&nbsp;&nbsp;&nbsp;"<span class="str">Automation</span>",</div>
-                            <div class="term-line json">&nbsp;&nbsp;&nbsp;&nbsp;"<span class="str">Web Apps</span>",</div>
-                            <div class="term-line json">&nbsp;&nbsp;&nbsp;&nbsp;"<span class="str">Network Tools</span>"</div>
-                            <div class="term-line json">&nbsp;&nbsp;],</div>
-                            <div class="term-line json">&nbsp;&nbsp;"available": <span class="bool">true</span></div>
-                            <div class="term-line json">}</div>
-                        </div>
-                    </div>
+                <div class="steps" id="steps">
+                    <div class="track" aria-hidden="true"><span class="fill"></span></div>
+                    <ol>
+                        <li class="step"><span class="mono n">01</span><h3 data-i18n="s1.t">Guardo</h3><p data-i18n="s1.p">Mi faccio mostrare il lavoro da chi lo fa ogni giorno, non solo da chi lo descrive.</p></li>
+                        <li class="step"><span class="mono n">02</span><h3 data-i18n="s2.t">Costruisco</h3><p data-i18n="s2.p">Una prima versione da provare su dati veri, poi la rifinisco con chi la usa.</p></li>
+                        <li class="step"><span class="mono n">03</span><h3 data-i18n="s3.t">Collaudo</h3><p data-i18n="s3.p">Prima di metterla in uso la provo sui casi veri, compresi quelli scomodi.</p></li>
+                        <li class="step"><span class="mono n">04</span><h3 data-i18n="s4.t">Resto</h3><p data-i18n="s4.p">Dopo la consegna sono ancora io la persona da chiamare quando qualcosa cambia.</p></li>
+                    </ol>
+                </div>
+                <div class="ai-note rv">
+                    <h3 data-i18n="ai.title">Come uso l'IA</h3>
+                    <p data-i18n="ai.text">Non scrivo codice a mano. Costruisco guidando Claude Code e Gemini: scelgo il problema, descrivo cosa serve, leggo i risultati e collaudo. Rispondo io di quello che va in uso. Nei sistemi che costruisco l'IA prepara, una persona approva.</p>
                 </div>
             </div>
+        </section>
 
-            <!-- Tech Stack inside About -->
-            <div class="skills-grid" style="margin-top: 64px;">
-                <div class="skill-group reveal">
-                    <h3 class="skill-group-title">Languages</h3>
-                    <div class="skill-items">
-                        <div class="skill-item"><div class="skill-bar" style="--w:95%"></div><span>Python</span><span class="skill-pct">95%</span></div>
-                        <div class="skill-item"><div class="skill-bar" style="--w:75%"></div><span>HTML / CSS</span><span class="skill-pct">75%</span></div>
-                        <div class="skill-item"><div class="skill-bar" style="--w:60%"></div><span>JavaScript</span><span class="skill-pct">60%</span></div>
-                        <div class="skill-item"><div class="skill-bar" style="--w:50%"></div><span>SQL</span><span class="skill-pct">50%</span></div>
-                    </div>
+        <!-- Percorso -->
+        <section class="path light" id="percorso">
+            <div class="wrap path-grid">
+                <div class="path-intro rv">
+                    <h2 data-i18n="bg.title">Percorso</h2>
+                    <p class="lead" data-i18n="bg.intro">Vengo dall'IT: sei anni a far funzionare reti, server e Microsoft 365 per persone che hanno altro da fare. Da lì ho imparato a guardare un processo e a capire dove si perde tempo. Oggi uso l'IA per togliere quel tempo perso.</p>
                 </div>
-                <div class="skill-group reveal">
-                    <h3 class="skill-group-title">Frameworks & Tools</h3>
-                    <div class="skill-items">
-                        <div class="skill-item"><div class="skill-bar" style="--w:90%"></div><span>Pandas / NumPy</span><span class="skill-pct">90%</span></div>
-                        <div class="skill-item"><div class="skill-bar" style="--w:80%"></div><span>MetaTrader 5 API</span><span class="skill-pct">80%</span></div>
-                        <div class="skill-item"><div class="skill-bar" style="--w:70%"></div><span>Flask / FastAPI</span><span class="skill-pct">70%</span></div>
-                        <div class="skill-item"><div class="skill-bar" style="--w:75%"></div><span>Git / GitHub</span><span class="skill-pct">75%</span></div>
-                    </div>
-                </div>
-                <div class="skill-group reveal">
-                    <h3 class="skill-group-title">Domains</h3>
-                    <div class="skill-items">
-                        <div class="skill-item"><div class="skill-bar" style="--w:90%"></div><span>Algo Trading</span><span class="skill-pct">90%</span></div>
-                        <div class="skill-item"><div class="skill-bar" style="--w:85%"></div><span>Automation</span><span class="skill-pct">85%</span></div>
-                        <div class="skill-item"><div class="skill-bar" style="--w:70%"></div><span>Networking</span><span class="skill-pct">70%</span></div>
-                        <div class="skill-item"><div class="skill-bar" style="--w:65%"></div><span>Web Development</span><span class="skill-pct">65%</span></div>
-                    </div>
-                </div>
+                <ol class="timeline rv">
+                    <li><span class="mono when" data-i18n="t1.when">Da dic 2025</span><p data-i18n="t1"><b>Studio Vacchini</b> · freelance. Automazioni con IA, strumenti su misura e siti per piccole attività.</p></li>
+                    <li><span class="mono when" data-i18n="t2.when">Oggi</span><p data-i18n="t2">Infrastruttura IT per catene di ristorazione in tutta Italia.</p></li>
+                    <li><span class="mono when" data-i18n="t3.when">Prima</span><p data-i18n="t3">Fibra FTTH. Microsoft 365 e formazione degli utenti. SQL e help desk.</p></li>
+                </ol>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Projects -->
-    <section class="section" id="projects">
-        <div class="container">
-            <h2 class="section-title reveal">
-                <span class="section-num">02.</span> Featured Projects
-            </h2>
-            <div class="projects-grid">
-
-                <!-- Project 1: Trading Bots Suite -->
-                <div class="project-card featured reveal">
-                    <div class="project-glow"></div>
-                    <div class="project-header">
-                        <div class="project-icon">&#x1F4C8;</div>
-                        <div class="project-links">
-                            <span class="project-badge">Featured</span>
-                        </div>
-                    </div>
-                    <h3 class="project-title">Algorithmic Trading Suite</h3>
-                    <p class="project-desc">
-                        Over <strong>130 trading bots</strong> developed, backtested, and iterated
-                        across multiple strategies &mdash; from HP filter trend-following to
-                        Ichimoku multi-timeframe, mean reversion grids, ICT smart money concepts,
-                        and reinforcement learning agents. Each bot features automated position
-                        management, trailing stops, risk guards, and walk-forward validation
-                        on 21+ years of historical data.
-                    </p>
-                    <div class="project-stats">
-                        <div class="mini-stat">
-                            <span class="mini-val">130+</span>
-                            <span class="mini-label">Bots Built</span>
-                        </div>
-                        <div class="mini-stat">
-                            <span class="mini-val">21yr</span>
-                            <span class="mini-label">Backtest Data</span>
-                        </div>
-                        <div class="mini-stat">
-                            <span class="mini-val">Live</span>
-                            <span class="mini-label">Prop Firm Trading</span>
-                        </div>
-                    </div>
-                    <div class="project-tags">
-                        <span>Python</span>
-                        <span>MetaTrader 5</span>
-                        <span>NumPy</span>
-                        <span>SciPy</span>
-                        <span>Pandas</span>
-                        <span>Walk-Forward Testing</span>
-                        <span>Risk Management</span>
-                    </div>
-                </div>
-
-                <!-- Project 2: RispostaFacile -->
-                <div class="project-card reveal">
-                    <div class="project-glow"></div>
-                    <div class="project-header">
-                        <div class="project-icon">&#x1F916;</div>
-                    </div>
-                    <h3 class="project-title">RispostaFacile.ai</h3>
-                    <p class="project-desc">
-                        AI-powered email response generator built for Italian accountants.
-                        Clients submit questions through a web interface, AI drafts a professional
-                        reply in seconds, the accountant reviews and sends. Full SaaS platform
-                        with landing page, authentication, lead scraping pipeline, and
-                        cold email outreach system for customer acquisition.
-                    </p>
-                    <div class="project-tags">
-                        <span>Python</span>
-                        <span>FastAPI</span>
-                        <span>AI / LLM</span>
-                        <span>Docker</span>
-                        <span>Web Scraping</span>
-                        <span>SaaS</span>
-                    </div>
-                    <a href="https://www.rispostafacile.com/" target="_blank" class="project-visit-btn">Take a Look</a>
-                </div>
-
-                <!-- Project 3: GymPage.it -->
-                <div class="project-card reveal">
-                    <div class="project-glow"></div>
-                    <div class="project-header">
-                        <div class="project-icon">&#x1F4AA;</div>
-                    </div>
-                    <h3 class="project-title">GymPage.it</h3>
-                    <p class="project-desc">
-                        Professional website builder for gyms and personal trainers in Italy.
-                        Custom landing pages to showcase services, schedules, pricing, and
-                        contact forms. Includes an automated outreach engine that scrapes
-                        local gym contacts and sends personalized proposals with
-                        human-like sending patterns to avoid spam filters.
-                    </p>
-                    <div class="project-tags">
-                        <span>HTML / CSS</span>
-                        <span>Python</span>
-                        <span>Email Automation</span>
-                        <span>Lead Generation</span>
-                        <span>B2B Outreach</span>
-                    </div>
-                    <a href="https://gympage.it" target="_blank" class="project-visit-btn">Take a Look</a>
-                </div>
-
-                <!-- Project 4: StraniFlix -->
-                <div class="project-card reveal">
-                    <div class="project-glow"></div>
-                    <div class="project-header">
-                        <div class="project-icon">&#x1F3AC;</div>
-                        <span class="project-badge">Client</span>
-                    </div>
-                    <h3 class="project-title">StraniFlix — Film Catalog</h3>
-                    <p class="project-desc">
-                        Independent film catalog platform built for an Italian production company.
-                        MyMovies-style interface with real movie posters, genre/year filters,
-                        full-text search, detailed film pages with cast, festivals and ratings,
-                        plus an admin panel for autonomous content management.
-                    </p>
-                    <div class="project-tags">
-                        <span>HTML / CSS</span>
-                        <span>JavaScript</span>
-                        <span>Web App</span>
-                        <span>Admin Panel</span>
-                        <span>TMDb API</span>
-                    </div>
-                    <a href="catalogo-demo.html" target="_blank" class="project-visit-btn">Take a Look</a>
-                </div>
-
-                <!-- Project 5: Job Scanner -->
-                <div class="project-card reveal">
-                    <div class="project-glow"></div>
-                    <div class="project-header">
-                        <div class="project-icon">&#x1F50D;</div>
-                    </div>
-                    <h3 class="project-title">Job Scanner AI</h3>
-                    <p class="project-desc">
-                        AI-powered job matching engine that scans job listings, parses requirements,
-                        and matches them against your CV using intelligent scoring. Generates
-                        detailed HTML reports ranked by compatibility.
-                    </p>
-                    <div class="project-tags">
-                        <span>Python</span>
-                        <span>AI / NLP</span>
-                        <span>Web Scraping</span>
-                        <span>HTML Reports</span>
-                    </div>
-                </div>
-
-                <!-- Project 6: MailComm -->
-                <div class="project-card reveal">
-                    <div class="project-glow"></div>
-                    <div class="project-header">
-                        <div class="project-icon">&#x1F4E7;</div>
-                    </div>
-                    <h3 class="project-title">MailComm Platform</h3>
-                    <p class="project-desc">
-                        Full-stack email marketing and communication platform. Features a
-                        visual campaign builder, audience segmentation from CSV/database sources,
-                        template engine with dynamic personalization, scheduled sending with
-                        rate limiting, open/click tracking, and analytics dashboard for
-                        campaign performance monitoring.
-                    </p>
-                    <div class="project-tags">
-                        <span>Python</span>
-                        <span>SMTP / IMAP</span>
-                        <span>Template Engine</span>
-                        <span>Analytics</span>
-                        <span>Automation</span>
-                    </div>
-                </div>
-
-                <!-- Project 7: Network Manager -->
-                <div class="project-card reveal">
-                    <div class="project-glow"></div>
-                    <div class="project-header">
-                        <div class="project-icon">&#x1F310;</div>
-                    </div>
-                    <h3 class="project-title">Network Manager</h3>
-                    <p class="project-desc">
-                        Desktop application for Windows network management with modern dark GUI.
-                        Features automatic device discovery, subnet management, IP configuration,
-                        and real-time scanning with device type detection.
-                    </p>
-                    <div class="project-tags">
-                        <span>Python</span>
-                        <span>CustomTkinter</span>
-                        <span>Networking</span>
-                        <span>ARP / ICMP</span>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-
-    <!-- Contact -->
-    <section class="section" id="contact">
-        <div class="container">
-            <h2 class="section-title reveal">
-                <span class="section-num">03.</span> Get in Touch
-            </h2>
-            <div class="contact-content reveal">
-                <p class="contact-text">
-                    Got a business idea? Need to automate a workflow, build a website,
-                    or create a tool that saves you hours every week?
-                    <strong>Let's talk.</strong> I build custom software solutions for
-                    businesses and individuals &mdash; from concept to deployment.
-                </p>
-                <a href="mailto:studio.vacchini@gmail.com" class="btn btn-primary btn-lg">
-                    Let's Build Something Together
-                </a>
+        <!-- Contatti -->
+        <section class="contact" id="contatti">
+            <div class="wrap contact-inner rv">
+                <p class="mono contact-cmd">$ contact --andrea</p>
+                <h2 data-i18n="c.title">Hai un processo che mangia ore ogni settimana?</h2>
+                <p class="contact-text" data-i18n="c.text">Se cerchi qualcuno che porti l'IA nei processi della tua azienda, o hai un'attività con un lavoro ripetitivo da togliere, scrivimi o chiamami.</p>
                 <div class="contact-links">
-                    <a href="https://github.com/skrull2001-boop" target="_blank" class="social-link">
-                        <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-                        GitHub
-                    </a>
-                    <a href="https://www.linkedin.com/in/andrea-vacchini-it" target="_blank" class="social-link">
-                        <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-                        LinkedIn
-                    </a>
+                    <a class="cl cl-main mono" href="mailto:vacchiniandrea2001@gmail.com">vacchiniandrea2001@gmail.com</a>
+                    <a class="cl mono" href="tel:+393312510052">+39 331 251 0052</a>
+                    <a class="cl" href="https://wa.me/393312510052" target="_blank" rel="noopener" data-i18n="c.wa">Scrivimi su WhatsApp</a>
+                    <a class="cl" href="https://www.linkedin.com/in/andrea-vacchini-it" target="_blank" rel="noopener">LinkedIn ↗</a>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
-    <!-- Footer -->
     <footer class="footer">
-        <p>Designed & Built by <span class="accent">Andrea Vacchini</span></p>
-        <p class="footer-sub">Powered by curiosity and too much coffee.</p>
+        <div class="wrap footer-inner">
+            <span data-i18n="f.left">© 2026 Andrea Vacchini · Studio Vacchini · Milano</span>
+            <span class="mono" data-i18n="f.right">Sito costruito guidando Claude Code.</span>
+        </div>
     </footer>
 
     <script src="script.js"></script>
