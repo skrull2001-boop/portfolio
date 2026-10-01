@@ -24,7 +24,6 @@
         'alt.gp': 'GymPage home page',
         'alt.rf': 'RispostaFacile home page',
         'alt.kit': 'First screen of the book launch kit',
-        'alt.cat': 'Independent film catalog demo',
         'cue': 'scroll',
 
         'mani': 'AI writes the code. <em>I make the calls.</em>',
@@ -83,15 +82,14 @@
         'p6.over': 'Accounting firms',
         'p6.prob': 'Clients ask their accountant the same questions all day.',
         'p6.what': 'Drafts the reply; the accountant reads it, fixes it if needed and sends it.',
-        'next3': 'Next: A second brain run by 12 AI agents →',
+        'next3': 'Next: A staff of 12 AI agents →',
 
-        'roles.org': '<li>Ops</li><li>Sales</li><li>Projects</li><li>Dev</li><li>QA</li><li>Finance</li><li>Risk</li><li>Research</li>',
+        'roles.org': '<li>Ops</li><li>Sales</li><li>Projects</li><li>Dev</li><li>QA</li><li>Risk</li><li>Finance</li><li>Research</li><li>Career</li><li>Marketing</li><li>Tech</li><li>Business</li>',
         'roles.me': 'Andrea decides',
-        'p2.over': 'My own studio · Obsidian + AI agents',
-        'p2.title': 'A second brain run by 12 AI agents',
+        'p2.over': 'My own studio · AI agents',
+        'p2.title': 'A staff of 12 AI agents',
         'p2.prob': "Working alone, I cover sales, projects, finance, QA and research, and can't afford to lose track of decisions.",
-        'p2.what': 'An Obsidian vault where 12 agents with clear roles prepare proposals, drafts and checks and write everything down: project sheets, visual maps, a decision log, trading research. I decide; nothing goes out without my yes.',
-        'p2.extra': 'I use it for my own job search too: it shortlisted the roles I applied for.',
+        'p2.what': '12 agents with clear roles prepare proposals, drafts and checks and write everything down: project sheets, a decision log, research. I decide; nothing goes out without my yes.',
         'next4': 'Next: Trading Lab →',
 
         'p5.over': 'Research · automated systems',
@@ -102,18 +100,24 @@
         'p4.over': 'Sales automation',
         'p4.prob': 'Finding local businesses that need a website by hand takes hours of research.',
         'p4.what': 'Searches public sources for local businesses (hair salons, gyms) with no website or an outdated one, qualifies them and drafts both the site and the first message. Over 2,800 businesses in the database. I review and send each message myself.',
-        'next6': 'Next: GymPage →',
+        'next6': 'Next: GymPage and Second brain in Obsidian →',
 
         'p7.over': 'Gyms and personal trainers',
         'p7.prob': 'A gym needs a clear website without having to run a web project.',
         'p7.what': 'Ready-made sites with services, schedule, prices and contact.',
-        'next7': 'Next: Independent film catalog →',
 
-        'p8.over': 'Film production company',
-        'p8.title': 'Independent film catalog',
-        'p8.prob': 'The catalog needs frequent updates without calling a developer every time.',
-        'p8.what': 'Search, genre and year filters, film pages with cast and festivals, and a panel to update it yourself.',
-        'p8.link': 'Open the demo (in Italian) ↗',
+        'p9.over': 'My own studio · Obsidian',
+        'p9.title': 'Second brain in Obsidian',
+        'p9.prob': 'An Obsidian vault that ties together projects, clients, decisions, meetings and research, all linked, with visual maps of the studio and the trading lab.',
+        'p9.what': "It's the memory the agents work from. With this system I chose the job openings I applied to.",
+        'g.note': 'illustrative',
+        'g.proj': 'Projects',
+        'g.cli': 'Clients',
+        'g.dec': 'Decisions',
+        'g.meet': 'Meetings',
+        'g.res': 'Research',
+        'g.agents': 'Agents',
+        'g.proc': 'Processes',
 
         'others.title': 'More projects',
         'others.cmd': '$ ls ~/projects',
@@ -338,6 +342,42 @@
                 ['--rx', '--ry', '--gx', '--gy'].forEach(function (p) { card.style.removeProperty(p); });
             });
         });
+    }
+
+    // ---------- Grafo del secondo cervello: i nodi si muovono piano (spento con reduced-motion) ----------
+    var graph = document.getElementById('graph');
+    if (graph && !reduce && 'IntersectionObserver' in window) {
+        var circles = graph.querySelectorAll('circle');
+        var gLines = graph.querySelectorAll('line');
+        var gLabels = graph.querySelectorAll('text');
+        var base = Array.prototype.map.call(circles, function (c, i) {
+            return { x: +c.getAttribute('cx'), y: +c.getAttribute('cy'), a: 0.35 + (i % 5) * 0.08, p: i * 1.7, amp: c.classList.contains('big') ? 3 : 5 };
+        });
+        var running = false, raf = 0;
+        function step(t) {
+            var s = t / 1000, pos = [];
+            for (var i = 0; i < base.length; i++) {
+                var b = base[i];
+                var x = b.x + Math.sin(s * b.a + b.p) * b.amp, y = b.y + Math.cos(s * b.a * 0.8 + b.p) * b.amp;
+                pos.push([x, y]);
+                circles[i].setAttribute('cx', x.toFixed(1)); circles[i].setAttribute('cy', y.toFixed(1));
+            }
+            for (var j = 0; j < gLines.length; j++) {
+                var a = pos[+gLines[j].getAttribute('data-a')], c = pos[+gLines[j].getAttribute('data-b')];
+                gLines[j].setAttribute('x1', a[0].toFixed(1)); gLines[j].setAttribute('y1', a[1].toFixed(1));
+                gLines[j].setAttribute('x2', c[0].toFixed(1)); gLines[j].setAttribute('y2', c[1].toFixed(1));
+            }
+            for (var k = 0; k < gLabels.length; k++) {
+                var q = pos[+gLabels[k].getAttribute('data-n')];
+                gLabels[k].setAttribute('x', q[0].toFixed(1)); gLabels[k].setAttribute('y', (q[1] + 20).toFixed(1));
+            }
+            if (running) raf = requestAnimationFrame(step);
+        }
+        new IntersectionObserver(function (entries) {
+            var vis = entries[0].isIntersecting;
+            if (vis && !running) { running = true; raf = requestAnimationFrame(step); }
+            if (!vis) { running = false; cancelAnimationFrame(raf); }
+        }).observe(graph);
     }
 
     // ---------- Tilt della pila: solo con mouse e movimento consentito ----------

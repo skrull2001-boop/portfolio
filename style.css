@@ -309,22 +309,26 @@ h2 { font-size: clamp(34px, 4vw, 52px); line-height: 1.08; letter-spacing: -.035
 .invoice tbody tr:last-child td { padding-bottom: 24px; }
 
 /* Costellazione dei ruoli */
-.constellation { position: relative; width: 100%; max-width: 540px; aspect-ratio: 1 / 1; margin: 0 auto; }
+.constellation { position: relative; width: 100%; max-width: 560px; aspect-ratio: 1 / 1; margin: 0 auto; }
 .links { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
 .links line { stroke: url(#lg); stroke-width: .35; stroke-opacity: .7; stroke-dasharray: 1; stroke-dashoffset: 0; }
 .links .ring { fill: none; stroke: rgba(255, 255, 255, .08); stroke-width: .2; }
-.nodes li:nth-child(1) { --x: 50.0%; --y: 12.0%; --i: 0; }
-.nodes li:nth-child(2) { --x: 76.87%; --y: 23.13%; --i: 1; }
-.nodes li:nth-child(3) { --x: 88.0%; --y: 50.0%; --i: 2; }
-.nodes li:nth-child(4) { --x: 76.87%; --y: 76.87%; --i: 3; }
-.nodes li:nth-child(5) { --x: 50.0%; --y: 88.0%; --i: 4; }
-.nodes li:nth-child(6) { --x: 23.13%; --y: 76.87%; --i: 5; }
-.nodes li:nth-child(7) { --x: 12.0%; --y: 50.0%; --i: 6; }
-.nodes li:nth-child(8) { --x: 23.13%; --y: 23.13%; --i: 7; }
+.nodes li:nth-child(1) { --x: 50.0%; --y: 7.0%; --i: 0; }
+.nodes li:nth-child(2) { --x: 64.0%; --y: 25.75%; --i: 1; }
+.nodes li:nth-child(3) { --x: 87.24%; --y: 28.5%; --i: 2; }
+.nodes li:nth-child(4) { --x: 78.0%; --y: 50.0%; --i: 3; }
+.nodes li:nth-child(5) { --x: 87.24%; --y: 71.5%; --i: 4; }
+.nodes li:nth-child(6) { --x: 64.0%; --y: 74.25%; --i: 5; }
+.nodes li:nth-child(7) { --x: 50.0%; --y: 93.0%; --i: 6; }
+.nodes li:nth-child(8) { --x: 36.0%; --y: 74.25%; --i: 7; }
+.nodes li:nth-child(9) { --x: 12.76%; --y: 71.5%; --i: 8; }
+.nodes li:nth-child(10) { --x: 22.0%; --y: 50.0%; --i: 9; }
+.nodes li:nth-child(11) { --x: 12.76%; --y: 28.5%; --i: 10; }
+.nodes li:nth-child(12) { --x: 36.0%; --y: 25.75%; --i: 11; }
 .nodes li {
     position: absolute; left: var(--x); top: var(--y); transform: translate(-50%, -50%);
-    font: 500 13.5px var(--mono); color: var(--soft); white-space: nowrap;
-    padding: 7px 14px; border-radius: 99px; background: var(--night-2); border: 1px solid #2f3a5c;
+    font: 500 13px var(--mono); color: var(--soft); white-space: nowrap;
+    padding: 6px 12px; border-radius: 99px; background: var(--night-2); border: 1px solid #2f3a5c;
 }
 .core {
     position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
@@ -336,6 +340,18 @@ h2 { font-size: clamp(34px, 4vw, 52px); line-height: 1.08; letter-spacing: -.035
 .js-motion .constellation line { stroke-dashoffset: 1; transition: stroke-dashoffset 1s var(--ease); transition-delay: calc(var(--i) * 70ms); }
 .js-motion .media.in .constellation .nodes li { opacity: 1; transform: translate(-50%, -50%); }
 .js-motion .media.in .constellation line { stroke-dashoffset: 0; }
+
+/* Secondo cervello: vista a grafo illustrativa */
+.frame.graph { aspect-ratio: 16 / 10; background: radial-gradient(70% 80% at 50% 45%, #141c38, #0a0f1f); box-shadow: 0 0 0 1px rgba(255, 255, 255, .06), 0 2px 4px rgba(18, 20, 32, .1), 0 12px 24px -8px rgba(18, 20, 32, .3), 0 40px 70px -30px rgba(18, 20, 32, .5); }
+.graph-svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.g-edges line { stroke: #3a4670; stroke-width: 1; }
+.g-nodes .small { fill: #56628c; }
+.g-nodes .big { stroke-width: 3; }
+.g-nodes .b0 { fill: #22e3ff; stroke: rgba(34, 227, 255, .25); }
+.g-nodes .b1 { fill: #8b6bff; stroke: rgba(139, 107, 255, .3); }
+.g-nodes .b2 { fill: #b9c4e8; stroke: rgba(185, 196, 232, .2); }
+.g-nodes text { font: 500 12px var(--mono); fill: #c3c8d8; text-anchor: middle; }
+.graph-note { position: absolute; right: 14px; top: 12px; font-size: 11px; color: #9aa1b6; text-transform: uppercase; letter-spacing: .1em; }
 
 /* Terminale Trading Lab */
 .terminal {
@@ -502,8 +518,15 @@ h2 { font-size: clamp(34px, 4vw, 52px); line-height: 1.08; letter-spacing: -.035
     .invoice th { font-size: 10.5px; }
     .inv-top { padding: 11px 14px; }
     .term-body { padding: 20px; }
-    .nodes li { font-size: 10.5px; padding: 5px 8px; }
-    .core { font-size: 12.5px; padding: 9px 14px; box-shadow: 0 0 0 6px rgba(34, 227, 255, .08); }
+    /* su telefono i ruoli diventano una griglia ordinata sotto "Andrea decide" */
+    .constellation { aspect-ratio: auto; display: flex; flex-direction: column; align-items: center; gap: 22px; padding: 8px 0; }
+    .links { display: none; }
+    .core { position: static; transform: none; font-size: 15px; padding: 12px 22px; order: -1; }
+    .nodes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; width: 100%; }
+    .nodes li, .js-motion .constellation .nodes li, .js-motion .media.in .constellation .nodes li { position: static; transform: none; text-align: center; font-size: 13px; padding: 8px 6px; }
+    .js-motion .constellation .nodes li { opacity: 0; }
+    .js-motion .media.in .constellation .nodes li { opacity: 1; }
+    .g-nodes text { font-size: 15px; }
     .cl { padding: 15px 20px; font-size: 16px; }
     .cl.mono { font-size: 14.5px; }
     .timeline p { font-size: 16px; }
