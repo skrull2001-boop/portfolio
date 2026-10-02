@@ -137,22 +137,26 @@ h1 { font-size: clamp(42px, 5.8vw, 84px); line-height: 1.04; letter-spacing: -.0
 .hero-visual { perspective: 1600px; }
 .stack {
     position: relative; height: 500px;
-    transform-style: preserve-3d;
+    /* niente preserve-3d: la profondità la danno z-index e scala, così le lastre non si compenetrano mai */
     transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
     transition: transform .6s var(--ease);
 }
 .stack figure {
-    --z: 0px; --up: 0px;
+    --up: 0px; --sc: 1; --boost: 0;
     position: absolute; width: 80%;
     border-radius: 14px; overflow: hidden; background: var(--night-2);
     border: 1px solid #2c3656;
     box-shadow: 0 1px 0 rgba(255, 255, 255, .06) inset, 0 4px 8px rgba(0, 0, 0, .25), 0 24px 40px -12px rgba(0, 0, 0, .55), 0 60px 90px -30px rgba(0, 0, 0, .75);
-    transform: rotateY(14deg) rotateX(4deg) translateZ(var(--z)) translate(var(--fx, 0px), calc(var(--up) + var(--fy, 0px)));
+    transform: perspective(1400px) rotateY(14deg) rotateX(4deg) translate(var(--fx, 0px), calc(var(--up) + var(--fy, 0px))) scale(calc(var(--sc) + var(--boost)));
     transition: transform .6s var(--lift);
     pointer-events: auto;
 }
 /* ogni lastra galleggia piano, sfasata dalle altre */
-.fl { position: absolute; inset: 0; transform-style: preserve-3d; pointer-events: none; animation: float 7s ease-in-out infinite; }
+.fl { position: absolute; inset: 0; pointer-events: none; animation: float 7s ease-in-out infinite; }
+.fl1 { z-index: 1; }
+.fl2 { z-index: 2; }
+.fl3 { z-index: 3; }
+.stack .fl.on { z-index: 10; }
 .fl2 { animation-duration: 8s; animation-delay: -2.5s; }
 .fl3 { animation-duration: 6.5s; animation-delay: -4s; }
 @keyframes float { 0%, 100% { transform: translateY(-6px); } 50% { transform: translateY(6px); } }
@@ -161,9 +165,9 @@ h1 { font-size: clamp(42px, 5.8vw, 84px); line-height: 1.04; letter-spacing: -.0
     font: 500 12px var(--mono); color: var(--text);
     background: rgba(11, 16, 32, .9); border: 1px solid #2c3656; padding: 5px 11px; border-radius: 7px;
 }
-.f1 { left: 0; top: 0; }
-.f2 { left: 11%; top: 80px; --z: 50px; }
-.f3 { left: 22%; top: 176px; --z: 100px; border-color: var(--cy) !important; }
+.f1 { left: 0; top: 0; --sc: .93; }
+.f2 { left: 11%; top: 80px; --sc: .965; }
+.f3 { left: 22%; top: 176px; border-color: var(--cy) !important; }
 .f1 img { opacity: .6; transition: opacity .45s; }
 .f2 img { opacity: .85; transition: opacity .45s; }
 .f1 img, .f2 img { aspect-ratio: 16 / 10; object-fit: cover; object-position: top left; }
@@ -335,11 +339,27 @@ h2 { font-size: clamp(34px, 4vw, 52px); line-height: 1.08; letter-spacing: -.035
 @keyframes scan { 0% { opacity: 0; } 35% { opacity: 1; } 100% { opacity: 0; } }
 @keyframes flagged { 0% { opacity: 0; } 100% { opacity: 1; } }
 
-/* Costellazione dei ruoli */
+/* Costellazione dei 12 agenti: lastra 3D, ruoli interattivi, impulsi verso "Andrea decide" */
+.const-frame {
+    position: relative; overflow: hidden; border-radius: 18px; padding: clamp(16px, 3vw, 32px);
+    background: radial-gradient(70% 70% at 50% 50%, #151e3c, #0a0f1f); border: 1px solid #263055;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .3), 0 20px 40px -12px rgba(0, 0, 0, .6), 0 50px 90px -40px rgba(0, 0, 0, .9);
+}
+.const-frame .glare { z-index: 3; }
 .constellation { position: relative; width: 100%; max-width: 560px; aspect-ratio: 1 / 1; margin: 0 auto; }
 .links { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
-.links line { stroke: url(#lg); stroke-width: .35; stroke-opacity: .7; stroke-dasharray: 1; stroke-dashoffset: 0; }
+.links line.base { stroke: url(#lg); stroke-width: .35; stroke-opacity: .55; stroke-dasharray: 1; stroke-dashoffset: 0; }
 .links .ring { fill: none; stroke: rgba(255, 255, 255, .08); stroke-width: .2; }
+.links line.hl { stroke: #8ff3ff; stroke-width: .7; stroke-linecap: round; opacity: 0; transition: opacity .35s var(--ease); }
+.links line.hl.on { opacity: 1; }
+.links .pulse { fill: #effcff; opacity: 0; }
+.links .pulse.go { animation: travel .95s cubic-bezier(.5, 0, .4, 1) both; }
+@keyframes travel {
+    0% { transform: translate(0, 0); opacity: 0; }
+    15% { opacity: 1; }
+    85% { opacity: 1; }
+    100% { transform: translate(var(--dx), var(--dy)); opacity: 0; }
+}
 .nodes li:nth-child(1) { --x: 50.0%; --y: 7.0%; --i: 0; }
 .nodes li:nth-child(2) { --x: 64.0%; --y: 25.75%; --i: 1; }
 .nodes li:nth-child(3) { --x: 87.24%; --y: 28.5%; --i: 2; }
@@ -352,21 +372,49 @@ h2 { font-size: clamp(34px, 4vw, 52px); line-height: 1.08; letter-spacing: -.035
 .nodes li:nth-child(10) { --x: 22.0%; --y: 50.0%; --i: 9; }
 .nodes li:nth-child(11) { --x: 12.76%; --y: 28.5%; --i: 10; }
 .nodes li:nth-child(12) { --x: 36.0%; --y: 25.75%; --i: 11; }
-.nodes li {
-    position: absolute; left: var(--x); top: var(--y); transform: translate(-50%, -50%);
+.nodes li { position: absolute; left: var(--x); top: var(--y); transform: translate(-50%, -50%); z-index: 1; }
+.node {
+    position: relative; display: block; cursor: pointer;
     font: 500 13px var(--mono); color: var(--soft); white-space: nowrap;
     padding: 6px 12px; border-radius: 99px; background: var(--night-2); border: 1px solid #2f3a5c;
+    transform: translate(var(--mx, 0px), var(--my, 0px)) scale(var(--s, 1));
+    transition: transform .35s var(--lift), color .25s, border-color .25s, background .25s;
 }
+.node::after {
+    content: ""; position: absolute; inset: -1px; border-radius: inherit; pointer-events: none;
+    box-shadow: 0 0 0 4px rgba(34, 227, 255, .14), 0 0 22px rgba(34, 227, 255, .5);
+    opacity: 0; transition: opacity .3s var(--ease);
+}
+.node.on { --s: 1.16; color: #fff; border-color: var(--cy); background: #16224a; }
+.node.on::after { opacity: 1; }
+.node:focus-visible { outline-offset: 4px; }
 .core {
-    position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
-    font: 600 16px var(--sans); color: #04121a; white-space: nowrap;
+    position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%) scale(var(--s, 1)); z-index: 1;
+    font: 600 16px var(--sans); color: #04121a; white-space: nowrap; cursor: pointer; border: 0;
     padding: 13px 22px; border-radius: 99px; background: linear-gradient(100deg, var(--cy), #8fb4ff);
     box-shadow: 0 0 0 10px rgba(34, 227, 255, .08), 0 0 0 22px rgba(34, 227, 255, .04);
+    transition: transform .35s var(--lift);
 }
+.core:hover, .core.on { --s: 1.06; }
+.core::after {
+    content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+    box-shadow: 0 0 0 2px rgba(143, 243, 255, .9), 0 0 30px rgba(34, 227, 255, .6); opacity: 0;
+}
+.core.ping::after { animation: ping .7s ease-out; }
+@keyframes ping { 0% { opacity: .9; transform: scale(1); } 100% { opacity: 0; transform: scale(1.35); } }
+.role-tip {
+    position: absolute; z-index: 2; width: min(260px, 70%); pointer-events: none;
+    padding: 12px 14px; border-radius: 12px; background: rgba(8, 12, 26, .96); border: 1px solid #34406a;
+    box-shadow: 0 18px 40px -12px rgba(0, 0, 0, .8);
+    opacity: 0; transform: translate(-50%, var(--ty, 0px)) translateY(6px); transition: opacity .25s var(--ease), transform .25s var(--ease);
+}
+.role-tip.visible { opacity: 1; transform: translate(-50%, var(--ty, 0px)); }
+.role-tip b { display: block; font: 500 12px var(--mono); color: var(--cy); text-transform: uppercase; letter-spacing: .08em; margin-bottom: 4px; }
+.role-tip span { display: block; font-size: 14.5px; line-height: 1.5; color: var(--soft); white-space: normal; }
 .js-motion .constellation .nodes li { opacity: 0; transform: translate(-50%, -50%) scale(.8); transition: opacity .6s var(--ease), transform .6s var(--ease); transition-delay: calc(var(--i) * 70ms + 200ms); }
-.js-motion .constellation line { stroke-dashoffset: 1; transition: stroke-dashoffset 1s var(--ease); transition-delay: calc(var(--i) * 70ms); }
+.js-motion .constellation line.base { stroke-dashoffset: 1; transition: stroke-dashoffset 1s var(--ease); transition-delay: calc(var(--i) * 70ms); }
 .js-motion .media.in .constellation .nodes li { opacity: 1; transform: translate(-50%, -50%); }
-.js-motion .media.in .constellation line { stroke-dashoffset: 0; }
+.js-motion .media.in .constellation line.base { stroke-dashoffset: 0; }
 
 /* Secondo cervello: vista a grafo illustrativa */
 .frame.graph { aspect-ratio: 16 / 10; background: radial-gradient(70% 80% at 50% 45%, #141c38, #0a0f1f); box-shadow: 0 0 0 1px rgba(255, 255, 255, .06), 0 2px 4px rgba(18, 20, 32, .1), 0 12px 24px -8px rgba(18, 20, 32, .3), 0 40px 70px -30px rgba(18, 20, 32, .5); }
@@ -480,12 +528,17 @@ h2 { font-size: clamp(34px, 4vw, 52px); line-height: 1.08; letter-spacing: -.035
 
 /* Hover della pila: solo con mouse (effetti avviati da chi guarda, attivi anche con movimento ridotto) */
 @media (hover: hover) and (pointer: fine) {
-    .stack figure:hover { --up: -12px; --z: 160px; z-index: 5; }
-    .stack figure:hover img { opacity: 1; }
     /* al passaggio sulla pila le lastre si aprono a ventaglio */
     .hero-visual:hover .f1 { --fx: -56px; --fy: -34px; }
     .hero-visual:hover .f2 { --fx: -10px; --fy: -8px; }
     .hero-visual:hover .f3 { --fx: 44px; --fy: 30px; }
+    /* con una lastra attiva il ventaglio si allarga; quella attiva passa davanti (z-index) e si solleva */
+    .stack[data-active] .f1 { --fx: -84px; --fy: -50px; }
+    .stack[data-active] .f2 { --fx: -10px; --fy: -10px; }
+    .stack[data-active] .f3 { --fx: 66px; --fy: 46px; }
+    .stack[data-active] .fl figure img { opacity: .45; }
+    .stack .fl.on figure { --up: -14px; --boost: .05; }
+    .stack .fl.on figure img { opacity: 1; }
     /* l'etichetta "passa sopra per scorrere" ha senso solo con il mouse */
     .scroll-hint { display: inline-flex; }
 }
@@ -518,7 +571,7 @@ h2 { font-size: clamp(34px, 4vw, 52px); line-height: 1.08; letter-spacing: -.035
     .step { padding-top: 0; padding-left: 44px; }
     .invoice table { font-size: 13px; }
     .invoice th, .invoice td { padding-left: 14px; padding-right: 14px; }
-    .nodes li { font-size: 12px; padding: 6px 11px; }
+    .node { font-size: 12px; padding: 6px 11px; }
     .core { font-size: 14px; padding: 11px 18px; }
     .card3d { --rx: 2deg; --ry: -2deg; }
     .show.rev .card3d, .duo-item:nth-child(2) .card3d { --ry: 2deg; }
@@ -556,7 +609,12 @@ h2 { font-size: clamp(34px, 4vw, 52px); line-height: 1.08; letter-spacing: -.035
     .links { display: none; }
     .core { position: static; transform: none; font-size: 15px; padding: 12px 22px; order: -1; }
     .nodes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; width: 100%; }
-    .nodes li, .js-motion .constellation .nodes li, .js-motion .media.in .constellation .nodes li { position: static; transform: none; text-align: center; font-size: 13px; padding: 8px 6px; }
+    .nodes li, .js-motion .constellation .nodes li, .js-motion .media.in .constellation .nodes li { position: static; transform: none; }
+    .node { width: 100%; text-align: center; font-size: 13px; padding: 9px 6px; }
+    .core:hover, .core.on { --s: 1; }
+    /* su telefono il riquadro del ruolo compare sotto la griglia */
+    .role-tip { position: static; width: 100%; display: none; transform: none; }
+    .role-tip.visible { display: block; transform: none; }
     .js-motion .constellation .nodes li { opacity: 0; }
     .js-motion .media.in .constellation .nodes li { opacity: 1; }
     .g-nodes text { font-size: 15px; }

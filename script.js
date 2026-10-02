@@ -84,7 +84,31 @@
         'p6.what': 'Drafts the reply; the accountant reads it, fixes it if needed and sends it.',
         'next3': 'Next: A staff of 12 AI agents →',
 
-        'roles.org': '<li>Ops</li><li>Sales</li><li>Projects</li><li>Dev</li><li>QA</li><li>Risk</li><li>Finance</li><li>Research</li><li>Career</li><li>Marketing</li><li>Tech</li><li>Business</li>',
+        'r0': 'Ops',
+        'r0.d': 'routes requests and keeps the dashboard and weekly reports.',
+        'r1': 'Sales',
+        'r1.d': 'prepares quotes and message drafts, sends nothing.',
+        'r2': 'Projects',
+        'r2.d': 'plans projects, estimates timing and tracks deliveries.',
+        'r3': 'Dev',
+        'r3.d': 'writes and fixes the project code.',
+        'r4': 'QA',
+        'r4.d': 'checks code and sites before delivery.',
+        'r5': 'Risk',
+        'r5.d': 'checks privacy, contracts and risks.',
+        'r6': 'Finance',
+        'r6.d': 'tracks income, costs and deadlines.',
+        'r7': 'Research',
+        'r7.d': 'analyses the trading lab data.',
+        'r8': 'Career',
+        'r8.d': 'finds and filters job openings.',
+        'r9': 'Marketing',
+        'r9.d': 'writes copy for sites, posts and case studies.',
+        'r10': 'Tech',
+        'r10.d': 'chooses architecture and tools and writes specs.',
+        'r11': 'Business',
+        'r11.d': 'tests ideas and markets before building.',
+        'const.aria': "The studio's 12 agents",
         'roles.me': 'Andrea decides',
         'p2.over': 'My own studio · AI agents',
         'p2.title': 'A staff of 12 AI agents',
@@ -386,6 +410,123 @@
         window.addEventListener('resize', function () { scrollers.forEach(measure); });
     }
 
+    // ---------- Costellazione dei 12 agenti ----------
+    var cons = document.getElementById('constellation');
+    if (cons) {
+        var nodes = cons.querySelectorAll('.node');
+        var hls = cons.querySelectorAll('line.hl');
+        var pulses = cons.querySelectorAll('.pulse');
+        var core = cons.querySelector('.core');
+        var tip = document.getElementById('role-tip');
+        pulses.forEach(function (c) { c.addEventListener('animationend', function () { c.classList.remove('go'); }); });
+        var current = -1, coreOn = false, consHover = false;
+
+        // impulso di luce che viaggia dal ruolo al centro
+        function pulse(i, delay) {
+            var c = pulses[i];
+            setTimeout(function () {
+                c.classList.remove('go'); void c.getBoundingClientRect(); c.classList.add('go');
+                setTimeout(function () { core.classList.remove('ping'); void core.offsetWidth; core.classList.add('ping'); }, 850);
+            }, delay || 0);
+        }
+        function lightLine(i, on) { if (hls[i]) hls[i].classList.toggle('on', on); }
+
+        function showTip(i) {
+            var b = nodes[i];
+            tip.querySelector('b').textContent = b.querySelector('.nm').textContent;
+            tip.querySelector('span').textContent = b.querySelector('.ds [data-i18n]').textContent;
+            var li = b.parentNode, cs = getComputedStyle(li);
+            if (cs.position === 'absolute') {
+                var x = parseFloat(li.style.getPropertyValue('--x') || cs.getPropertyValue('--x'));
+                var y = parseFloat(cs.getPropertyValue('--y'));
+                var below = y < 50;
+                // spostato verso l'esterno, per non coprire "Andrea decide"
+                var out = x > 52 ? 12 : x < 48 ? -12 : 0;
+                tip.style.left = Math.min(74, Math.max(26, x + out)) + '%';
+                tip.style.top = (below ? y + 6.5 : y - 6.5) + '%';
+                tip.style.setProperty('--ty', below ? '0px' : '-100%');
+            } else {
+                tip.style.left = tip.style.top = ''; tip.style.removeProperty('--ty');
+            }
+            tip.classList.add('visible');
+        }
+        function activate(i) {
+            if (current === i) return;
+            deactivate();
+            current = i;
+            nodes[i].classList.add('on');
+            lightLine(i, true);
+            pulse(i);
+            showTip(i);
+        }
+        function deactivate() {
+            if (current < 0) return;
+            nodes[current].classList.remove('on');
+            lightLine(current, false);
+            tip.classList.remove('visible');
+            current = -1;
+        }
+        function allOn(on) {
+            coreOn = on;
+            core.classList.toggle('on', on);
+            for (var j = 0; j < hls.length; j++) lightLine(j, on);
+            if (on) for (var k = 0; k < pulses.length; k++) pulse(k, k * 45);
+        }
+
+        nodes.forEach(function (b, i) {
+            b.addEventListener('mouseenter', function () { activate(i); });
+            b.addEventListener('mouseleave', function () { deactivate(); });
+            b.addEventListener('focus', function () { activate(i); });
+            b.addEventListener('blur', function () { deactivate(); });
+            b.addEventListener('click', function () { activate(i); });   // tap su telefono
+        });
+        core.addEventListener('mouseenter', function () { allOn(true); });
+        core.addEventListener('mouseleave', function () { allOn(false); });
+        core.addEventListener('focus', function () { allOn(true); });
+        core.addEventListener('blur', function () { allOn(false); });
+        core.addEventListener('click', function () { allOn(true); setTimeout(function () { if (document.activeElement !== core) allOn(false); }, 1600); });
+
+        // effetto magnetico: i ruoli si scostano dal cursore (max 8px), solo con il mouse
+        if (finePointer) {
+            var mpos = null, mframe = 0;
+            cons.addEventListener('mousemove', function (e) {
+                mpos = [e.clientX, e.clientY]; consHover = true;
+                if (mframe) return;
+                mframe = requestAnimationFrame(function () {
+                    mframe = 0;
+                    nodes.forEach(function (b) {
+                        var r = b.parentNode.getBoundingClientRect();
+                        var cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+                        var dx = cx - mpos[0], dy = cy - mpos[1], d = Math.sqrt(dx * dx + dy * dy) || 1;
+                        var push = d < 110 ? (1 - d / 110) * 8 : 0;
+                        if (b.classList.contains('on')) push = 0;   // il ruolo sotto il cursore resta fermo
+                        b.style.setProperty('--mx', (dx / d * push).toFixed(1) + 'px');
+                        b.style.setProperty('--my', (dy / d * push).toFixed(1) + 'px');
+                    });
+                });
+            });
+            cons.addEventListener('mouseleave', function () {
+                consHover = false;
+                nodes.forEach(function (b) { b.style.removeProperty('--mx'); b.style.removeProperty('--my'); });
+            });
+        }
+
+        // a riposo, ogni tanto un impulso parte da un agente a caso (spento con movimento ridotto)
+        if (!reduce && 'IntersectionObserver' in window) {
+            var timer = 0;
+            new IntersectionObserver(function (entries) {
+                if (entries[0].isIntersecting && !timer) {
+                    timer = setInterval(function () {
+                        if (consHover || coreOn || current >= 0) return;
+                        var i = Math.floor(Math.random() * pulses.length);
+                        lightLine(i, true); pulse(i);
+                        setTimeout(function () { if (current !== i && !coreOn) lightLine(i, false); }, 1000);
+                    }, 2300);
+                } else if (!entries[0].isIntersecting && timer) { clearInterval(timer); timer = 0; }
+            }).observe(cons);
+        }
+    }
+
     // ---------- Grafo del secondo cervello: i nodi si muovono piano (spento con reduced-motion) ----------
     var graph = document.getElementById('graph');
     if (graph && !reduce && 'IntersectionObserver' in window) {
@@ -436,6 +577,17 @@
         area.addEventListener('mouseleave', function () {
             stack.style.setProperty('--ry', '0deg');
             stack.style.setProperty('--rx', '0deg');
+            setActive(null);
+        });
+        // lastra attiva: resta attiva finché non si entra in un'altra, così non "sfarfalla" quando si sposta
+        var fls = stack.querySelectorAll('.fl');
+        function setActive(fl) {
+            fls.forEach(function (f) { f.classList.toggle('on', f === fl); });
+            if (fl) stack.setAttribute('data-active', fl.className.match(/fl(\d)/)[1]);
+            else stack.removeAttribute('data-active');
+        }
+        fls.forEach(function (fl) {
+            fl.querySelector('figure').addEventListener('mouseenter', function () { setActive(fl); });
         });
     }
 })();
