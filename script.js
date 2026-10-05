@@ -30,8 +30,8 @@
 
         'numbers.aria': 'In numbers',
         'n.a.l': 'Invoice check',
-        'n.a.n': '4,000',
-        'n.a.t': 'invoice-order pairs tested before go-live',
+        'n.a.n': '16,000',
+        'n.a.t': 'invoices handled in a hospital',
         'n.b.t': 'per invoice checked',
         'n.c.t': 'products live on their own domain',
         'n.d.t': 'AI agents, one person who decides',
@@ -76,7 +76,7 @@
         'p3.over': 'Hospital near Milan',
         'p3.title': 'Invoice vs. purchase-order check',
         'p3.prob': 'Whoever pays the invoices had to check every e-invoice against its order by hand.',
-        'p3.what': 'Pairs invoices and orders automatically and shows only the differences worth a look. Runs offline. Tested on 4,000 pairs.',
+        'p3.what': 'Pairs invoices and orders automatically and shows only the differences worth a look. Runs offline. Tested on 4,000 pairs, it has now handled about 16,000 invoices.',
         'next2': 'Next: RispostaFacile →',
 
         'p6.over': 'Accounting firms',
