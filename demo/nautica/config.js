@@ -1,7 +1,7 @@
 /*
  * Personalizzazione della demo.
  * Questo file contiene i valori di base (azienda inventata). Per un'azienda vera
- * non si tocca: si crea aziende/<nome>.js e si apre index.html?a=<nome>.
+ * non si tocca: si crea aziende/<nome>.js (solo in locale) e si usa il link di genera_link.py (?d=).
  * Tutti i dati sono inventati: non inserire dati reali di clienti o armatori.
  */
 window.CONFIG = {

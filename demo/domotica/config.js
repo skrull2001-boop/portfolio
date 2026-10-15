@@ -1,7 +1,7 @@
 /*
  * Personalizzazione della demo per una singola azienda.
  * Si cambia SOLO questo file (più, se serve, il logo in assets/).
- * Per preparare la demo di un'azienda senza copiare la cartella: aziende/<sigla>.js e index.html?a=<sigla>.
+ * Per preparare la demo di un'azienda senza copiare la cartella: aziende/<sigla>.js (solo in locale) e il link di genera_link.py (?d=).
  * Tutti i dati sono inventati: non inserire dati reali di clienti.
  */
 window.CONFIG = {
