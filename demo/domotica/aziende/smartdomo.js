@@ -10,5 +10,5 @@ Object.assign(window.CONFIG, {
   logo: null,
   sede: "Monza (MB)",
   telefono: "039 5788038",
-  email: "(email da inserire)"
+  email: "info@smartdomo.it"
 });
