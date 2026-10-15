@@ -4,6 +4,9 @@ document.addEventListener('DOMContentLoaded', function () {
   var d = document.createElement('div');
   d.setAttribute('role', 'note');
   d.style.cssText = 'background:#fff7d6;color:#5b4a00;font:13px/1.4 system-ui,sans-serif;padding:6px 12px;text-align:center;border-bottom:1px solid #e9d98a;position:relative;z-index:9999';
-  d.textContent = 'Bozza dimostrativa preparata da Studio Vacchini per ' + nome + ' · non affiliata all’azienda · tutti i dati sono inventati';
+  var personale = /[?&](a|d)=/.test(location.search);
+  d.textContent = personale
+    ? 'Bozza dimostrativa preparata da Studio Vacchini per ' + nome + ' · non affiliata all’azienda · tutti i dati sono inventati'
+    : 'Demo di Studio Vacchini · azienda e dati di esempio, inventati';
   document.body.insertBefore(d, document.body.firstChild);
 });
