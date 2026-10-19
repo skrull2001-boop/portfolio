@@ -39,3 +39,34 @@
   // document.write mantiene l'ordine: il file dell'azienda è letto prima di app.js
   document.write('<script src="aziende/' + window.AZIENDA + '.js" onerror="window.AZIENDA_MANCANTE=\'' + window.AZIENDA + '\'"><\/script>');
 })();
+
+/*
+ * Portale per il deposito del piano di lavoro, in base alla provincia della sede (sigla tra parentesi in CONFIG.sede).
+ * GeMA esiste solo in Lombardia: fuori regione si usa un testo neutro. Senza sede (o sigla) resta GeMA.
+ * Letto al momento dell'uso, così vale anche per i file aziende/*.js caricati dopo questo script.
+ * nomePortale(forma): 'nome' (default), 'su' ("su GeMA"), 'a' ("a GeMA"), 'breve' (etichetta corta), 'ente' e 'dell' (organo di vigilanza).
+ */
+(function () {
+  'use strict';
+  var LOMBARDIA = ['MI', 'MB', 'BG', 'BS', 'CO', 'CR', 'LC', 'LO', 'MN', 'PV', 'SO', 'VA'];
+  var VENETO = ['VR', 'VI', 'PD', 'VE', 'TV', 'RO', 'BL'];
+  var TESTI = {
+    lombardia: { nome: 'GeMA', su: 'su GeMA', a: 'a GeMA', breve: 'GeMA', ente: 'ATS', dell: 'dell\'ATS' },
+    veneto: { nome: 'portale regionale', su: 'sul portale regionale', a: 'al portale regionale', breve: 'ULSS', ente: 'ULSS', dell: 'dell\'ULSS' },
+    italia: { nome: 'portale regionale', su: 'sul portale regionale', a: 'al portale regionale', breve: 'ASL/ATS', ente: 'ASL/ATS', dell: 'dell\'ASL/ATS' },
+    ticino: { nome: 'autorità competente', su: 'presso l\'autorità competente', a: 'all\'autorità competente', breve: 'SUVA', ente: 'SUVA/autorità cantonale', dell: 'della SUVA/autorità cantonale' }
+  };
+
+  function zona() {
+    var sede = String((window.CONFIG && window.CONFIG.sede) || '');
+    var m = /\(([A-Za-z]{2})\)/.exec(sede), p = m ? m[1].toUpperCase() : '';
+    if (p === 'TI' || /svizzera/i.test(sede)) return 'ticino';
+    if (!p || LOMBARDIA.indexOf(p) >= 0) return 'lombardia';
+    return VENETO.indexOf(p) >= 0 ? 'veneto' : 'italia';
+  }
+
+  window.nomePortale = function (forma) {
+    var t = TESTI[zona()];
+    return t[forma] || t.nome;
+  };
+})();

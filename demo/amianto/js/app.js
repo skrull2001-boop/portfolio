@@ -5,7 +5,7 @@
  */
 (function () {
   'use strict';
-  var C = window.CONFIG, D = window.DATI, OGGI = window.DEMO.OGGI, gg = window.DEMO.gg;
+  var C = window.CONFIG, P = window.nomePortale, D = window.DATI, OGGI = window.DEMO.OGGI, gg = window.DEMO.gg;
 
   /* ---------- utilità ---------- */
   var $ = function (s, el) { return (el || document).querySelector(s); };
@@ -72,7 +72,7 @@
   function scadenze() {
     var out = [];
     D.cantieri.forEach(function (c) {
-      if (c.stato === 'piano' && c.inizio) out.push({ tipo: 'GeMA', data: gemaEntro(c), titolo: 'Piano di lavoro su GeMA', sotto: c.id + ' · ' + c.comune, href: '#/piano/' + c.id });
+      if (c.stato === 'piano' && c.inizio) out.push({ tipo: P('breve'), data: gemaEntro(c), titolo: 'Piano di lavoro ' + P('su'), sotto: c.id + ' · ' + c.comune, href: '#/piano/' + c.id });
     });
     D.operai.forEach(function (o) {
       out.push({ tipo: 'Corso', data: o.corso.agg, titolo: 'Aggiornamento corso amianto', sotto: o.nome, href: '#/operai/' + o.id });
@@ -172,7 +172,7 @@
   function infoDemo() {
     modale('<h2>Cosa è vero in questa demo</h2><p class="muted">Questa è una bozza dimostrativa per ' + esc(C.nome) + '. Serve a far vedere come lavorerebbe l\'app, non è ancora il prodotto.</p>' +
       '<div class="two"><div><h3>' + ico('check') + ' Funziona già così</h3><ul><li>Navigazione tra tutte le schermate, da computer e da telefono</li><li>Piano di lavoro precompilato con anteprima e stampa in PDF dal browser</li><li>Preventivo con calcolo delle superfici e del totale, stampabile</li><li>Allarmi calcolati dalle scadenze</li></ul></div>' +
-      '<div><h3>' + ico('info') + ' Simulato</h3><ul><li>Tutti i dati: cantieri, persone, aziende e formulari sono inventati</li><li>La lettura dei documenti con l\'IA è un\'animazione</li><li>Nessun salvataggio: ricaricando la pagina si riparte</li><li>Nessun invio a GeMA o RENTRI: nell\'app vera si prepara il documento, il deposito resta all\'impresa</li></ul></div></div>');
+      '<div><h3>' + ico('info') + ' Simulato</h3><ul><li>Tutti i dati: cantieri, persone, aziende e formulari sono inventati</li><li>La lettura dei documenti con l\'IA è un\'animazione</li><li>Nessun salvataggio: ricaricando la pagina si riparte</li><li>Nessun invio ' + P('a') + ' o RENTRI: nell\'app vera si prepara il documento, il deposito resta all\'impresa</li></ul></div></div>');
   }
 
   /* ---------- 1. cruscotto ---------- */
@@ -193,7 +193,7 @@
     var h = intestazione(saluto + ', ' + esc(C.utente.nome), OGGI.toLocaleDateString('it-IT', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }), '<a class="btn" href="#/ia">' + ico('ia') + 'Leggi un documento</a>');
     h += '<section class="kpis">' +
       kpi('Cantieri attivi', attivi.length, inCorso + ' con lavori in corso', 'cantieri', '#/cantieri') +
-      kpi('Piani da caricare su GeMA', piani.length, piani.length ? 'primo entro il ' + fmt(gemaEntro(piani[0])) : 'nessuno', 'doc', piani.length ? '#/piano/' + piani[0].id : '#/cantieri', piani.length && giorni(gemaEntro(piani[0])) <= 7 ? 'warn' : '') +
+      kpi('Piani da caricare ' + P('su'), piani.length, piani.length ? 'primo entro il ' + fmt(gemaEntro(piani[0])) : 'nessuno', 'doc', piani.length ? '#/piano/' + piani[0].id : '#/cantieri', piani.length && giorni(gemaEntro(piani[0])) <= 7 ? 'warn' : '') +
       kpi('Operai con scadenze a 60 giorni', opScad + ' su ' + D.operai.length, 'corsi, visite, patentini', 'operai', '#/operai', opScad ? 'info' : '') +
       kpi('Formulari senza 4ª copia', firAperti, 'da ricevere entro 3 mesi', 'rifiuti', '#/rifiuti') +
       '</section>';
@@ -215,7 +215,7 @@
   }
   function rigaCantiere(c) {
     var extra = '';
-    if (c.stato === 'piano') { var n = giorni(gemaEntro(c)); extra = '<span class="mini mini-' + livello(n) + '">GeMA entro ' + fmtBreve(gemaEntro(c)) + '</span>'; }
+    if (c.stato === 'piano') { var n = giorni(gemaEntro(c)); extra = '<span class="mini mini-' + livello(n) + '">' + P('breve') + ' entro ' + fmtBreve(gemaEntro(c)) + '</span>'; }
     else if (c.inizio && c.inizio > OGGI) extra = '<span class="mini">Inizio ' + fmtBreve(c.inizio) + '</span>';
     else if (c.stato === 'incorso') extra = '<span class="mini mini-brand">Giorno ' + (giorni(OGGI) - giorni(c.inizio) + 1) + ' di ' + c.durata + '</span>';
     var pct = Math.round(statoIdx(c.stato) / (STATI.length - 1) * 100);
@@ -242,10 +242,10 @@
     docs.push({ nome: 'Rapporto di prova del campione (laboratorio)', st: 'ok', info: fmt(piu(c.sopralluogo.data, 6)) });
     docs.push({ nome: 'Preventivo', st: i >= 1 ? 'ok' : 'todo', info: i >= 1 ? (c.importo ? eur(c.importo) : 'inviato') : 'da preparare', href: i < 2 ? '#/preventivo/' + c.id : null });
     docs.push({ nome: 'Notifica preliminare (art. 250 D.Lgs. 81/2008)', st: i >= 3 ? 'ok' : i === 2 ? 'draft' : 'none', info: i >= 3 ? 'inviata' : i === 2 ? 'bozza pronta' : '—' });
-    docs.push({ nome: 'Piano di lavoro (art. 256 D.Lgs. 81/2008)', st: i >= 3 ? 'ok' : i === 2 ? 'todo' : 'none', info: i >= 3 ? 'depositato su GeMA il ' + fmt(c.depositato) : i === 2 ? 'da generare e caricare' : '—', href: i >= 2 ? '#/piano/' + c.id : null });
+    docs.push({ nome: 'Piano di lavoro (art. 256 D.Lgs. 81/2008)', st: i >= 3 ? 'ok' : i === 2 ? 'todo' : 'none', info: i >= 3 ? 'depositato ' + P('su') + ' il ' + fmt(c.depositato) : i === 2 ? 'da generare e caricare' : '—', href: i >= 2 ? '#/piano/' + c.id : null });
     var nf = D.fir.filter(function (f) { return f.cantiere === c.id; }).length;
     docs.push({ nome: 'Formulari rifiuti (FIR)', st: nf ? 'ok' : 'none', info: nf ? nf + ' formulari' : '—', href: nf ? '#/rifiuti' : null });
-    docs.push({ nome: 'Certificato di restituibilità', st: i === 6 ? 'ok' : i === 5 ? 'todo' : 'none', info: i === 6 ? 'ricevuto' : i === 5 ? 'in attesa dell\'ATS' : '—' });
+    docs.push({ nome: 'Certificato di restituibilità', st: i === 6 ? 'ok' : i === 5 ? 'todo' : 'none', info: i === 6 ? 'ricevuto' : i === 5 ? 'in attesa ' + P('dell') : '—' });
     return docs;
   }
   var DOC_ST = { ok: ['ok', 'Presente'], draft: ['info', 'Bozza'], todo: ['warn', 'Da fare'], none: ['neutral', 'Non ancora'] };
@@ -261,9 +261,9 @@
     var gema = '';
     if (c.stato === 'piano') {
       var n = giorni(gemaEntro(c));
-      gema = '<div class="banner banner-' + livello(n) + '">' + ico('clock') + '<div><strong>Piano di lavoro da caricare su GeMA entro il ' + fmt(gemaEntro(c)) + ' (' + rel(gemaEntro(c)) + ')</strong><small>Inizio lavori previsto il ' + fmt(c.inizio) + ': servono almeno 30 giorni dal deposito.</small></div><a class="btn btn-sm" href="#/piano/' + c.id + '">Genera</a></div>';
+      gema = '<div class="banner banner-' + livello(n) + '">' + ico('clock') + '<div><strong>Piano di lavoro da caricare ' + P('su') + ' entro il ' + fmt(gemaEntro(c)) + ' (' + rel(gemaEntro(c)) + ')</strong><small>Inizio lavori previsto il ' + fmt(c.inizio) + ': servono almeno 30 giorni dal deposito.</small></div><a class="btn btn-sm" href="#/piano/' + c.id + '">Genera</a></div>';
     } else if (c.depositato && i < 4) {
-      gema = '<div class="banner banner-ok">' + ico('check') + '<div><strong>Piano depositato su GeMA il ' + fmt(c.depositato) + '</strong><small>Lavori possibili dal ' + fmt(piu(c.depositato, 30)) + '. Inizio previsto il ' + fmt(c.inizio) + '.</small></div></div>';
+      gema = '<div class="banner banner-ok">' + ico('check') + '<div><strong>Piano depositato ' + P('su') + ' il ' + fmt(c.depositato) + '</strong><small>Lavori possibili dal ' + fmt(piu(c.depositato, 30)) + '. Inizio previsto il ' + fmt(c.inizio) + '.</small></div></div>';
     }
     h += gema;
 
@@ -330,9 +330,9 @@
     var m = modelloPiano(c);
     var depositato = statoIdx(c.stato) >= 3;
     var azioni = '<button class="btn btn-ghost" data-act="stampa-piano" data-id="' + c.id + '">' + ico('print') + 'Stampa / PDF</button>' +
-      (depositato ? '' : '<button class="btn" data-act="deposita" data-id="' + c.id + '">' + ico('upload') + 'Segna come caricato su GeMA</button>');
+      (depositato ? '' : '<button class="btn" data-act="deposita" data-id="' + c.id + '">' + ico('upload') + 'Segna come caricato ' + P('su') + '</button>');
     var h = intestazione('Piano di lavoro', '<span class="code">' + c.id + '</span> · ' + esc(c.titolo) + ', ' + esc(c.comune), azioni, '#/cantiere/' + c.id);
-    if (depositato) h += '<div class="banner banner-ok">' + ico('check') + '<div><strong>Piano già depositato su GeMA il ' + fmt(c.depositato) + '</strong><small>Le modifiche qui servono solo per una variante.</small></div></div>';
+    if (depositato) h += '<div class="banner banner-ok">' + ico('check') + '<div><strong>Piano già depositato ' + P('su') + ' il ' + fmt(c.depositato) + '</strong><small>Le modifiche qui servono solo per una variante.</small></div></div>';
     else h += bannerGema(m);
     h += '<div class="seg seg-vista"><button data-act="vista-piano" data-v="modulo" class="' + (vistaPiano === 'modulo' ? 'on' : '') + '">Modulo</button><button data-act="vista-piano" data-v="anteprima" class="' + (vistaPiano === 'anteprima' ? 'on' : '') + '">Anteprima</button></div>';
     h += '<div class="split vista-' + vistaPiano + '"><form class="card form" id="form-piano" data-id="' + c.id + '" autocomplete="off"><p class="hint">' + ico('ia') + 'Campi precompilati da scheda cantiere, sopralluogo e anagrafica operai. Controlla e correggi.</p>';
@@ -355,9 +355,9 @@
   }
   function bannerGema(m) {
     var ini = fromISO(m.inizio);
-    if (!ini) return '<div class="banner banner-warn">' + ico('clock') + '<div><strong>Manca la data di inizio lavori</strong><small>Serve per calcolare il termine di deposito su GeMA.</small></div></div>';
+    if (!ini) return '<div class="banner banner-warn">' + ico('clock') + '<div><strong>Manca la data di inizio lavori</strong><small>Serve per calcolare il termine di deposito ' + P('su') + '.</small></div></div>';
     var entro = piu(ini, -30), n = giorni(entro);
-    return '<div class="banner banner-' + livello(n) + '" id="banner-gema">' + ico('clock') + '<div><strong>Da caricare su GeMA entro il ' + fmt(entro) + ' (' + rel(entro) + ')</strong><small>30 giorni prima dell\'inizio lavori del ' + fmt(ini) + '. Se il termine è superato bisogna spostare la data di inizio.</small></div></div>';
+    return '<div class="banner banner-' + livello(n) + '" id="banner-gema">' + ico('clock') + '<div><strong>Da caricare ' + P('su') + ' entro il ' + fmt(entro) + ' (' + rel(entro) + ')</strong><small>30 giorni prima dell\'inizio lavori del ' + fmt(ini) + '. Se il termine è superato bisogna spostare la data di inizio.</small></div></div>';
   }
   function docTesta(titolo, sotto) {
     return '<div class="doc-head">' + logoHTML('logo-doc') + '<div class="doc-az"><strong>' + esc(C.nome) + '</strong><span>' + esc(C.sede) + ' · P.IVA ' + esc(C.piva) + '</span><span>' + esc(C.telefono) + ' · ' + esc(C.email) + '</span></div></div>' +
@@ -380,7 +380,7 @@
       sez(6, 'Rifiuti', '<p>Codice CER ' + esc(m.cer) + '.</p>' + p(m.rifiuti)) +
       sez(7, 'Protezione di terzi e restituibilità', p(m.terzi)) +
       '<div class="doc-firme"><div>Il datore di lavoro<span>' + esc(m.datore) + '</span></div><div>Il responsabile tecnico<span>' + esc(m.responsabile) + '</span></div></div>' +
-      '<p class="doc-foot">Bozza generata il ' + fmt(OGGI) + ' da dati inventati, a scopo dimostrativo. Il contenuto va verificato dal responsabile tecnico; il deposito su GeMA resta a cura dell\'impresa.</p>';
+      '<p class="doc-foot">Bozza generata il ' + fmt(OGGI) + ' da dati inventati, a scopo dimostrativo. Il contenuto va verificato dal responsabile tecnico; il deposito ' + P('su') + ' resta a cura dell\'impresa.</p>';
   }
   function aggiornaPiano(form) {
     var c = cantiere(form.getAttribute('data-id')), m = modelloPiano(c);
@@ -459,7 +459,7 @@
 
   /* ---------- 6. preventivo ---------- */
   var VOCI = [
-    { id: 'prat', d: 'Pratiche: campionamento, analisi, notifica e piano di lavoro su GeMA', um: 'a corpo', q: function () { return 1; }, p: 650 },
+    { id: 'prat', d: 'Pratiche: campionamento, analisi, notifica e piano di lavoro ' + P('su'), um: 'a corpo', q: function () { return 1; }, p: 650 },
     { id: 'cant', d: 'Allestimento cantiere, unità di decontaminazione, segnaletica', um: 'a corpo', q: function () { return 1; }, p: 850 },
     { id: 'sic', d: 'Linea vita provvisoria e parapetti perimetrali', um: 'ml', q: function (m) { return m.perimetro; }, p: 16 },
     { id: 'inc', d: 'Incapsulamento preventivo con prodotto di tipo C', um: 'mq', q: function (m) { return m.sup; }, p: 2.6 },
@@ -672,7 +672,7 @@
       case 'avanza': var c = cantiere(id), i = statoIdx(c.stato);
         if (i < STATI.length - 1) { c.stato = STATI[i + 1][0]; if (c.stato === 'depositato') c.depositato = new Date(OGGI); if (!c.inizio && i + 1 >= 2) { c.inizio = gg(45); c.squadra = ['op1', 'op3', 'op7']; } toast('Stato aggiornato: ' + statoLabel(c.stato)); render(); }
         break;
-      case 'deposita': var cd = cantiere(id); cd.stato = 'depositato'; cd.depositato = new Date(OGGI); toast('Piano segnato come caricato su GeMA. Scadenza tolta dal cruscotto.'); render(); break;
+      case 'deposita': var cd = cantiere(id); cd.stato = 'depositato'; cd.depositato = new Date(OGGI); toast('Piano segnato come caricato ' + P('su') + '. Scadenza tolta dal cruscotto.'); render(); break;
       case 'stampa-piano': var cp = cantiere(id); stampa('<div class="paper">' + docPiano(cp, modelloPiano(cp)) + '</div>'); break;
       case 'stampa-prev': var cv = cantiere(id); stampa('<div class="paper">' + docPreventivo(cv, modelloPrev(cv)) + '</div>'); break;
       case 'foto': var cf = cantiere(id), f = cf.foto[+el.getAttribute('data-k')];
