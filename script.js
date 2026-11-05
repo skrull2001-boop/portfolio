@@ -90,6 +90,7 @@
         'po.prob': "Cleaning your disk is scary: you don't know what you're deleting, and the serious tools are subscriptions.",
         'po.what': "A ring shows what fills the disk; safe items are already checked, each one explained in plain words. On my PC it found 38 GB to free, 23 of them NVIDIA graphics cache. Six languages, regional pricing, weekly automatic cleanup. Pay once, yours forever.",
         'po.stat': 'to read 800,000 files',
+        'po.link': 'Orbita website →',
 
         'r0': 'Ops',
         'r0.d': 'routes requests and keeps the dashboard and weekly reports.',

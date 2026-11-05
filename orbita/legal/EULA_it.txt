@@ -1,0 +1,63 @@
+ORBITA — CONTRATTO DI LICENZA CON L'UTENTE FINALE E INFORMATIVA SULLA PRIVACY
+Versione 1.0 — novembre 2026
+
+Copyright (c) 2026 Andrea Vacchini. Tutti i diritti riservati.
+
+LEGGI CON ATTENZIONE QUESTO CONTRATTO. INSTALLANDO, COPIANDO O USANDO ORBITA ACCETTI DI ESSERE VINCOLATO DAI SUOI TERMINI. SE NON LI ACCETTI, NON INSTALLARE E NON USARE IL SOFTWARE.
+
+1. PARTI
+Il presente Contratto di licenza ("Contratto") è stipulato tra te, la persona fisica o l'ente che installa o usa il software ("tu" o "Utente"), e Andrea Vacchini, Italia ("Licenziante"), contatto: studiovacchini@gmail.com. Per "Software" si intendono l'applicazione Orbita, i suoi aggiornamenti, la documentazione e i file collegati.
+
+2. CONCESSIONE DELLA LICENZA
+Alle condizioni del presente Contratto, il Licenziante ti concede una licenza limitata, personale, non esclusiva, non trasferibile, non sublicenziabile e revocabile per installare e usare il Software su computer di tua proprietà o sotto il tuo controllo. La scansione e la mappa del disco sono gratuite. Un numero limitato di pulizie è gratuito; le pulizie illimitate e la pulizia automatica ("Orbita Pro") richiedono una chiave di licenza valida. La chiave è personale e non può essere condivisa, pubblicata o rivenduta.
+
+3. LIMITAZIONI
+Salvo quanto espressamente consentito da norme inderogabili, non puoi: (a) copiare, modificare, tradurre o creare opere derivate dal Software; (b) decompilarlo, disassemblarlo o sottoporlo a reverse engineering; (c) noleggiarlo, darlo in locazione o in prestito, venderlo, ridistribuirlo o sublicenziarlo; (d) rimuovere o alterare le note sul copyright, i marchi o il presente Contratto; (e) aggirare il sistema di licenza o creare, usare o distribuire generatori di chiavi; (f) usare il Software per scopi illeciti.
+
+4. COSA FA IL SOFTWARE — LA TUA RESPONSABILITÀ
+4.1 Il Software analizza la memoria del computer e, SOLO dopo la tua conferma, cancella o sposta file. I file temporanei e le cache vengono cancellati definitivamente. I file che scegli manualmente vengono spostati nel Cestino di Windows. Alcune operazioni (ad esempio la pulizia di Windows Update, la pulizia dei componenti tramite Microsoft DISM, la disattivazione dell'ibernazione, lo svuotamento del Cestino) sono eseguite con strumenti di Windows e possono richiedere il permesso di amministratore, che concedi tramite la richiesta di Windows.
+4.2 Sei tu a decidere quali voci pulire. Le voci preselezionate sono suggerimenti basati su criteri generali e potrebbero non adattarsi al tuo specifico sistema, ai tuoi programmi o al tuo modo di lavorare.
+4.3 PRIMA DI USARE IL SOFTWARE DEVI FARE UNA COPIA DI SICUREZZA DEI DATI CHE VUOI CONSERVARE. Sei l'unico responsabile dei tuoi dati, delle tue copie di sicurezza e delle conseguenze delle operazioni che confermi.
+4.4 Chiudi gli altri programmi prima di pulire. I file in uso vengono saltati; i risultati dipendono dal tuo sistema e non sono garantiti.
+
+5. PULIZIA AUTOMATICA
+Se attivi la pulizia automatica, autorizzi il Software a creare un'attività pianificata di Windows che lo avvia all'orario scelto e pulisce, senza ulteriore conferma, solo le voci contrassegnate come sicure che non richiedono il permesso di amministratore. Puoi disattivarla in qualsiasi momento dal Software; anche la disinstallazione la interrompe.
+
+6. ESCLUSIONE DI GARANZIE
+NEI LIMITI MASSIMI CONSENTITI DALLA LEGGE APPLICABILE, IL SOFTWARE È FORNITO "COSÌ COM'È" E "COME DISPONIBILE", CON TUTTI I SUOI DIFETTI E SENZA GARANZIE DI ALCUN TIPO, ESPRESSE, IMPLICITE O DI LEGGE, INCLUSE, A TITOLO ESEMPLIFICATIVO, LE GARANZIE DI COMMERCIABILITÀ, IDONEITÀ A UNO SCOPO PARTICOLARE, ACCURATEZZA, NON VIOLAZIONE DI DIRITTI DI TERZI E FUNZIONAMENTO ININTERROTTO O PRIVO DI ERRORI. IL LICENZIANTE NON GARANTISCE ALCUNA QUANTITÀ DI SPAZIO LIBERATO, ALCUN MIGLIORAMENTO DELLE PRESTAZIONI NÉ LA COMPATIBILITÀ CON ALCUN SISTEMA O SOFTWARE.
+
+7. LIMITAZIONE DI RESPONSABILITÀ
+7.1 NEI LIMITI MASSIMI CONSENTITI DALLA LEGGE APPLICABILE, IL LICENZIANTE NON È RESPONSABILE PER PERDITA O DANNEGGIAMENTO DI DATI, MANCATO GUADAGNO, PERDITA DI RICAVI, DI AFFARI O DI AVVIAMENTO, DANNI O MALFUNZIONAMENTI DEL SISTEMA, COSTI DI RECUPERO O SOSTITUZIONE, NÉ PER ALCUN DANNO INDIRETTO, INCIDENTALE, SPECIALE, CONSEQUENZIALE O PUNITIVO DERIVANTE DAL SOFTWARE O DAL PRESENTE CONTRATTO O AD ESSI CONNESSO, QUALUNQUE NE SIA LA CAUSA E IL FONDAMENTO, ANCHE SE AVVISATO DELLA LORO POSSIBILITÀ.
+7.2 NEI LIMITI MASSIMI CONSENTITI DALLA LEGGE APPLICABILE, LA RESPONSABILITÀ COMPLESSIVA DEL LICENZIANTE NON SUPERA L'IMPORTO DA TE EFFETTIVAMENTE PAGATO PER IL SOFTWARE NEI DODICI (12) MESI PRECEDENTI IL FATTO CHE HA DATO ORIGINE ALLA PRETESA, O DIECI EURO (10 EUR) SE NON HAI PAGATO NULLA.
+7.3 Nulla nel presente Contratto esclude o limita la responsabilità che non può essere esclusa o limitata per legge, inclusa la responsabilità per dolo o colpa grave (art. 1229 del Codice civile) e, ove applicabile, per morte o lesioni personali, né pregiudica i diritti inderogabili dei consumatori.
+
+8. MANLEVA
+Nei limiti consentiti dalla legge, ti impegni a manlevare e tenere indenne il Licenziante da pretese, perdite e spese (incluse ragionevoli spese legali) derivanti dalla tua violazione del presente Contratto o dall'uso improprio del Software.
+
+9. SERVIZI E MARCHI DI TERZI
+9.1 La funzione facoltativa con l'IA "Cos'è?" funziona solo se fornisci una tua chiave API di un servizio di IA di terzi (Anthropic). Quando la usi, il Software invia a quel servizio il percorso, la dimensione e i nomi delle sottocartelle della cartella scelta, mai il contenuto dei tuoi file. Si applicano i termini e l'informativa privacy di quel servizio.
+9.2 Windows, Microsoft Store, NVIDIA, AMD, Intel, Steam, Chrome e gli altri nomi citati sono marchi dei rispettivi titolari. Il Licenziante non è affiliato a essi né approvato da essi.
+
+10. INFORMATIVA SULLA PRIVACY
+10.1 Il Software funziona in locale sul tuo computer. Non raccoglie, non vende e non trasmette i tuoi file, l'elenco dei tuoi file o statistiche di utilizzo. I risultati della scansione restano sul tuo computer.
+10.2 Il Software salva sul tuo computer solo le proprie impostazioni, lo stato della licenza e la pianificazione della pulizia automatica, nella sua cartella dei dati.
+10.3 I dati possono uscire dal tuo computer solo (a) se usi la funzione facoltativa con l'IA (vedi 9.1), oppure (b) quando acquisti o attivi una licenza, tramite il rivenditore indicato all'acquisto, la cui informativa privacy si applica.
+10.4 Per qualsiasi richiesta sulla privacy puoi scrivere a studiovacchini@gmail.com. Chi risiede nell'Unione europea ha i diritti previsti dal Regolamento (UE) 2016/679 (GDPR), compreso il diritto di proporre reclamo al Garante per la protezione dei dati personali.
+
+11. ACQUISTI, RIMBORSI E RECESSO
+Le licenze sono vendute tramite un rivenditore autorizzato o un negozio di app (ad esempio Microsoft Store o un "merchant of record"), di cui si applicano anche le condizioni di vendita, pagamento, fiscali e di rimborso. Per i consumatori dell'Unione europea: se chiedi l'accesso immediato al contenuto digitale e lo confermi all'acquisto, perdi il diritto di recesso una volta iniziata la fornitura (art. 59, comma 1, lett. o, del Codice del consumo; art. 16, lett. m, della Direttiva 2011/83/UE); restano salvi i tuoi diritti di legge in caso di difetto di conformità.
+
+12. AGGIORNAMENTI E RISOLUZIONE
+Il Licenziante può fornire aggiornamenti, regolati dal presente Contratto salvo diversi termini allegati. Il Contratto resta valido fino alla sua cessazione. Cessa automaticamente in caso di tua violazione; in tal caso devi smettere di usare il Software e disinstallarlo. Le sezioni 3, 6, 7, 8, 13 e 14 restano valide anche dopo la cessazione.
+
+13. PROPRIETÀ INTELLETTUALE
+Il Software è concesso in licenza, non venduto. Il Licenziante conserva ogni diritto, titolo e interesse sul Software, inclusi tutti i diritti d'autore, il nome "Orbita" e la sua identità visiva. Tutti i diritti non espressamente concessi sono riservati.
+
+14. LEGGE APPLICABILE E FORO COMPETENTE
+Il presente Contratto è regolato dalla legge italiana, escluse le norme di diritto internazionale privato e la Convenzione di Vienna sulla vendita internazionale di beni. È competente il Foro di Milano, fatte salve le norme inderogabili che consentono al consumatore di agire o essere convenuto davanti al giudice del luogo di residenza e le tutele riconosciute al consumatore dalla legge del suo Paese di residenza.
+
+15. DISPOSIZIONI GENERALI
+Se una clausola è ritenuta invalida o inefficace, viene limitata nella misura minima necessaria e le altre restano pienamente valide. Il presente Contratto costituisce l'intero accordo tra te e il Licenziante riguardo al Software. Le traduzioni sono fornite per comodità; in caso di contrasto prevale la versione inglese, salvo diversa norma inderogabile.
+
+16. CONTATTI
+Andrea Vacchini — studiovacchini@gmail.com

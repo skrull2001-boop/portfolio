@@ -1,0 +1,63 @@
+ORBITA — END USER LICENSE AGREEMENT AND PRIVACY NOTICE
+Version 1.0 — November 2026
+
+Copyright (c) 2026 Andrea Vacchini. All rights reserved.
+
+PLEASE READ THIS AGREEMENT CAREFULLY. BY INSTALLING, COPYING OR USING ORBITA YOU AGREE TO BE BOUND BY ITS TERMS. IF YOU DO NOT AGREE, DO NOT INSTALL OR USE THE SOFTWARE.
+
+1. PARTIES
+This End User License Agreement ("Agreement") is between you, the individual or entity installing or using the software ("you" or "User"), and Andrea Vacchini, Italy ("Licensor"), contact: studiovacchini@gmail.com. "Software" means the Orbita application, its updates, documentation and any related files.
+
+2. LICENSE GRANT
+Subject to this Agreement, the Licensor grants you a limited, personal, non-exclusive, non-transferable, non-sublicensable and revocable license to install and use the Software on computers you own or control. The scan and the disk map are free. A limited number of cleanups is free; unlimited cleanups and automatic cleanup ("Orbita Pro") require a valid license key. A license key is personal and may not be shared, published or resold.
+
+3. RESTRICTIONS
+You may not, except to the extent expressly permitted by mandatory law: (a) copy, modify, translate or create derivative works of the Software; (b) decompile, disassemble or reverse engineer it; (c) rent, lease, lend, sell, redistribute or sublicense it; (d) remove or alter copyright notices, trademarks or this Agreement; (e) circumvent the license system or create, use or distribute key generators; (f) use the Software for any unlawful purpose.
+
+4. WHAT THE SOFTWARE DOES — YOUR RESPONSIBILITY
+4.1 The Software analyses your storage and, ONLY when you confirm, deletes or moves files. Temporary files and caches are deleted permanently. Files you select manually are moved to the Windows Recycle Bin. Some operations (for example Windows Update cleanup, component cleanup through Microsoft DISM, disabling hibernation, emptying the Recycle Bin) are performed with Windows tools and may require administrator permission, which you grant through the Windows prompt.
+4.2 You alone decide which items to clean. Pre-selected items are suggestions based on general criteria and may not suit your specific system, software or workflow.
+4.3 BEFORE USING THE SOFTWARE YOU MUST BACK UP ANY DATA YOU WISH TO KEEP. You are solely responsible for your data, for your backups and for the consequences of the operations you confirm.
+4.4 Close other programs before cleaning. Files in use are skipped; results depend on your system and are not guaranteed.
+
+5. AUTOMATIC CLEANUP
+If you enable automatic cleanup, you authorise the Software to create a Windows scheduled task that runs the Software at the chosen time and cleans, without further confirmation, only the items marked as safe that do not require administrator permission. You can disable it at any time from the Software; uninstalling the Software also stops it.
+
+6. NO WARRANTY
+TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE SOFTWARE IS PROVIDED "AS IS" AND "AS AVAILABLE", WITH ALL FAULTS AND WITHOUT WARRANTY OF ANY KIND, EXPRESS, IMPLIED OR STATUTORY, INCLUDING WITHOUT LIMITATION WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, ACCURACY, NON-INFRINGEMENT AND UNINTERRUPTED OR ERROR-FREE OPERATION. THE LICENSOR DOES NOT WARRANT ANY AMOUNT OF SPACE FREED, ANY PERFORMANCE IMPROVEMENT OR COMPATIBILITY WITH ANY SYSTEM OR SOFTWARE.
+
+7. LIMITATION OF LIABILITY
+7.1 TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE LICENSOR SHALL NOT BE LIABLE FOR ANY LOSS OR CORRUPTION OF DATA, LOSS OF PROFITS, REVENUE, BUSINESS OR GOODWILL, SYSTEM DAMAGE OR MALFUNCTION, COST OF RECOVERY OR REPLACEMENT, OR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL OR PUNITIVE DAMAGES, ARISING OUT OF OR RELATED TO THE SOFTWARE OR THIS AGREEMENT, HOWEVER CAUSED AND UNDER ANY THEORY OF LIABILITY, EVEN IF ADVISED OF THEIR POSSIBILITY.
+7.2 TO THE MAXIMUM EXTENT PERMITTED BY APPLICABLE LAW, THE LICENSOR'S TOTAL AGGREGATE LIABILITY SHALL NOT EXCEED THE AMOUNT YOU ACTUALLY PAID FOR THE SOFTWARE IN THE TWELVE (12) MONTHS BEFORE THE EVENT GIVING RISE TO THE CLAIM, OR TEN EUROS (EUR 10) IF YOU HAVE PAID NOTHING.
+7.3 Nothing in this Agreement excludes or limits liability that cannot be excluded or limited under applicable law, including liability for wilful misconduct or gross negligence and, where applicable, liability for death or personal injury, nor does it affect the mandatory rights of consumers.
+
+8. INDEMNITY
+To the extent permitted by law, you agree to indemnify and hold the Licensor harmless from claims, losses and expenses (including reasonable legal fees) arising from your breach of this Agreement or your misuse of the Software.
+
+9. THIRD-PARTY SERVICES AND TRADEMARKS
+9.1 The optional "What is it?" AI feature works only if you provide your own API key for a third-party AI service (Anthropic). When you use it, the Software sends that service the path, size and names of the subfolders of the selected folder — never the content of your files. That service's own terms and privacy policy apply.
+9.2 Windows, Microsoft Store, NVIDIA, AMD, Intel, Steam, Chrome and the other names mentioned are trademarks of their respective owners. The Licensor is not affiliated with or endorsed by them.
+
+10. PRIVACY NOTICE
+10.1 The Software works locally on your computer. It does not collect, sell or transmit your files, the list of your files, or usage statistics. Scan results stay on your computer.
+10.2 The Software stores on your computer only its own settings, license status and automatic cleanup schedule, in its application data folder.
+10.3 Data may leave your computer only (a) if you use the optional AI feature (see 9.1), or (b) when you buy or activate a license, through the reseller indicated at purchase, whose privacy policy applies.
+10.4 For any privacy request you can write to studiovacchini@gmail.com. EU residents have the rights provided by Regulation (EU) 2016/679 (GDPR), including the right to lodge a complaint with a supervisory authority.
+
+11. PURCHASES, REFUNDS AND WITHDRAWAL
+Licenses are sold through an authorised reseller or app store (for example Microsoft Store or a merchant of record), whose terms of sale, payment, tax and refund terms also apply. For consumers in the European Union: if you request immediate access to the digital content and acknowledge it at checkout, you lose your right of withdrawal once delivery has begun (Article 16(m) of Directive 2011/83/EU); this does not affect your statutory rights in case of non-conformity.
+
+12. UPDATES AND TERMINATION
+The Licensor may provide updates, which are governed by this Agreement unless accompanied by different terms. This Agreement is effective until terminated. It terminates automatically if you breach it; upon termination you must stop using and uninstall the Software. Sections 3, 6, 7, 8, 13 and 14 survive termination.
+
+13. INTELLECTUAL PROPERTY
+The Software is licensed, not sold. The Licensor retains all rights, title and interest in and to the Software, including all copyrights, the name "Orbita" and its visual identity. All rights not expressly granted are reserved.
+
+14. GOVERNING LAW AND JURISDICTION
+This Agreement is governed by the laws of Italy, excluding its conflict-of-law rules and the UN Convention on Contracts for the International Sale of Goods. The courts of Milan, Italy, have jurisdiction, without prejudice to the mandatory rules that allow consumers to bring or defend proceedings in the courts of their place of residence and to the protections granted to consumers by the law of their country of residence.
+
+15. GENERAL
+If any provision is held invalid or unenforceable, it will be limited to the minimum extent necessary and the remaining provisions will remain in full force. This Agreement is the entire agreement between you and the Licensor regarding the Software. Translations are provided for convenience; in case of discrepancy the English version prevails, unless mandatory law provides otherwise.
+
+16. CONTACT
+Andrea Vacchini — studiovacchini@gmail.com
