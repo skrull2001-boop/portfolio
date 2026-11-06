@@ -35,7 +35,7 @@ module.exports = {
     pulisci: "Nettoyer", puliziaInCorso: "Nettoyage en cours", preparo: "Préparation…", ops: "Oups", chiudi: "Fermer",
     simulazione: "Simulation terminée", fatto: "Terminé", siPotrebbero: "pourraient être libérés", liberati: "libérés",
     nienteDaLiberare: "Rien à libérer", aggiornaMappa: "Actualiser la carte",
-    licenzaSopra: "Orbita Pro", licenzaTitolo: "Tu as utilisé tes {g} nettoyages gratuits",
+    licenzaSopra: "Orbita Pro", licenzaTitolo: "Tu as utilisé ton nettoyage gratuit",
     licenzaTesto: "L'analyse et la carte restent gratuites pour toujours. Avec Orbita Pro tu nettoies sans limite et tu actives le nettoyage automatique.",
     slogan: "Payez une fois. À vous pour toujours.", prezzoLancio: "Prix de lancement", poi: "puis {p}", unaVolta: "paiement unique",
     acquistoPresto: "L'achat en ligne sera bientôt disponible.", piuTardi: "Plus tard", attiva: "Activer", chiaveSegnaposto: "ORB-XXXX-XXXX-XXXX-XX",

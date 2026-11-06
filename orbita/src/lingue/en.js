@@ -35,7 +35,7 @@ module.exports = {
     pulisci: "Clean", puliziaInCorso: "Cleaning", preparo: "Getting ready…", ops: "Oops", chiudi: "Close",
     simulazione: "Simulation complete", fatto: "Done", siPotrebbero: "could be freed", liberati: "freed",
     nienteDaLiberare: "Nothing to free", aggiornaMappa: "Refresh the map",
-    licenzaSopra: "Orbita Pro", licenzaTitolo: "You've used your {g} free cleanups",
+    licenzaSopra: "Orbita Pro", licenzaTitolo: "You've used your free cleanup",
     licenzaTesto: "Scanning and the map stay free forever. With Orbita Pro you clean without limits and unlock automatic cleanup.",
     slogan: "Pay once. Yours forever.", prezzoLancio: "Launch price", poi: "then {p}", unaVolta: "one-time",
     acquistoPresto: "Online purchase coming soon.", piuTardi: "Later", attiva: "Activate", chiaveSegnaposto: "ORB-XXXX-XXXX-XXXX-XX",
