@@ -5,143 +5,243 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Orbita · See what fills your disk. Clean it safely.</title>
-<meta name="description" content="Orbita shows what fills your Windows disk in one colorful ring and cleans only what's safe, explaining every item in plain words. Pay once, yours forever.">
+<meta name="description" content="Orbita shows what fills your Windows disk in one ring and cleans only what's safe, explaining every item in plain words. Pay once, yours forever.">
 <meta property="og:title" content="Orbita · See what fills your disk. Clean it safely.">
 <meta property="og:description" content="One ring to see your whole disk. Safe items pre-checked, each explained in plain words. Pay once, yours forever.">
 <meta property="og:image" content="https://skrull2001-boop.github.io/portfolio/orbita/img/og.jpg">
 <meta property="og:url" content="https://skrull2001-boop.github.io/portfolio/orbita/">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#eef1f5">
 <link rel="icon" href="img/favicon.png">
 <style>
-:root{--bg:#05070f;--txt:#e6ecff;--t2:#9aa8d6;--t3:#64709a;--ciano:#5ee7ff;--verde:#00e5a0;--bordo:rgba(120,150,255,.16);--vetro:rgba(18,26,56,.55);
---num:"Bahnschrift","Segoe UI Variable Display","Segoe UI",system-ui,sans-serif;--font:"Segoe UI Variable Text","Segoe UI",system-ui,-apple-system,sans-serif}
+:root{
+  --bg:#eef1f5;--bg2:#ffffff;--txt:#0f172a;--t2:#475569;--t3:#8a93a3;--bordo:rgba(15,30,60,.10);
+  --blu:#0067c0;--blu2:#2f8be6;--verde:#0f9d6b;
+  --scuro:#111316;--scuro2:#181b20;--sb:rgba(255,255,255,.08);--st:#eceef2;--st2:#a4abb8;--sblu:#4d8dff;
+  --num:"Bahnschrift","Segoe UI Variable Display","Segoe UI",system-ui,sans-serif;
+  --font:"Segoe UI Variable Text","Segoe UI",system-ui,-apple-system,"Helvetica Neue",sans-serif;
+  --mono:"Cascadia Mono",Consolas,ui-monospace,monospace;
+}
 *{box-sizing:border-box}html{scroll-behavior:smooth}
-body{margin:0;background:radial-gradient(1200px 700px at 20% 10%,#0f1a45 0%,transparent 60%),radial-gradient(900px 600px at 90% 60%,#1a0f3d 0%,transparent 60%),var(--bg);color:var(--txt);font:16px/1.6 var(--font)}
-a{color:var(--ciano)}
-.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
-nav{display:flex;align-items:center;gap:14px;padding:18px 0}
-.logo{display:flex;align-items:center;gap:10px;font:600 16px var(--num);letter-spacing:.3em;text-decoration:none;color:var(--txt)}
-.logo img{width:30px;height:30px}
+body{margin:0;background:var(--bg);color:var(--txt);font:16px/1.6 var(--font);-webkit-font-smoothing:antialiased}
+a{color:var(--blu)}
+.wrap{max-width:1160px;margin:0 auto;padding:0 20px}
+.mono{font-family:var(--mono);letter-spacing:.08em;text-transform:uppercase;font-size:12px}
+
+/* nav */
+nav{position:sticky;top:0;z-index:10;background:rgba(238,241,245,.78);backdrop-filter:saturate(1.4) blur(14px);-webkit-backdrop-filter:saturate(1.4) blur(14px);border-bottom:1px solid transparent;transition:border-color .2s}
+nav.ombra{border-bottom-color:var(--bordo)}
+nav .wrap{display:flex;align-items:center;gap:22px;height:64px}
+.logo{display:flex;align-items:center;gap:10px;font:600 15px var(--num);letter-spacing:.34em;text-decoration:none;color:var(--txt)}
+.logo img{width:28px;height:28px}
 nav .sp{flex:1}
 nav a.l{color:var(--t2);text-decoration:none;font-size:14px}
-.lang{background:transparent;border:1px solid var(--bordo);color:var(--t2);border-radius:999px;padding:4px 12px;cursor:pointer;font:13px var(--font)}
-.hero{display:grid;grid-template-columns:1fr;gap:28px;padding:40px 0 20px;text-align:center}
-.hero h1{font:600 clamp(34px,6vw,64px)/1.05 var(--font);margin:0;letter-spacing:-.02em}
-.grad{background:linear-gradient(120deg,#00e5a0,#5ee7ff 55%,#8f8bff);-webkit-background-clip:text;color:transparent}
-.hero p.sub{color:var(--t2);font-size:clamp(16px,2.2vw,20px);max-width:720px;margin:0 auto}
-.slogan{font:600 18px var(--font);color:var(--ciano);letter-spacing:.02em}
-.cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:8px}
-.btn{display:inline-block;border-radius:14px;padding:14px 26px;font:700 15px var(--font);text-decoration:none;cursor:pointer;border:0}
-.btn.p{color:#04121a;background:linear-gradient(120deg,#00e5a0,#5ee7ff 55%,#8f8bff);box-shadow:0 10px 40px #00e5a044}
-.btn.s{color:var(--txt);background:rgba(255,255,255,.06);border:1px solid var(--bordo)}
-.nota{color:var(--t3);font-size:13px}
-.shot{margin:34px auto 0;max-width:1100px;border-radius:18px;overflow:hidden;border:1px solid var(--bordo);box-shadow:0 30px 90px #000a,0 0 0 1px #ffffff0d inset}
-.shot img{display:block;width:100%;height:auto}
-section{padding:64px 0}
-h2{font:600 clamp(26px,3.6vw,38px)/1.15 var(--font);margin:0 0 10px;text-align:center}
-.lead{color:var(--t2);text-align:center;max-width:680px;margin:0 auto 34px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
-.card{background:var(--vetro);border:1px solid var(--bordo);border-radius:18px;padding:22px}
-.card .ic{font-size:22px}
-.card h3{margin:8px 0 6px;font:600 18px var(--font)}
+nav a.l:hover{color:var(--txt)}
+.lang{background:var(--bg2);border:1px solid var(--bordo);color:var(--t2);border-radius:999px;padding:5px 13px;cursor:pointer;font:600 12px var(--font)}
+.btn{display:inline-flex;align-items:center;gap:8px;border-radius:12px;padding:13px 24px;font:600 15px var(--font);text-decoration:none;cursor:pointer;border:0;transition:transform .15s,box-shadow .2s,background .2s}
+.btn.p{color:#fff;background:var(--blu);box-shadow:0 8px 24px rgba(0,103,192,.25)}
+.btn.p:hover{transform:translateY(-1px);box-shadow:0 12px 30px rgba(0,103,192,.32)}
+.btn.s{color:var(--txt);background:var(--bg2);border:1px solid var(--bordo)}
+.btn.pic{padding:9px 16px;font-size:14px}
+
+/* hero */
+.hero{position:relative;padding:72px 0 0;text-align:center;overflow:hidden}
+.orbite{position:absolute;left:50%;top:-140px;width:1100px;height:1100px;transform:translateX(-50%);pointer-events:none;opacity:.9}
+.orbite ellipse,.orbite circle.g{fill:none;stroke:rgba(0,103,192,.13)}
+.orbite .tr{stroke-dasharray:3 7}
+.orbite .ruota{transform-origin:550px 550px;animation:ruota 120s linear infinite}
+@keyframes ruota{to{transform:rotate(360deg)}}
+.hero>.wrap{position:relative}
+.eti{display:inline-flex;align-items:center;gap:8px;color:var(--blu);background:rgba(0,103,192,.07);border:1px solid rgba(0,103,192,.16);border-radius:999px;padding:5px 14px}
+.eti i{width:7px;height:7px;border-radius:50%;background:var(--verde);box-shadow:0 0 0 4px rgba(15,157,107,.15)}
+.hero h1{font:700 clamp(38px,6.4vw,76px)/1.02 var(--font);letter-spacing:-.035em;margin:22px auto 0;max-width:1040px}
+.hero h1 .blu{color:var(--blu)}
+.hero p.sub{color:var(--t2);font-size:clamp(17px,2.1vw,20px);max-width:680px;margin:22px auto 0}
+.cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:30px}
+.nota{color:var(--t3);font-size:13px;margin-top:14px}
+
+/* screenshot con interruttore chiaro/scuro */
+.vetrina{margin:56px auto 0;max-width:1120px;position:relative}
+.switch{display:inline-flex;background:var(--bg2);border:1px solid var(--bordo);border-radius:999px;padding:4px;gap:4px;margin-bottom:18px;box-shadow:0 4px 14px rgba(15,30,60,.06)}
+.switch button{border:0;background:transparent;border-radius:999px;padding:7px 16px;font:600 13px var(--font);color:var(--t2);cursor:pointer}
+.switch button.on{background:var(--txt);color:#fff}
+.finestra{border-radius:14px;overflow:hidden;border:1px solid var(--bordo);background:#fff;box-shadow:0 2px 4px rgba(15,30,60,.04),0 40px 100px -20px rgba(15,30,60,.28)}
+.finestra img{display:block;width:100%;height:auto}
+
+/* sezioni */
+section{padding:96px 0}
+.kick{color:var(--blu);text-align:center;margin-bottom:12px}
+h2{font:700 clamp(28px,3.8vw,44px)/1.1 var(--font);letter-spacing:-.025em;margin:0 0 14px;text-align:center}
+.lead{color:var(--t2);text-align:center;max-width:640px;margin:0 auto 48px;font-size:18px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px}
+.card{background:var(--bg2);border:1px solid var(--bordo);border-radius:18px;padding:26px;box-shadow:0 1px 2px rgba(15,30,60,.04)}
+.card .ic{width:40px;height:40px;border-radius:11px;display:grid;place-items:center;background:rgba(0,103,192,.08);color:var(--blu);font-size:19px;font-weight:700}
+.card h3{margin:16px 0 6px;font:600 18px var(--font);letter-spacing:-.01em}
 .card p{margin:0;color:var(--t2);font-size:15px}
-.big{font:600 clamp(40px,6vw,64px)/1 var(--num);color:var(--verde);text-shadow:0 0 30px #00e5a066}
-.prezzo{max-width:520px;margin:0 auto;text-align:center}
-.prezzo .card{padding:30px}
-.prezzo ul{text-align:left;color:var(--t2);padding-left:20px}
-.badge{display:inline-block;font:700 11px var(--font);letter-spacing:.08em;text-transform:uppercase;color:#1a0b00;background:linear-gradient(120deg,#ffd23f,#ff9f1c);border-radius:999px;padding:3px 10px}
-details{background:var(--vetro);border:1px solid var(--bordo);border-radius:14px;padding:14px 18px;margin:10px 0}
-summary{cursor:pointer;font-weight:600}
+
+.numeri{display:grid;grid-template-columns:repeat(3,1fr);gap:0;background:var(--bg2);border:1px solid var(--bordo);border-radius:20px;overflow:hidden}
+.numeri div{padding:34px 26px;text-align:center}
+.numeri div+div{border-left:1px solid var(--bordo)}
+.big{font:600 clamp(42px,5.4vw,60px)/1 var(--num);color:var(--txt);letter-spacing:-.01em}
+.big.v{color:var(--verde)}
+.numeri p{margin:10px 0 0;color:var(--t2);font-size:15px}
+
+/* sezione scura (Grafite) */
+.scura{background:var(--scuro);color:var(--st)}
+.scura .kick{color:var(--sblu)}
+.scura .lead{color:var(--st2)}
+.scura .card{background:var(--scuro2);border-color:var(--sb);box-shadow:none}
+.scura .card p{color:var(--st2)}
+.scura .card .ic{background:rgba(77,141,255,.12);color:var(--sblu)}
+
+/* prezzo */
+.prezzo{max-width:520px;margin:0 auto}
+.prezzo .card{padding:36px;text-align:center;border-radius:22px;box-shadow:0 30px 80px -30px rgba(15,30,60,.25)}
+.badge{display:inline-block;font:700 11px var(--font);letter-spacing:.08em;text-transform:uppercase;color:var(--verde);background:rgba(15,157,107,.1);border-radius:999px;padding:5px 12px}
+.prezzo .big{margin:18px 0 4px;font-size:64px}
+.prezzo ul{list-style:none;padding:0;margin:26px 0 28px;text-align:left}
+.prezzo li{padding:9px 0 9px 30px;position:relative;color:var(--t2);border-top:1px solid var(--bordo)}
+.prezzo li::before{content:"✓";position:absolute;left:4px;color:var(--verde);font-weight:700}
+
+/* faq */
+.faq{max-width:760px;margin:0 auto}
+details{background:var(--bg2);border:1px solid var(--bordo);border-radius:14px;padding:16px 20px;margin:10px 0}
+summary{cursor:pointer;font-weight:600;list-style:none;display:flex;justify-content:space-between;gap:12px}
+summary::after{content:"+";color:var(--t3);font-size:20px;line-height:1}
+details[open] summary::after{content:"–"}
 details p{color:var(--t2);margin:10px 0 0}
-footer{border-top:1px solid var(--bordo);padding:28px 0 40px;color:var(--t3);font-size:13px;text-align:center}
+
+.finale{text-align:center;padding:90px 0}
+footer{border-top:1px solid var(--bordo);padding:30px 0 44px;color:var(--t3);font-size:13px;text-align:center}
 footer a{color:var(--t2)}
-@media (max-width:640px){nav a.l{display:none}section{padding:44px 0}}
+.appare{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}
+.appare.vista{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.orbite .ruota{animation:none}.appare{opacity:1;transform:none;transition:none}}
+@media (max-width:760px){nav a.l{display:none}section{padding:64px 0}.numeri{grid-template-columns:1fr}.numeri div+div{border-left:0;border-top:1px solid var(--bordo)}.orbite{width:800px;height:800px}}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <nav>
+<nav id="nav">
+  <div class="wrap">
     <a class="logo" href="#"><img src="img/icona.png" alt="">ORBITA</a>
     <span class="sp"></span>
     <a class="l" href="#come" data-t="nav1">How it works</a>
+    <a class="l" href="#sicura" data-t="nav3">Safety</a>
     <a class="l" href="#prezzo" data-t="nav2">Price</a>
     <a class="l" href="#faq">FAQ</a>
     <button class="lang" id="lang" type="button">IT</button>
-  </nav>
+    <a class="btn p pic" href="#accesso" data-t="navcta">Early access</a>
+  </div>
+</nav>
 
-  <header class="hero">
-    <div class="slogan" data-t="slogan">Pay once. Yours forever.</div>
-    <h1 data-t="h1" data-html>See what fills your disk.<br><span class="grad">Clean it safely.</span></h1>
-    <p class="sub" data-t="sub">Orbita shows your whole Windows disk in one colorful ring. Everything that's safe to remove is already checked, and every item is explained in plain words, so you always know what you're deleting.</p>
+<header class="hero">
+  <svg class="orbite" viewBox="0 0 1100 1100" aria-hidden="true">
+    <circle class="g" cx="550" cy="550" r="250"/>
+    <g class="ruota"><circle class="g tr" cx="550" cy="550" r="330"/></g>
+    <ellipse cx="550" cy="550" rx="520" ry="150" transform="rotate(-14 550 550)"/>
+    <ellipse class="tr" cx="550" cy="550" rx="470" ry="220" transform="rotate(24 550 550)"/>
+    <g transform="rotate(-14 550 550)"><circle r="7" fill="#0067c0"><animateMotion dur="30s" repeatCount="indefinite" path="M30 550 a520 150 0 1 0 1040 0 a520 150 0 1 0 -1040 0"/></circle></g>
+    <g transform="rotate(24 550 550)"><circle r="5" fill="#0f9d6b"><animateMotion dur="44s" repeatCount="indefinite" keyPoints="1;0" keyTimes="0;1" calcMode="linear" path="M80 550 a470 220 0 1 0 940 0 a470 220 0 1 0 -940 0"/></circle></g>
+  </svg>
+  <div class="wrap">
+    <span class="eti mono"><i></i><span data-t="slogan">Pay once. Yours forever.</span></span>
+    <h1 data-t="h1" data-html>See what fills your disk.<br><span class="blu">Clean it safely.</span></h1>
+    <p class="sub" data-t="sub">Orbita shows your whole Windows disk in one ring. Everything that's safe to remove is already checked, and every item is explained in plain words, so you always know what you're deleting.</p>
     <div class="cta">
       <a class="btn p" href="#accesso" data-t="cta1">Get early access</a>
       <a class="btn s" href="#come" data-t="cta2">See how it works</a>
     </div>
     <div class="nota" data-t="nota">Coming soon on the Microsoft Store · Windows 10 and 11</div>
-    <div class="shot"><img id="shot" src="img/orbita-en.jpg" width="1400" height="840" alt="Orbita: disk ring by category and recommended cleanup"></div>
-  </header>
 
-  <section id="come">
+    <div class="vetrina appare">
+      <div class="switch" role="group" aria-label="Theme">
+        <button type="button" class="on" data-tema="light" data-t="chiaro">Light</button>
+        <button type="button" data-tema="dark" data-t="scuro">Dark</button>
+      </div>
+      <div class="finestra"><img id="shot" src="img/orbita-light-en.jpg" width="1400" height="840" alt="Orbita: disk ring by category and recommended cleanup"></div>
+    </div>
+  </div>
+</header>
+
+<section id="come">
+  <div class="wrap">
+    <div class="kick mono" data-t="k1">How it works</div>
     <h2 data-t="s1t">Your disk, finally readable</h2>
     <p class="lead" data-t="s1l">Windows tells you the disk is full. Orbita tells you why, and what you can safely do about it.</p>
     <div class="grid">
-      <div class="card"><div class="ic">◉</div><h3 data-t="f1t">One ring, the whole disk</h3><p data-t="f1p">Games, caches, Windows updates, downloads: every color is a category. Tap one to see the biggest folders and files.</p></div>
-      <div class="card"><div class="ic">✓</div><h3 data-t="f2t">Safe items pre-checked</h3><p data-t="f2p">Only things that rebuild themselves: browser and app caches, temp files, old update packages, game shader caches.</p></div>
-      <div class="card"><div class="ic">?</div><h3 data-t="f3t">Every item explained</h3><p data-t="f3p">"What is it?" tells you in plain words what each item is and what happens if you remove it. No jargon.</p></div>
-      <div class="card"><div class="ic">⟳</div><h3 data-t="f4t">Weekly automatic cleanup</h3><p data-t="f4p">With Orbita Pro it cleans the safe stuff on its own once a week and sends you a notification.</p></div>
+      <div class="card appare"><div class="ic">◉</div><h3 data-t="f1t">One ring, the whole disk</h3><p data-t="f1p">Games, caches, Windows updates, downloads: every color is a category. Tap one to see the biggest folders and files.</p></div>
+      <div class="card appare"><div class="ic">✓</div><h3 data-t="f2t">Safe items pre-checked</h3><p data-t="f2p">Only things that rebuild themselves: browser and app caches, temp files, old update packages, game shader caches.</p></div>
+      <div class="card appare"><div class="ic">?</div><h3 data-t="f3t">Every item explained</h3><p data-t="f3p">"What is it?" tells you in plain words what each item is and what happens if you remove it. No jargon.</p></div>
+      <div class="card appare"><div class="ic">⟳</div><h3 data-t="f4t">Weekly automatic cleanup</h3><p data-t="f4p">With Orbita Pro it cleans the safe stuff on its own once a week and sends you a notification.</p></div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section>
-    <h2 data-t="s2t">Real numbers, real PC</h2>
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="kick mono" data-t="k2">Real numbers</div>
+    <h2 data-t="s2t">Tested on a real PC</h2>
     <p class="lead" data-t="s2l">On the developer's gaming PC, the first scan found:</p>
-    <div class="grid" style="text-align:center">
-      <div class="card"><div class="big">38 GB</div><p data-t="n1">ready to free, all safe</p></div>
-      <div class="card"><div class="big">23 GB</div><p data-t="n2">of NVIDIA graphics cache, from games played months ago</p></div>
-      <div class="card"><div class="big">~30 s</div><p data-t="n3">to read 800,000 files</p></div>
+    <div class="numeri appare">
+      <div><div class="big v">38 GB</div><p data-t="n1">ready to free, all safe</p></div>
+      <div><div class="big">23 GB</div><p data-t="n2">of NVIDIA graphics cache, from games played months ago</p></div>
+      <div><div class="big">~30 s</div><p data-t="n3">to read 800,000 files</p></div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section>
+<section id="sicura" class="scura">
+  <div class="wrap">
+    <div class="kick mono" data-t="k3">Safety first</div>
     <h2 data-t="s3t">Built to never break anything</h2>
+    <p class="lead" data-t="s3l">A cleaner you can trust has to say no more often than yes.</p>
     <div class="grid">
-      <div class="card"><h3 data-t="g1t">Only known folders</h3><p data-t="g1p">Orbita deletes only inside a list of known cache and temp folders. Never your documents, never system files.</p></div>
-      <div class="card"><h3 data-t="g2t">Your files go to the Recycle Bin</h3><p data-t="g2p">Big files you pick yourself go to the Recycle Bin, so you can always restore them.</p></div>
-      <div class="card"><h3 data-t="g3t">Microsoft's own tools</h3><p data-t="g3p">Windows component cleanup runs through Microsoft's official tool (DISM), never by hand.</p></div>
-      <div class="card"><h3 data-t="g4t">Nothing leaves your PC</h3><p data-t="g4p">No accounts, no tracking, no file lists sent anywhere. The scan stays on your computer.</p></div>
+      <div class="card appare"><div class="ic">▣</div><h3 data-t="g1t">Only known folders</h3><p data-t="g1p">Orbita deletes only inside a list of known cache and temp folders. Never your documents, never system files.</p></div>
+      <div class="card appare"><div class="ic">↺</div><h3 data-t="g2t">Your files go to the Recycle Bin</h3><p data-t="g2p">Big files you pick yourself go to the Recycle Bin, so you can always restore them.</p></div>
+      <div class="card appare"><div class="ic">⊞</div><h3 data-t="g3t">Microsoft's own tools</h3><p data-t="g3p">Windows component cleanup runs through Microsoft's official tool (DISM), never by hand.</p></div>
+      <div class="card appare"><div class="ic">◌</div><h3 data-t="g4t">Nothing leaves your PC</h3><p data-t="g4p">No accounts, no tracking, no file lists sent anywhere. The scan stays on your computer.</p></div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section id="prezzo" class="prezzo">
+<section id="prezzo">
+  <div class="wrap prezzo">
+    <div class="kick mono" data-t="k4">Price</div>
     <h2 data-t="s4t">Pay once. Yours forever.</h2>
     <p class="lead" data-t="s4l">No subscription. The scan and the map are free forever.</p>
-    <div class="card">
+    <div class="card appare">
       <span class="badge" data-t="lancio">Launch week: half price</span>
-      <div class="big" style="margin:16px 0 4px" data-t="prezzo">9.99 €</div>
+      <div class="big" data-t="prezzo">9.99 €</div>
       <div class="nota" data-t="prezzoN">one-time · local prices in every country</div>
       <ul>
         <li data-t="p1">Free: scan, disk map and 3 cleanups</li>
         <li data-t="p2">Orbita Pro: unlimited cleanups</li>
         <li data-t="p3">Weekly automatic cleanup</li>
+        <li data-t="p5">Light and dark theme</li>
         <li data-t="p4">6 languages: English, Italiano, Español, Português, Deutsch, Français</li>
       </ul>
+      <a class="btn p" href="#accesso" data-t="cta1" style="width:100%;justify-content:center">Get early access</a>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section id="accesso" class="prezzo">
-    <h2 data-t="s5t">Get early access</h2>
-    <p class="lead" data-t="s5l">Orbita is in its final tests. Write to us and you'll get the download before the public launch, at the launch price.</p>
-    <a class="btn p" id="mail" href="mailto:studiovacchini@gmail.com?subject=Orbita%20early%20access" data-t="s5b">Ask for early access</a>
-  </section>
-
-  <section id="faq">
+<section id="faq" style="padding-top:0">
+  <div class="wrap faq">
     <h2>FAQ</h2>
     <details><summary data-t="q1">Is it safe?</summary><p data-t="a1">Orbita only empties folders that programs rebuild by themselves (caches and temporary files). Files you choose by hand go to the Recycle Bin. Before any cleanup you see exactly what will be removed. As with any tool that deletes files, keep a backup of your important data.</p></details>
     <details><summary data-t="q2">Why will my games start a bit slower once?</summary><p data-t="a2">Cleaning the graphics (shader) cache means each game rebuilds it the first time you launch it. After that, everything is as before.</p></details>
     <details><summary data-t="q3">Does it work on Windows 10?</summary><p data-t="a3">Yes, Windows 10 and Windows 11, 64-bit.</p></details>
     <details><summary data-t="q4">Do you collect my data?</summary><p data-t="a4">No. Orbita works offline on your PC. The optional "What is it?" AI feature only works with your own API key and sends only folder names and sizes, never file contents.</p></details>
-  </section>
-</div>
+  </div>
+</section>
+
+<section id="accesso" class="finale scura">
+  <div class="wrap">
+    <h2 data-t="s5t">Get early access</h2>
+    <p class="lead" data-t="s5l">Orbita is in its final tests. Write to us and you'll get the download before the public launch, at the launch price.</p>
+    <a class="btn p" id="mail" href="mailto:studiovacchini@gmail.com?subject=Orbita%20early%20access" data-t="s5b" style="background:var(--sblu)">Ask for early access</a>
+  </div>
+</section>
 
 <footer>
   <div class="wrap">
@@ -152,24 +252,26 @@ footer a{color:var(--t2)}
 
 <script>
 (function(){
-  var IT={nav1:"Come funziona",nav2:"Prezzo",slogan:"Paga una volta. Tua per sempre.",
-  h1:'Guarda cosa riempie il disco.<br><span class="grad">Puliscilo in sicurezza.</span>',
-  sub:"Orbita mostra tutto il disco di Windows in un solo anello colorato. Quello che si può togliere senza rischi è già spuntato, e ogni voce è spiegata in parole semplici: sai sempre cosa stai cancellando.",
-  cta1:"Accesso anticipato",cta2:"Guarda come funziona",nota:"In arrivo sul Microsoft Store · Windows 10 e 11",
+  var IT={nav1:"Come funziona",nav2:"Prezzo",nav3:"Sicurezza",navcta:"Accesso anticipato",slogan:"Paga una volta. Tua per sempre.",
+  h1:'Guarda cosa riempie il disco.<br><span class="blu">Puliscilo in sicurezza.</span>',
+  sub:"Orbita mostra tutto il disco di Windows in un solo anello. Quello che si può togliere senza rischi è già spuntato, e ogni voce è spiegata in parole semplici: sai sempre cosa stai cancellando.",
+  cta1:"Accesso anticipato",cta2:"Guarda come funziona",nota:"In arrivo sul Microsoft Store · Windows 10 e 11",chiaro:"Chiaro",scuro:"Scuro",
+  k1:"Come funziona",k2:"Numeri veri",k3:"Prima la sicurezza",k4:"Prezzo",
   s1t:"Il tuo disco, finalmente leggibile",s1l:"Windows ti dice che il disco è pieno. Orbita ti dice perché, e cosa puoi fare in sicurezza.",
   f1t:"Un anello, tutto il disco",f1p:"Giochi, cache, aggiornamenti di Windows, download: ogni colore è una categoria. Toccane uno e vedi le cartelle e i file più pesanti.",
   f2t:"Le voci sicure già spuntate",f2p:"Solo cose che si ricreano da sole: cache di browser e app, file temporanei, vecchi aggiornamenti, cache grafica dei giochi.",
   f3t:"Ogni voce spiegata",f3p:"\"Cos'è?\" ti dice in parole semplici cos'è ogni voce e cosa succede se la togli. Niente gergo.",
   f4t:"Pulizia automatica settimanale",f4p:"Con Orbita Pro pulisce da sola le voci sicure una volta a settimana e ti avvisa con una notifica.",
-  s2t:"Numeri veri, PC vero",s2l:"Sul PC da gioco dello sviluppatore, la prima scansione ha trovato:",
+  s2t:"Provata su un PC vero",s2l:"Sul PC da gioco dello sviluppatore, la prima scansione ha trovato:",
   n1:"da liberare, tutti sicuri",n2:"di cache grafica NVIDIA, di giochi giocati mesi fa",n3:"per leggere 800.000 file",
-  s3t:"Fatta per non rompere niente",g1t:"Solo cartelle note",g1p:"Orbita cancella solo dentro un elenco di cartelle di cache e temporanei conosciute. Mai i tuoi documenti, mai i file di sistema.",
+  s3t:"Fatta per non rompere niente",s3l:"Un programma di pulizia affidabile deve dire di no più spesso che di sì.",
+  g1t:"Solo cartelle note",g1p:"Orbita cancella solo dentro un elenco di cartelle di cache e temporanei conosciute. Mai i tuoi documenti, mai i file di sistema.",
   g2t:"I tuoi file vanno nel Cestino",g2p:"I file grandi che scegli tu finiscono nel Cestino: puoi sempre recuperarli.",
   g3t:"Gli strumenti di Microsoft",g3p:"La pulizia dei componenti di Windows passa dallo strumento ufficiale di Microsoft (DISM), mai a mano.",
   g4t:"Niente esce dal tuo PC",g4p:"Nessun account, nessun tracciamento, nessun elenco di file inviato da nessuna parte. La scansione resta sul tuo computer.",
   s4t:"Paga una volta. Tua per sempre.",s4l:"Nessun abbonamento. La scansione e la mappa sono gratis per sempre.",
   lancio:"Settimana di lancio: metà prezzo",prezzo:"9,99 €",prezzoN:"una volta sola · prezzi locali in ogni paese",
-  p1:"Gratis: scansione, mappa del disco e 3 pulizie",p2:"Orbita Pro: pulizie illimitate",p3:"Pulizia automatica settimanale",p4:"6 lingue: English, Italiano, Español, Português, Deutsch, Français",
+  p1:"Gratis: scansione, mappa del disco e 3 pulizie",p2:"Orbita Pro: pulizie illimitate",p3:"Pulizia automatica settimanale",p5:"Tema chiaro e scuro",p4:"6 lingue: English, Italiano, Español, Português, Deutsch, Français",
   s5t:"Accesso anticipato",s5l:"Orbita è negli ultimi test. Scrivici e avrai il download prima del lancio pubblico, al prezzo di lancio.",s5b:"Chiedi l'accesso anticipato",
   q1:"È sicura?",a1:"Orbita svuota solo cartelle che i programmi ricreano da soli (cache e file temporanei). I file che scegli a mano vanno nel Cestino. Prima di ogni pulizia vedi esattamente cosa verrà tolto. Come con ogni strumento che cancella file, tieni una copia di sicurezza dei dati importanti.",
   q2:"Perché i giochi partiranno un po' più lenti una volta?",a2:"Pulendo la cache grafica (shader), ogni gioco la ricrea al primo avvio. Dopo, tutto torna come prima.",
@@ -179,12 +281,12 @@ footer a{color:var(--t2)}
   eula:"Contratto di licenza e privacy",autore:"Creata da Andrea Vacchini"};
   var els=document.querySelectorAll("[data-t]"),EN={};
   els.forEach(function(e){EN[e.dataset.t]=e.hasAttribute("data-html")?e.innerHTML:e.textContent;});
-  var btn=document.getElementById("lang");
+  var btn=document.getElementById("lang"),shot=document.getElementById("shot"),tema="light";
+  function foto(){shot.src="img/orbita-"+tema+"-"+document.documentElement.lang+".jpg";}
   function set(l){
     var d=l==="it"?IT:EN;
     els.forEach(function(e){var v=d[e.dataset.t];if(v==null)return;if(e.hasAttribute("data-html"))e.innerHTML=v;else e.textContent=v;});
-    document.documentElement.lang=l;
-    document.getElementById("shot").src="img/orbita-"+l+".jpg";
+    document.documentElement.lang=l;foto();
     document.getElementById("eula").href="legal/EULA_"+l+".txt";
     document.getElementById("mail").href="mailto:studiovacchini@gmail.com?subject="+encodeURIComponent(l==="it"?"Orbita accesso anticipato":"Orbita early access");
     btn.textContent=l==="it"?"EN":"IT";
@@ -194,6 +296,16 @@ footer a{color:var(--t2)}
   var l=salvata||((navigator.language||"en").slice(0,2)==="it"?"it":"en");
   if(l==="it")set("it");
   btn.onclick=function(){set(document.documentElement.lang==="it"?"en":"it");};
+  document.querySelectorAll(".switch button").forEach(function(b){
+    b.onclick=function(){tema=b.dataset.tema;document.querySelectorAll(".switch button").forEach(function(x){x.classList.toggle("on",x===b);});foto();};
+  });
+  ["light","dark"].forEach(function(t){["it","en"].forEach(function(g){var i=new Image();i.src="img/orbita-"+t+"-"+g+".jpg";});});
+  var nav=document.getElementById("nav");
+  addEventListener("scroll",function(){nav.classList.toggle("ombra",scrollY>8);},{passive:true});
+  if("IntersectionObserver" in window){
+    var io=new IntersectionObserver(function(v){v.forEach(function(x){if(x.isIntersecting){x.target.classList.add("vista");io.unobserve(x.target);}});},{threshold:.12});
+    document.querySelectorAll(".appare").forEach(function(e){io.observe(e);});
+  }else document.querySelectorAll(".appare").forEach(function(e){e.classList.add("vista");});
 })();
 </script>
 </body>
