@@ -112,12 +112,29 @@ details[open] summary::after{content:"–"}
 details p{color:var(--t2);margin:10px 0 0}
 
 .finale{text-align:center;padding:90px 0}
+.demo-sez{padding-top:80px}
+.demo-box{position:relative;border-radius:16px;overflow:hidden;border:1px solid var(--sb);box-shadow:0 40px 100px -20px rgba(0,0,0,.6);background:#0b0c0e}
+.demo-avvia{display:block;width:100%;border:0;padding:0;margin:0;cursor:pointer;position:relative;background:none}
+.demo-avvia img{display:block;width:100%;height:auto;filter:brightness(.55) saturate(.9);transition:filter .3s}
+.demo-avvia:hover img{filter:brightness(.7)}
+.demo-play{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;color:#fff;font:600 18px var(--font)}
+.demo-play b{width:84px;height:84px;border-radius:50%;display:grid;place-items:center;background:var(--sblu);font-size:30px;box-shadow:0 0 0 12px rgba(77,141,255,.18);transition:transform .2s}
+.demo-avvia:hover .demo-play b{transform:scale(1.07)}
+.demo-box iframe{display:block;border:0;transform-origin:0 0}
+.demo-mobile{display:none;text-align:center;margin-top:14px}
+.confronto{max-width:860px;margin:0 auto;background:var(--bg2);border:1px solid var(--bordo);border-radius:20px;overflow:hidden}
+.confronto .riga{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:12px;padding:15px 24px;border-top:1px solid var(--bordo);align-items:center;font-size:15px}
+.confronto .riga.testa{border-top:0;background:#f7f8fa;font:600 13px var(--font);color:var(--t2);text-transform:uppercase;letter-spacing:.06em}
+.confronto .riga.testa span:nth-child(2){color:var(--blu)}
+.confronto .si{color:var(--verde);font-weight:600}
+.confronto .si::before{content:"✓ "}
+.confronto i{color:var(--t3);font-style:normal}
 footer{border-top:1px solid var(--bordo);padding:30px 0 44px;color:var(--t3);font-size:13px;text-align:center}
 footer a{color:var(--t2)}
 .appare{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}
 .appare.vista{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){.orbite .ruota{animation:none}.appare{opacity:1;transform:none;transition:none}}
-@media (max-width:760px){nav a.l{display:none}section{padding:64px 0}.numeri{grid-template-columns:1fr}.numeri div+div{border-left:0;border-top:1px solid var(--bordo)}.orbite{width:800px;height:800px}}
+@media (max-width:760px){.demo-mobile{display:block}.confronto .riga{grid-template-columns:1fr 1fr;}.confronto .riga span:first-child{grid-column:1/3;font-weight:600}nav a.l{display:none}section{padding:64px 0}.numeri{grid-template-columns:1fr}.numeri div+div{border-left:0;border-top:1px solid var(--bordo)}.orbite{width:800px;height:800px}}
 </style>
 </head>
 <body>
@@ -125,6 +142,7 @@ footer a{color:var(--t2)}
   <div class="wrap">
     <a class="logo" href="#"><img src="img/icona.png" alt="">ORBITA</a>
     <span class="sp"></span>
+    <a class="l" href="#demo" data-t="nav0">Live demo</a>
     <a class="l" href="#come" data-t="nav1">How it works</a>
     <a class="l" href="#sicura" data-t="nav3">Safety</a>
     <a class="l" href="#prezzo" data-t="nav2">Price</a>
@@ -148,8 +166,8 @@ footer a{color:var(--t2)}
     <h1 data-t="h1" data-html>See what fills your disk.<br><span class="blu">Clean it safely.</span></h1>
     <p class="sub" data-t="sub">Orbita shows your whole Windows disk in one ring. Everything that's safe to remove is already checked, and every item is explained in plain words, so you always know what you're deleting.</p>
     <div class="cta">
-      <a class="btn p" href="#accesso" data-t="cta1">Get early access</a>
-      <a class="btn s" href="#come" data-t="cta2">See how it works</a>
+      <a class="btn p" href="#demo" data-t="ctaDemo">▶ Try the live demo</a>
+      <a class="btn s" href="#accesso" data-t="cta1">Get early access</a>
     </div>
     <div class="nota" data-t="nota">Coming soon on the Microsoft Store · Windows 10 and 11</div>
 
@@ -162,6 +180,21 @@ footer a{color:var(--t2)}
     </div>
   </div>
 </header>
+
+<section id="demo" class="scura demo-sez">
+  <div class="wrap">
+    <div class="kick mono" data-t="k0">Live demo</div>
+    <h2 data-t="d0t">Try it right here</h2>
+    <p class="lead" data-t="d0l">This is the real Orbita interface running in your browser, with sample data. Press "Scan", watch the ring fill up, tap the colors, try a cleanup: nothing on your PC is touched.</p>
+    <div class="demo-box" id="demoBox">
+      <button class="demo-avvia" id="demoAvvia" type="button">
+        <img id="demoPoster" src="img/orbita-light-en.jpg" alt="" loading="lazy">
+        <span class="demo-play"><b>▶</b><span data-t="d0b">Start the interactive demo</span></span>
+      </button>
+    </div>
+    <p class="nota demo-mobile" data-t="d0m">The demo is made for a computer screen: open this page on your PC to try it.</p>
+  </div>
+</section>
 
 <section id="come">
   <div class="wrap">
@@ -204,6 +237,23 @@ footer a{color:var(--t2)}
   </div>
 </section>
 
+<section id="diversa" style="padding-bottom:0">
+  <div class="wrap">
+    <div class="kick mono" data-t="k5">Why it's different</div>
+    <h2 data-t="c0t">A cleaner that respects you</h2>
+    <p class="lead" data-t="c0l">Most disk cleaners want a subscription, scare you with red warnings and hide what they delete. Orbita does the opposite.</p>
+    <div class="confronto appare">
+      <div class="riga testa"><span></span><span>Orbita</span><span data-t="c0x">Typical cleaners</span></div>
+      <div class="riga"><span data-t="c1">Subscription</span><b class="si" data-t="c1a">Never: pay once</b><i data-t="c1b">Often yearly</i></div>
+      <div class="riga"><span data-t="c2">Explains every item</span><b class="si" data-t="c2a">Yes, in plain words</b><i data-t="c2b">Rarely</i></div>
+      <div class="riga"><span data-t="c3">Fake "PC at risk" alarms</span><b class="si" data-t="c3a">None</b><i data-t="c3b">Common</i></div>
+      <div class="riga"><span data-t="c4">Extra software in the installer</span><b class="si" data-t="c4a">Never</b><i data-t="c4b">Sometimes</i></div>
+      <div class="riga"><span data-t="c5">Your files</span><b class="si" data-t="c5a">Recycle Bin, always</b><i data-t="c5b">Deleted for good</i></div>
+      <div class="riga"><span data-t="c6">Data sent online</span><b class="si" data-t="c6a">Nothing</b><i data-t="c6b">Usage stats</i></div>
+    </div>
+  </div>
+</section>
+
 <section id="prezzo">
   <div class="wrap prezzo">
     <div class="kick mono" data-t="k4">Price</div>
@@ -214,7 +264,7 @@ footer a{color:var(--t2)}
       <div class="big" data-t="prezzo">9.99 €</div>
       <div class="nota" data-t="prezzoN">one-time · local prices in every country</div>
       <ul>
-        <li data-t="p1">Free: scan, disk map and 3 cleanups</li>
+        <li data-t="p1">Free: scan, disk map and 2 cleanups</li>
         <li data-t="p2">Orbita Pro: unlimited cleanups</li>
         <li data-t="p3">Weekly automatic cleanup</li>
         <li data-t="p5">Light and dark theme</li>
@@ -252,7 +302,14 @@ footer a{color:var(--t2)}
 
 <script>
 (function(){
-  var IT={nav1:"Come funziona",nav2:"Prezzo",nav3:"Sicurezza",navcta:"Accesso anticipato",slogan:"Paga una volta. Tua per sempre.",
+  var IT={nav0:"Demo dal vivo",ctaDemo:"▶ Prova la demo dal vivo",k0:"Demo dal vivo",d0t:"Provala qui, adesso",
+  d0l:"Questa è la vera interfaccia di Orbita, nel tuo browser, con dati di esempio. Premi \"Scansiona\", guarda l'anello riempirsi, tocca i colori, prova una pulizia: sul tuo PC non viene toccato niente.",
+  d0b:"Avvia la demo interattiva",d0m:"La demo è pensata per lo schermo di un computer: apri questa pagina dal PC per provarla.",
+  k5:"Perché è diversa",c0t:"Un pulitore che ti rispetta",c0l:"Molti programmi di pulizia vogliono un abbonamento, ti spaventano con avvisi rossi e non dicono cosa cancellano. Orbita fa il contrario.",
+  c0x:"Pulitori tipici",c1:"Abbonamento",c1a:"Mai: paghi una volta",c1b:"Spesso annuale",c2:"Spiega ogni voce",c2a:"Sì, in parole semplici",c2b:"Raramente",
+  c3:"Falsi allarmi \"PC a rischio\"",c3a:"Nessuno",c3b:"Frequenti",c4:"Altri programmi nell'installazione",c4a:"Mai",c4b:"A volte",
+  c5:"I tuoi file",c5a:"Nel Cestino, sempre",c5b:"Cancellati per sempre",c6:"Dati inviati online",c6a:"Nessuno",c6b:"Statistiche d'uso",
+  nav1:"Come funziona",nav2:"Prezzo",nav3:"Sicurezza",navcta:"Accesso anticipato",slogan:"Paga una volta. Tua per sempre.",
   h1:'Guarda cosa riempie il disco.<br><span class="blu">Puliscilo in sicurezza.</span>',
   sub:"Orbita mostra tutto il disco di Windows in un solo anello. Quello che si può togliere senza rischi è già spuntato, e ogni voce è spiegata in parole semplici: sai sempre cosa stai cancellando.",
   cta1:"Accesso anticipato",cta2:"Guarda come funziona",nota:"In arrivo sul Microsoft Store · Windows 10 e 11",chiaro:"Chiaro",scuro:"Scuro",
@@ -271,7 +328,7 @@ footer a{color:var(--t2)}
   g4t:"Niente esce dal tuo PC",g4p:"Nessun account, nessun tracciamento, nessun elenco di file inviato da nessuna parte. La scansione resta sul tuo computer.",
   s4t:"Paga una volta. Tua per sempre.",s4l:"Nessun abbonamento. La scansione e la mappa sono gratis per sempre.",
   lancio:"Settimana di lancio: metà prezzo",prezzo:"9,99 €",prezzoN:"una volta sola · prezzi locali in ogni paese",
-  p1:"Gratis: scansione, mappa del disco e 3 pulizie",p2:"Orbita Pro: pulizie illimitate",p3:"Pulizia automatica settimanale",p5:"Tema chiaro e scuro",p4:"6 lingue: English, Italiano, Español, Português, Deutsch, Français",
+  p1:"Gratis: scansione, mappa del disco e 2 pulizie",p2:"Orbita Pro: pulizie illimitate",p3:"Pulizia automatica settimanale",p5:"Tema chiaro e scuro",p4:"6 lingue: English, Italiano, Español, Português, Deutsch, Français",
   s5t:"Accesso anticipato",s5l:"Orbita è negli ultimi test. Scrivici e avrai il download prima del lancio pubblico, al prezzo di lancio.",s5b:"Chiedi l'accesso anticipato",
   q1:"È sicura?",a1:"Orbita svuota solo cartelle che i programmi ricreano da soli (cache e file temporanei). I file che scegli a mano vanno nel Cestino. Prima di ogni pulizia vedi esattamente cosa verrà tolto. Come con ogni strumento che cancella file, tieni una copia di sicurezza dei dati importanti.",
   q2:"Perché i giochi partiranno un po' più lenti una volta?",a2:"Pulendo la cache grafica (shader), ogni gioco la ricrea al primo avvio. Dopo, tutto torna come prima.",
@@ -282,7 +339,7 @@ footer a{color:var(--t2)}
   var els=document.querySelectorAll("[data-t]"),EN={};
   els.forEach(function(e){EN[e.dataset.t]=e.hasAttribute("data-html")?e.innerHTML:e.textContent;});
   var btn=document.getElementById("lang"),shot=document.getElementById("shot"),tema="light";
-  function foto(){shot.src="img/orbita-"+tema+"-"+document.documentElement.lang+".jpg";}
+  function foto(){shot.src="img/orbita-"+tema+"-"+document.documentElement.lang+".jpg";var dp=document.getElementById("demoPoster");if(dp)dp.src="img/orbita-light-"+document.documentElement.lang+".jpg";}
   function set(l){
     var d=l==="it"?IT:EN;
     els.forEach(function(e){var v=d[e.dataset.t];if(v==null)return;if(e.hasAttribute("data-html"))e.innerHTML=v;else e.textContent=v;});
@@ -300,6 +357,13 @@ footer a{color:var(--t2)}
     b.onclick=function(){tema=b.dataset.tema;document.querySelectorAll(".switch button").forEach(function(x){x.classList.toggle("on",x===b);});foto();};
   });
   ["light","dark"].forEach(function(t){["it","en"].forEach(function(g){var i=new Image();i.src="img/orbita-"+t+"-"+g+".jpg";});});
+  var box=document.getElementById("demoBox"),avvia=document.getElementById("demoAvvia");
+  function scalaDemo(){var f=box.querySelector("iframe");if(!f)return;var k=box.clientWidth/1360;f.style.transform="scale("+k+")";box.style.height=Math.round(860*k)+"px";}
+  avvia.onclick=function(){
+    var f=document.createElement("iframe");f.width=1360;f.height=860;f.title="Orbita demo";
+    f.src="app/?lang="+document.documentElement.lang;box.innerHTML="";box.appendChild(f);scalaDemo();
+  };
+  addEventListener("resize",scalaDemo);
   var nav=document.getElementById("nav");
   addEventListener("scroll",function(){nav.classList.toggle("ombra",scrollY>8);},{passive:true});
   if("IntersectionObserver" in window){

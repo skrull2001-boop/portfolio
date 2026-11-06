@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<!-- Orbita · Copyright (c) 2026 Andrea Vacchini. All rights reserved. -->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:">
+  <title>Orbita</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="griglia-sfondo" aria-hidden="true"></div>
+
+  <header class="barra">
+    <div class="logo">
+      <img src="logo.png" width="26" height="26" alt="" class="logo-img">
+      <span>ORBITA</span>
+      <span class="sotto-logo" data-t="hudSotto"></span>
+    </div>
+    <nav class="unita" id="unita"></nav>
+    <div class="badge-prova" id="badgeProva" data-t="modalitaProva" hidden></div>
+    <div class="spazio-barra"></div>
+    <div class="stato-hud" id="statoHud"></div>
+    <button class="ingranaggio" id="btnTema" title="Chiaro / scuro" aria-label="Chiaro / scuro"><span class="ic-luna">☾</span><span class="ic-sole">☀</span></button>
+    <button class="ingranaggio" id="btnImpostazioni" data-t-title="impostazioni" aria-label="Impostazioni">⚙</button>
+  </header>
+
+  <main class="griglia">
+    <!-- SINISTRA: categorie e numeri -->
+    <section class="col-sx vetro">
+      <div class="etichetta-hud" data-t="sezCategorie"></div>
+      <div class="barre" id="legenda"></div>
+      <div class="riempi"></div>
+      <div class="stat3" id="riepilogo">
+        <div class="tile"><small data-t="usati"></small><span id="rUsato">—</span></div>
+        <div class="tile verde"><small data-t="recuperabili"></small><span id="rRecuperabile">—</span></div>
+        <div class="tile"><small data-t="liberi"></small><span id="rLibero">—</span></div>
+      </div>
+    </section>
+
+    <!-- CENTRO: l'anello -->
+    <section class="palco">
+      <div class="orbita-wrap" id="orbitaWrap">
+        <svg class="anello" id="anello" viewBox="0 0 600 600">
+          <defs>
+            <filter id="bagliore" x="-30%" y="-30%" width="160%" height="160%">
+              <feGaussianBlur stdDeviation="6" result="b"/>
+              <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+            <radialGradient id="nucleo" cx="50%" cy="45%">
+              <stop offset="0" style="stop-color:var(--nucleo1)"/><stop offset="1" style="stop-color:var(--nucleo2)"/>
+            </radialGradient>
+            <clipPath id="tagliaPianeta"><circle cx="300" cy="300" r="136"/></clipPath>
+            <radialGradient id="luceP" cx="35%" cy="28%" r="80%">
+              <stop offset="0" style="stop-color:var(--ciano);stop-opacity:.16"/><stop offset=".55" style="stop-color:var(--ciano);stop-opacity:0"/>
+            </radialGradient>
+          </defs>
+          <g class="tacche" aria-hidden="true">
+            <line x1="300" y1="14" x2="300" y2="26" class="tacca lunga" transform="rotate(0 300 300)"/>
+            <line x1="300" y1="18" x2="300" y2="26" class="tacca" transform="rotate(5 300 300)"/>
+            <line x1="300" y1="18" x2="300" y2="26" class="tacca" transform="rotate(10 300 300)"/>
+            <line x1="300" y1="18" x2="300" y2="26" class="tacca" transform="rotate(15 300 300)"/>
+            <line x1="300" y1="18" x2="300" y2="26" class="tacca" transform="rotate(20 300 300)"/>
+            <line x1="300" y1="18" x2="300" y2="26" class="tacca" transform="rotate(25 300 300)"/>
+            <line x1="300" y1="14" x2="300" y2="26" class="tacca lunga" transform="rotate(30 300 300)"/>
+            <line x1="300" y1="18" x2="300" y2="26" class="tacca" transform="rotate(35 300 300)"/>
+            <line x1="300" y1="18" x2="300" y2="26" class="tacca" transform="rotate(40 300 300)"/>
+            <line x1="300" y1="18" x2="300" y2="26" class="tacca" transform="rotate(45 300 300)"/>
+            <line x1="300" y1="18" x2="300" y2="26" class="tacca" transform="rotate(50 300 300)"/>
+            <line x1="300" y1="18" x2="300" y2="26" class="tacca" transform="rotate(55 300 300)"/>
+            <line x1="300" y1="14" x2="300" y2="26" class="tacca lunga" transform="rotate(60 300 300)"/>
+            <line x1="300" y1="18" x2="300" y2="26" class="tacca" transform="rotate(65 300 300)"/>
+            <line x1="300" y1="18" x2="300" y2="26" class="tacca" transform="rotate(70 300 300)"/>
+            <line x1="300" y1="18" x2="300" y2="26" class="tacca" transform="rotate(75 300 300)"/>
+            <line x1="300" y1="18" x2="300" y2="26" class="tacca" transform="rotate(80 300 300)"/>
+            <line x1="300" y1="18" x2="300" y2="26" class="tacca" transform="rotate(85 300 300)"/>
+            <line x1="300" y1="14" x2="300" y2="26" class="tacca lunga" transform="rotate(90 300 300)"/>
+            <line x1="300" y1="18" x2="300" y2="26" class="tacca" transform="rotate(95 300 300)"/>
+            <line x1="300" y1="18" x2="300" y2="26" class="tacca" transform="rotate(100 300 300)"/>
+            <line x1="300" y1="18" x2="300" y2="26" class="tacca" transform="rotate(105 300 300)"/>
+            <line x1="300" y1="18" x2="300" y2="26" class="tacca" transform="rotate(110 300 300)"/>
+            <line x1="300" y1="18" x2="300" y2="26" class="tacca" transform="rotate(115 300 300)"/>
+            <line x1="300" y1="14" x2="300" y2="26" class="tacca lunga" transform="rotate(120 300 300)"/>
+            <line x1="300" y1="18" x2="300" y2="26" class="tacca" transform="rotate(125 300 300)"/>
+            <line x1="300" y1="18" x2="300" y2="26" class="tacca" transform="rotate(130 300 300)"/>
+            <line x1="300" y1="18" x2="300" y2="26" class="tacca" transform="rotate(135 300 300)"/>
+            <line x1="300" y1="18" x2="300" y2="26" class="tacca" transform="rotate(140 300 300)"/>
+            <line x1="300" y1="18" x2="300" y2="26" class="tacca" transform="rotate(145 300 300)"/>
+            <line x1="300" y1="14" x2="300" y2="26" class="tacca lunga" transform="rotate(150 300 300)"/>
+            <line x1="300" y1="18" x2="300" y2="26" class="tacca" transform="rotate(155 300 300)"/>
+            <line x1="300" y1="18" x2="300" y2="26" class="tacca" transform="rotate(160 300 300)"/>
+            <line x1="300" y1="18" x2="300" y2="26" class="tacca" transform="rotate(165 300 300)"/>
+            <line x1="300" y1="18" x2="300" y2="26" class="tacca" transform="rotate(170 300 300)"/>
+            <line x1="300" y1="18" x2="300" y2="26" class="tacca" transform="rotate(175 300 300)"/>
+            <line x1="300" y1="14" x2="300" y2="26" class="tacca lunga" transform="rotate(180 300 300)"/>
+            <line x1="300" y1="18" x2="300" y2="26" class="tacca" transform="rotate(185 300 300)"/>
+            <line x1="300" y1="18" x2="300" y2="26" class="tacca" transform="rotate(190 300 300)"/>
+            <line x1="300" y1="18" x2="300" y2="26" class="tacca" transform="rotate(195 300 300)"/>
+            <line x1="300" y1="18" x2="300" y2="26" class="tacca" transform="rotate(200 300 300)"/>
+            <line x1="300" y1="18" x2="300" y2="26" class="tacca" transform="rotate(205 300 300)"/>
+            <line x1="300" y1="14" x2="300" y2="26" class="tacca lunga" transform="rotate(210 300 300)"/>
+            <line x1="300" y1="18" x2="300" y2="26" class="tacca" transform="rotate(215 300 300)"/>
+            <line x1="300" y1="18" x2="300" y2="26" class="tacca" transform="rotate(220 300 300)"/>
+            <line x1="300" y1="18" x2="300" y2="26" class="tacca" transform="rotate(225 300 300)"/>
+            <line x1="300" y1="18" x2="300" y2="26" class="tacca" transform="rotate(230 300 300)"/>
+            <line x1="300" y1="18" x2="300" y2="26" class="tacca" transform="rotate(235 300 300)"/>
+            <line x1="300" y1="14" x2="300" y2="26" class="tacca lunga" transform="rotate(240 300 300)"/>
+            <line x1="300" y1="18" x2="300" y2="26" class="tacca" transform="rotate(245 300 300)"/>
+            <line x1="300" y1="18" x2="300" y2="26" class="tacca" transform="rotate(250 300 300)"/>
+            <line x1="300" y1="18" x2="300" y2="26" class="tacca" transform="rotate(255 300 300)"/>
+            <line x1="300" y1="18" x2="300" y2="26" class="tacca" transform="rotate(260 300 300)"/>
+            <line x1="300" y1="18" x2="300" y2="26" class="tacca" transform="rotate(265 300 300)"/>
+            <line x1="300" y1="14" x2="300" y2="26" class="tacca lunga" transform="rotate(270 300 300)"/>
+            <line x1="300" y1="18" x2="300" y2="26" class="tacca" transform="rotate(275 300 300)"/>
+            <line x1="300" y1="18" x2="300" y2="26" class="tacca" transform="rotate(280 300 300)"/>
+            <line x1="300" y1="18" x2="300" y2="26" class="tacca" transform="rotate(285 300 300)"/>
+            <line x1="300" y1="18" x2="300" y2="26" class="tacca" transform="rotate(290 300 300)"/>
+            <line x1="300" y1="18" x2="300" y2="26" class="tacca" transform="rotate(295 300 300)"/>
+            <line x1="300" y1="14" x2="300" y2="26" class="tacca lunga" transform="rotate(300 300 300)"/>
+            <line x1="300" y1="18" x2="300" y2="26" class="tacca" transform="rotate(305 300 300)"/>
+            <line x1="300" y1="18" x2="300" y2="26" class="tacca" transform="rotate(310 300 300)"/>
+            <line x1="300" y1="18" x2="300" y2="26" class="tacca" transform="rotate(315 300 300)"/>
+            <line x1="300" y1="18" x2="300" y2="26" class="tacca" transform="rotate(320 300 300)"/>
+            <line x1="300" y1="18" x2="300" y2="26" class="tacca" transform="rotate(325 300 300)"/>
+            <line x1="300" y1="14" x2="300" y2="26" class="tacca lunga" transform="rotate(330 300 300)"/>
+            <line x1="300" y1="18" x2="300" y2="26" class="tacca" transform="rotate(335 300 300)"/>
+            <line x1="300" y1="18" x2="300" y2="26" class="tacca" transform="rotate(340 300 300)"/>
+            <line x1="300" y1="18" x2="300" y2="26" class="tacca" transform="rotate(345 300 300)"/>
+            <line x1="300" y1="18" x2="300" y2="26" class="tacca" transform="rotate(350 300 300)"/>
+            <line x1="300" y1="18" x2="300" y2="26" class="tacca" transform="rotate(355 300 300)"/>
+          </g>
+          <text x="600.0" y="303.5" class="scala-num">25%</text><text x="300.0" y="603.5" class="scala-num">50%</text><text x="0.0" y="303.5" class="scala-num">75%</text>
+          <!-- orbite inclinate: meta' dietro, prima dell'anello -->
+          <g class="giro-orbite">
+          <g transform="rotate(-18 300 300)"><path d="M8 300 A292 84 0 0 1 592 300" class="orbita-linea dietro orbita-a"/></g>
+          <g transform="rotate(32 300 300)"><path d="M32 300 A268 128 0 0 1 568 300" class="orbita-linea dietro orbita-b"/></g>
+          </g>
+          <circle cx="300" cy="300" r="262" class="giro giro-tratteggio"/>
+          <circle cx="300" cy="300" r="246" class="giro giro-archi"/>
+          <g id="satellite"><circle cx="300" cy="38" r="3.5" class="satellite"/></g>
+          <circle cx="300" cy="300" r="205" class="traccia"/>
+          <circle cx="300" cy="300" r="229" class="bordo-anello"/>
+          <circle cx="300" cy="300" r="181" class="bordo-anello"/>
+          <g id="settori" transform="rotate(-90 300 300)"></g>
+          <circle cx="300" cy="300" r="164" class="giro giro-punti"/>
+          <circle cx="300" cy="300" r="150" class="traccia-recuperabile"/>
+          <circle cx="300" cy="300" r="150" id="arcoRecuperabile" class="recuperabile" transform="rotate(-90 300 300)"/>
+          <circle cx="300" cy="300" r="138" fill="url(#nucleo)" class="pianeta"/>
+          <g clip-path="url(#tagliaPianeta)" class="griglia-pianeta" aria-hidden="true">
+            <g transform="rotate(-18 300 300)"><ellipse cx="300" cy="195.8" rx="87.4" ry="9.0" class="parallelo"/><ellipse cx="300" cy="242.5" rx="123.3" ry="12.7" class="parallelo"/><ellipse cx="300" cy="300.0" rx="136.0" ry="14.0" class="parallelo"/><ellipse cx="300" cy="357.5" rx="123.3" ry="12.7" class="parallelo"/><ellipse cx="300" cy="404.2" rx="87.4" ry="9.0" class="parallelo"/><g class="meridiani"><ellipse cx="300" cy="300" rx="131.4" ry="136" class="meridiano"/><ellipse cx="300" cy="300" rx="96.2" ry="136" class="meridiano"/><ellipse cx="300" cy="300" rx="35.2" ry="136" class="meridiano"/></g></g>
+          </g>
+          <circle cx="300" cy="300" r="138" fill="url(#luceP)" class="luce-pianeta"/>
+          <!-- orbite: meta' davanti, sopra al pianeta, e lune -->
+          <g class="giro-orbite">
+          <g transform="rotate(-18 300 300)"><path d="M8 300 A292 84 0 0 0 592 300" class="orbita-linea davanti orbita-a"/></g>
+          <g transform="rotate(32 300 300)"><path d="M32 300 A268 128 0 0 0 568 300" class="orbita-linea davanti orbita-b"/></g>
+          <g transform="rotate(-18 300 300)"><g class="luna luna-a"><circle r="12" class="luna-alone"/><circle r="5" class="luna-corpo"/><animateMotion dur="26s" repeatCount="indefinite" path="M8 300 a292 84 0 1 0 584 0 a292 84 0 1 0 -584 0"/><animate attributeName="opacity" dur="26s" repeatCount="indefinite" values="1;1;0.25;0.25;1" keyTimes="0;0.47;0.53;0.97;1"/></g></g>
+          <g transform="rotate(32 300 300)"><g class="luna luna-b"><circle r="10.5" class="luna-alone"/><circle r="3.5" class="luna-corpo"/><animateMotion dur="41s" repeatCount="indefinite" path="M32 300 a268 128 0 1 0 536 0 a268 128 0 1 0 -536 0" keyPoints="1;0" keyTimes="0;1" calcMode="linear"/><animate attributeName="opacity" dur="41s" repeatCount="indefinite" values="0.25;0.25;1;1;0.25" keyTimes="0;0.47;0.53;0.97;1"/></g></g>
+          </g>
+          <line x1="148" y1="300" x2="168" y2="300" class="mirino"/><line x1="432" y1="300" x2="452" y2="300" class="mirino"/>
+          <g id="radar" class="radar" hidden>
+            <path d="M300 300 L300 162 A138 138 0 0 1 419.5 231 Z" class="spazzata"/>
+          </g>
+        </svg>
+        <div class="centro" id="centro">
+          <div class="centro-etichetta" id="centroEtichetta"></div>
+          <div class="centro-valore" id="centroValore">—</div>
+          <div class="centro-sotto" id="centroSotto"></div>
+        </div>
+        <div class="tooltip" id="tooltip" hidden></div>
+      </div>
+
+      <div class="scan-box vetro" id="statoScan" hidden>
+        <div class="sb-testa"><span class="sb-punto"></span><span data-t="scanTitolo"></span><span class="sb-perc" id="ssPerc">0%</span></div>
+        <div class="sb-barra"><i id="ssBarra"></i></div>
+        <div class="sb-riga"><span id="ssFile"></span><span id="ssByte"></span></div>
+        <div class="sb-cartella" id="ssPercorso"></div>
+        <button class="link" id="btnAnnulla" data-t="annulla"></button>
+      </div>
+
+      <div class="azioni-palco">
+        <button class="btn-scansiona" id="btnScansiona">
+          <span class="pulsar"></span><span id="btnScansionaTesto" data-t="scansiona"></span>
+        </button>
+      </div>
+    </section>
+
+    <!-- DESTRA: pulizia -->
+    <aside class="pannello vetro" id="pannello">
+      <div class="pannello-testa">
+        <button class="indietro" id="btnIndietro" hidden aria-label="←">←</button>
+        <div>
+          <div class="pannello-sopra" id="pannelloSopra" data-t="benvenutoSopra"></div>
+          <h1 id="pannelloTitolo" data-t="benvenutoTitolo"></h1>
+        </div>
+        <div class="pannello-dim" id="pannelloDim"></div>
+      </div>
+      <p class="pannello-intro" id="pannelloIntro" data-t="benvenutoIntro"></p>
+      <div class="lista" id="lista"></div>
+      <div class="azione-pannello">
+        <div class="selezione">
+          <div class="sel-numero" id="selTotale">0 GB</div>
+          <div class="sel-testo" id="selTesto"></div>
+        </div>
+        <div class="riga-azione">
+          <div class="gratuite" id="gratuite"></div>
+          <button class="btn-pulisci" id="btnPulisci" disabled><span data-t="pulisciOra"></span></button>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <div class="velo" id="velo" hidden>
+    <div class="modale vetro" id="modale"></div>
+  </div>
+
+  <script src="demo.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
