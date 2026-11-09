@@ -8,10 +8,11 @@
 <meta name="description" content="Orbita shows what fills your Windows disk in one ring and cleans only what's safe, explaining every item in plain words. Pay once, yours forever.">
 <meta property="og:title" content="Orbita · See what fills your disk. Clean it safely.">
 <meta property="og:description" content="One ring to see your whole disk. Safe items pre-checked, each explained in plain words. Pay once, yours forever.">
-<meta property="og:image" content="https://skrull2001-boop.github.io/portfolio/orbita/img/og.jpg">
+<meta property="og:image" content="https://skrull2001-boop.github.io/portfolio/orbita/img/og.jpg?v=0911">
 <meta property="og:url" content="https://skrull2001-boop.github.io/portfolio/orbita/">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#eef1f5">
+<meta http-equiv="Cache-Control" content="no-cache">
 <link rel="icon" href="img/favicon.png">
 <style>
 :root{
@@ -178,7 +179,7 @@ footer a{color:var(--t2)}
         <button type="button" class="on" data-tema="light" data-t="chiaro">Light</button>
         <button type="button" data-tema="dark" data-t="scuro">Dark</button>
       </div>
-      <div class="finestra"><img id="shot" src="img/orbita-light-en.jpg" width="1400" height="840" alt="Orbita: disk ring by category and recommended cleanup"></div>
+      <div class="finestra"><img id="shot" src="img/orbita-light-en.jpg?v=0911" width="1400" height="840" alt="Orbita: disk ring by category and recommended cleanup"></div>
     </div>
   </div>
 </header>
@@ -190,7 +191,7 @@ footer a{color:var(--t2)}
     <p class="lead" data-t="d0l">This is the real Orbita interface running in your browser, with sample data. Press "Scan", watch the ring fill up, tap the colors, try a cleanup: nothing on your PC is touched.</p>
     <div class="demo-box" id="demoBox">
       <button class="demo-avvia" id="demoAvvia" type="button">
-        <img id="demoPoster" src="img/orbita-light-en.jpg" alt="" loading="lazy">
+        <img id="demoPoster" src="img/orbita-light-en.jpg?v=0911" alt="" loading="lazy">
         <span class="demo-play"><b>▶</b><span data-t="d0b">Start the interactive demo</span></span>
       </button>
     </div>
@@ -341,7 +342,7 @@ footer a{color:var(--t2)}
   var els=document.querySelectorAll("[data-t]"),EN={};
   els.forEach(function(e){EN[e.dataset.t]=e.hasAttribute("data-html")?e.innerHTML:e.textContent;});
   var btn=document.getElementById("lang"),shot=document.getElementById("shot"),tema="light";
-  function foto(){shot.src="img/orbita-"+tema+"-"+document.documentElement.lang+".jpg";var dp=document.getElementById("demoPoster");if(dp)dp.src="img/orbita-light-"+document.documentElement.lang+".jpg";}
+  function foto(){shot.src="img/orbita-"+tema+"-"+document.documentElement.lang+".jpg?v=0911";var dp=document.getElementById("demoPoster");if(dp)dp.src="img/orbita-light-"+document.documentElement.lang+".jpg?v=0911";}
   function set(l){
     var d=l==="it"?IT:EN;
     els.forEach(function(e){var v=d[e.dataset.t];if(v==null)return;if(e.hasAttribute("data-html"))e.innerHTML=v;else e.textContent=v;});
@@ -358,7 +359,7 @@ footer a{color:var(--t2)}
   document.querySelectorAll(".switch button").forEach(function(b){
     b.onclick=function(){tema=b.dataset.tema;document.querySelectorAll(".switch button").forEach(function(x){x.classList.toggle("on",x===b);});foto();};
   });
-  ["light","dark"].forEach(function(t){["it","en"].forEach(function(g){var i=new Image();i.src="img/orbita-"+t+"-"+g+".jpg";});});
+  ["light","dark"].forEach(function(t){["it","en"].forEach(function(g){var i=new Image();i.src="img/orbita-"+t+"-"+g+".jpg?v=0911";});});
   var box=document.getElementById("demoBox"),avvia=document.getElementById("demoAvvia");
   function scalaDemo(){var f=box.querySelector("iframe");if(!f)return;var k=box.clientWidth/1360;f.style.transform="scale("+k+")";box.style.height=Math.round(860*k)+"px";}
   avvia.onclick=function(){
