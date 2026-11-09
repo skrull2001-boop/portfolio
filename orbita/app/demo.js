@@ -53,6 +53,11 @@
     if (t && typeof applicaTema === "function") applicaTema(t === "dark" ? "ossidiana" : "chiaro");
   });
   window.addEventListener("load", () => {
+    if (window.parent !== window) {
+      // dentro il sito: niente badge "modalità prova" (la pagina lo dice già), testata più pulita
+      const b = document.getElementById("badgeProva"); if (b) b.style.display = "none";
+      const st = document.createElement("style"); st.textContent = "#badgeProva{display:none!important}.sotto-logo{white-space:nowrap}"; document.head.appendChild(st);
+    }
     if (temaSito && typeof applicaTema === "function") setTimeout(() => applicaTema(temaSito === "dark" ? "ossidiana" : "chiaro"), 50);
     if (parametri.get("giro") === "1") {
       // dopo ogni risultato aspetta qualche secondo e rifà l'analisi: la pagina resta viva
