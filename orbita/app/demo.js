@@ -44,7 +44,25 @@
       ["C:\\Program Files (x86)\\Steam\\steamapps\\common\\God of War Ragnarok", 74.9], ["C:\\XboxGames\\Forza Horizon 5", 61.2]],
     download: [["C:\\Users\\utente\\Downloads", 5.8, true]],
   };
-  const lingua = (new URLSearchParams(location.search).get("lang")) || "it";
+  const parametri = new URLSearchParams(location.search);
+  const lingua = parametri.get("lang") || "it";
+  // dal sito: tema chiaro/scuro scelto fuori dall'iframe, e "giro" = la demo ricomincia da sola
+  const temaSito = parametri.get("tema");
+  window.addEventListener("message", (e) => {
+    const t = e.data && e.data.orbitaTema;
+    if (t && typeof applicaTema === "function") applicaTema(t === "dark" ? "ossidiana" : "chiaro");
+  });
+  window.addEventListener("load", () => {
+    if (temaSito && typeof applicaTema === "function") setTimeout(() => applicaTema(temaSito === "dark" ? "ossidiana" : "chiaro"), 50);
+    if (parametri.get("giro") === "1") {
+      // dopo ogni risultato aspetta qualche secondo e rifà l'analisi: la pagina resta viva
+      let fermo = 0;
+      setInterval(() => {
+        if (typeof stato === "undefined" || stato.inScansione || !stato.scan) { fermo = 0; return; }
+        if (++fermo >= 9) { fermo = 0; scansiona(stato.radice); }
+      }, 1000);
+    }
+  });
   async function caricaLingua(cod) {
     // niente eval (la CSP lo vieta): carichiamo i file come script con un "module" finto
     const prendi = (c) => new Promise((ok, ko) => {
