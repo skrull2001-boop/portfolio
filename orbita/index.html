@@ -69,8 +69,40 @@ nav a.l:hover{color:var(--txt)}
 .switch button.on{background:var(--txt);color:#fff}
 .finestra{border-radius:14px;overflow:hidden;border:1px solid var(--bordo);background:#fff;box-shadow:0 2px 4px rgba(15,30,60,.04),0 40px 100px -20px rgba(15,30,60,.28)}
 .finestra img{display:block;width:100%;height:auto}
-.finestra iframe,.demo-box iframe{display:block;border:0;transform-origin:0 0;background:transparent}
+.finestra iframe{display:block;border:0;transform-origin:0 0;background:transparent}
 #vivo{position:relative}
+.vivo-eti{position:absolute;left:50%;top:-16px;transform:translateX(-50%);z-index:3;display:inline-flex;align-items:center;gap:8px;background:var(--txt);color:#fff;border-radius:999px;padding:7px 16px;font:600 13px var(--font);box-shadow:0 10px 30px rgba(15,30,60,.25);white-space:nowrap}
+.vivo-eti i{width:8px;height:8px;border-radius:50%;background:#ff4d4d;animation:batte 1.4s ease-in-out infinite}
+@keyframes batte{0%{box-shadow:0 0 0 0 rgba(255,77,77,.6)}70%{box-shadow:0 0 0 8px rgba(255,77,77,0)}100%{box-shadow:0 0 0 0 rgba(255,77,77,0)}}
+.vetrina .alone{position:absolute;inset:8% 6% -4%;background:radial-gradient(60% 60% at 50% 40%,rgba(0,103,192,.28),transparent 70%);filter:blur(40px);z-index:-1}
+.hero h1 .blu{background:linear-gradient(92deg,#0067c0,#2f8be6 45%,#0f9d6b);-webkit-background-clip:text;background-clip:text;color:transparent}
+.card{transition:transform .25s,box-shadow .25s,border-color .25s}
+.card:hover{transform:translateY(-4px);box-shadow:0 20px 50px -20px rgba(15,30,60,.3);border-color:rgba(0,103,192,.25)}
+.scura .card:hover{border-color:rgba(77,141,255,.35);box-shadow:0 20px 50px -20px rgba(0,0,0,.8)}
+/* 3 passi */
+.passi{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.passo{position:relative;background:var(--bg2);border:1px solid var(--bordo);border-radius:20px;padding:30px 26px 26px;overflow:hidden;transition:transform .25s,box-shadow .25s}
+.passo:hover{transform:translateY(-4px);box-shadow:0 20px 50px -20px rgba(15,30,60,.3)}
+.passo b{display:block;font:700 64px/1 var(--num);color:transparent;-webkit-text-stroke:1.5px rgba(0,103,192,.4);margin-bottom:14px}
+.passo h3{margin:0 0 6px;font:600 19px var(--font)}
+.passo p{margin:0;color:var(--t2);font-size:15px}
+.passo::after{content:"";position:absolute;right:-40px;top:-40px;width:140px;height:140px;border-radius:50%;border:1px dashed rgba(0,103,192,.2)}
+/* telefono */
+.tel{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center}
+.tel h2,.tel .kick,.tel .lead{text-align:left;margin-left:0}
+.tel ul{list-style:none;padding:0;margin:0 0 26px}
+.tel li{padding:8px 0 8px 30px;position:relative;color:var(--st2)}
+.tel li::before{content:"✓";position:absolute;left:4px;color:#34d399;font-weight:700}
+.telefono{justify-self:center;width:250px;height:510px;border-radius:44px;background:linear-gradient(160deg,#1c1d26,#0b0b10);border:1px solid rgba(255,255,255,.1);box-shadow:0 50px 100px -30px rgba(0,0,0,.9),inset 0 0 0 7px #000;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;position:relative}
+.telefono::before{content:"";position:absolute;top:18px;width:84px;height:22px;border-radius:12px;background:#000}
+.telefono svg{width:170px;height:170px}
+.telefono .arco{transition:stroke-dasharray 1.4s cubic-bezier(.2,.8,.2,1)}
+.telefono .gb{font:700 34px var(--num);color:#fff}
+.telefono .gbn{color:var(--st2);font-size:13px;margin-top:-12px}
+.store{display:inline-flex;gap:10px;flex-wrap:wrap}
+.store span{border:1px solid var(--sb);border-radius:12px;padding:9px 16px;color:var(--st);font:600 14px var(--font)}
+.store span small{display:block;color:var(--st2);font-weight:400;font-size:11px}
+@media (max-width:760px){.passi{grid-template-columns:1fr}.tel{grid-template-columns:1fr}.telefono{width:220px;height:440px}}
 
 /* sezioni */
 section{padding:96px 0}
@@ -116,16 +148,6 @@ details[open] summary::after{content:"–"}
 details p{color:var(--t2);margin:10px 0 0}
 
 .finale{text-align:center;padding:90px 0}
-.demo-sez{padding-top:80px}
-.demo-box{position:relative;border-radius:16px;overflow:hidden;border:1px solid var(--sb);box-shadow:0 40px 100px -20px rgba(0,0,0,.6);background:#0b0c0e}
-.demo-avvia{display:block;width:100%;border:0;padding:0;margin:0;cursor:pointer;position:relative;background:none}
-.demo-avvia img{display:block;width:100%;height:auto;filter:brightness(.55) saturate(.9);transition:filter .3s}
-.demo-avvia:hover img{filter:brightness(.7)}
-.demo-play{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;color:#fff;font:600 18px var(--font)}
-.demo-play b{width:84px;height:84px;border-radius:50%;display:grid;place-items:center;background:var(--sblu);font-size:30px;box-shadow:0 0 0 12px rgba(77,141,255,.18);transition:transform .2s}
-.demo-avvia:hover .demo-play b{transform:scale(1.07)}
-.demo-box iframe{display:block;border:0;transform-origin:0 0}
-.demo-mobile{display:none;text-align:center;margin-top:14px}
 .confronto{max-width:860px;margin:0 auto;background:var(--bg2);border:1px solid var(--bordo);border-radius:20px;overflow:hidden}
 .confronto .riga{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:12px;padding:15px 24px;border-top:1px solid var(--bordo);align-items:center;font-size:15px}
 .confronto .riga.testa{border-top:0;background:#f7f8fa;font:600 13px var(--font);color:var(--t2);text-transform:uppercase;letter-spacing:.06em}
@@ -138,7 +160,7 @@ footer a{color:var(--t2)}
 .appare{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}
 .appare.vista{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){.orbite .ruota{animation:none}.appare{opacity:1;transform:none;transition:none}}
-@media (max-width:760px){.demo-mobile{display:block}.confronto .riga{grid-template-columns:1fr 1fr;}.confronto .riga span:first-child{grid-column:1/3;font-weight:600}nav a.l{display:none}section{padding:64px 0}.numeri{grid-template-columns:1fr}.numeri div+div{border-left:0;border-top:1px solid var(--bordo)}.orbite{width:800px;height:800px}}
+@media (max-width:760px){.vivo-eti{display:none}.confronto .riga{grid-template-columns:1fr 1fr;}.confronto .riga span:first-child{grid-column:1/3;font-weight:600}nav a.l{display:none}section{padding:64px 0}.numeri{grid-template-columns:1fr}.numeri div+div{border-left:0;border-top:1px solid var(--bordo)}.orbite{width:800px;height:800px}}
 </style>
 </head>
 <body>
@@ -146,7 +168,7 @@ footer a{color:var(--t2)}
   <div class="wrap">
     <a class="logo" href="#"><img src="img/icona.png" alt="">ORBITA</a>
     <span class="sp"></span>
-    <a class="l" href="#demo" data-t="nav0">Live demo</a>
+    <a class="l" href="#prova" data-t="nav0">Live demo</a>
     <a class="l" href="#come" data-t="nav1">How it works</a>
     <a class="l" href="#sicura" data-t="nav3">Safety</a>
     <a class="l" href="#prezzo" data-t="nav2">Price</a>
@@ -170,34 +192,35 @@ footer a{color:var(--t2)}
     <h1 data-t="h1" data-html>See what fills your disk.<br><span class="blu">Clean it safely.</span></h1>
     <p class="sub" data-t="sub">Orbita shows your whole Windows disk in one ring. Everything that's safe to remove is already checked, and every item is explained in plain words, so you always know what you're deleting.</p>
     <div class="cta">
-      <a class="btn p" href="#demo" data-t="ctaDemo">▶ Try the live demo</a>
+      <a class="btn p" href="#prova" data-t="ctaDemo">▶ Try it right here</a>
       <a class="btn s" href="#accesso" data-t="cta1">Get early access</a>
     </div>
     <div class="gratis-hero" data-t="gratis">Your first full cleanup is free. Not impressed? You pay nothing.</div>
     <div class="nota" data-t="nota">Coming soon on the Microsoft Store · Windows 10 and 11</div>
 
-    <div class="vetrina appare">
+    <div class="vetrina appare" id="prova">
+      <div class="alone"></div>
       <div class="switch" role="group" aria-label="Theme">
         <button type="button" class="on" data-tema="light" data-t="chiaro">Light</button>
         <button type="button" data-tema="dark" data-t="scuro">Dark</button>
       </div>
-      <div class="finestra" id="vivo"><img id="shot" src="img/orbita-light-en.jpg?v=0911" width="1400" height="840" alt="Orbita: disk ring by category and recommended cleanup"></div>
+      <div style="position:relative"><span class="vivo-eti"><i></i><span data-t="vivoEti">Live: the real app. Tap the colors, try a cleanup.</span></span>
+      <div class="finestra" id="vivo"><img id="shot" src="img/orbita-light-en.jpg?v=0911" width="1400" height="840" alt="Orbita: disk ring by category and recommended cleanup"></div></div>
+      <p class="nota" data-t="vivoN">Sample data, running in your browser: nothing on your PC is touched.</p>
     </div>
   </div>
 </header>
 
-<section id="demo" class="scura demo-sez">
+<section id="passi">
   <div class="wrap">
-    <div class="kick mono" data-t="k0">Live demo</div>
-    <h2 data-t="d0t">Try it right here</h2>
-    <p class="lead" data-t="d0l">This is the real Orbita interface running in your browser, with sample data. Press "Scan", watch the ring fill up, tap the colors, try a cleanup: nothing on your PC is touched.</p>
-    <div class="demo-box" id="demoBox">
-      <button class="demo-avvia" id="demoAvvia" type="button">
-        <img id="demoPoster" src="img/orbita-light-en.jpg?v=0911" alt="" loading="lazy">
-        <span class="demo-play"><b>▶</b><span data-t="d0b">Start the interactive demo</span></span>
-      </button>
+    <div class="kick mono" data-t="kp">Three steps</div>
+    <h2 data-t="pt">From "disk full" to free space in a minute</h2>
+    <p class="lead" data-t="pl">No settings to learn. Orbita does the reading, you make the call.</p>
+    <div class="passi">
+      <div class="passo appare"><b>01</b><h3 data-t="p1t">Scan</h3><p data-t="p1p">Orbita reads the whole disk in about thirty seconds and draws it as one ring.</p></div>
+      <div class="passo appare"><b>02</b><h3 data-t="p2t">Understand</h3><p data-t="p2p">Tap a color to see what's inside. Every item says what it is and whether it's safe to remove.</p></div>
+      <div class="passo appare"><b>03</b><h3 data-t="p3t">Clean</h3><p data-t="p3p">The safe stuff is already checked. One click and the ring shrinks in front of you.</p></div>
     </div>
-    <p class="nota demo-mobile" data-t="d0m">The demo is made for a computer screen: open this page on your PC to try it.</p>
   </div>
 </section>
 
@@ -221,8 +244,8 @@ footer a{color:var(--t2)}
     <h2 data-t="s2t">Tested on a real PC</h2>
     <p class="lead" data-t="s2l">On the developer's gaming PC, the first scan found:</p>
     <div class="numeri appare">
-      <div><div class="big v">38 GB</div><p data-t="n1">ready to free, all safe</p></div>
-      <div><div class="big">23 GB</div><p data-t="n2">of NVIDIA graphics cache, from games played months ago</p></div>
+      <div><div class="big v" data-conta="38" data-suff=" GB">38 GB</div><p data-t="n1">ready to free, all safe</p></div>
+      <div><div class="big" data-conta="23" data-suff=" GB">23 GB</div><p data-t="n2">of NVIDIA graphics cache, from games played months ago</p></div>
       <div><div class="big">~30 s</div><p data-t="n3">to read 800,000 files</p></div>
     </div>
   </div>
@@ -255,6 +278,32 @@ footer a{color:var(--t2)}
       <div class="riga"><span data-t="c4">Extra software in the installer</span><b class="si" data-t="c4a">Never</b><i data-t="c4b">Sometimes</i></div>
       <div class="riga"><span data-t="c5">Your files</span><b class="si" data-t="c5a">Recycle Bin, always</b><i data-t="c5b">Deleted for good</i></div>
       <div class="riga"><span data-t="c6">Data sent online</span><b class="si" data-t="c6a">Nothing</b><i data-t="c6b">Usage stats</i></div>
+    </div>
+  </div>
+</section>
+
+<section id="telefono" class="scura">
+  <div class="wrap tel">
+    <div>
+      <div class="kick mono" data-t="kt">Coming to your phone</div>
+      <h2 data-t="tt">Your phone is full too. We know.</h2>
+      <p class="lead" data-t="tl">Orbita for Android and iPhone finds what eats your storage and lets you choose what to delete, one photo at a time.</p>
+      <ul>
+        <li data-t="t1">Duplicate photos and videos, side by side</li>
+        <li data-t="t2">Huge videos and forgotten screenshots</li>
+        <li data-t="t3">Apps you haven't opened in months (Android)</li>
+        <li data-t="t4">Nothing deleted without your OK</li>
+      </ul>
+      <div class="store"><span>Google Play<small data-t="presto">coming soon</small></span><span>App Store<small data-t="presto2">coming soon</small></span></div>
+    </div>
+    <div class="telefono appare" id="tel">
+      <svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="78" fill="none" stroke="rgba(255,255,255,.06)" stroke-width="20"/>
+        <circle class="arco" data-l="180" cx="100" cy="100" r="78" fill="none" stroke="#ff9f1c" stroke-width="20" stroke-dasharray="0 490" transform="rotate(-90 100 100)"/>
+        <circle class="arco" data-l="120" cx="100" cy="100" r="78" fill="none" stroke="#2ec4ff" stroke-width="20" stroke-dasharray="0 490" stroke-dashoffset="-184" transform="rotate(-90 100 100)"/>
+        <circle class="arco" data-l="60" cx="100" cy="100" r="78" fill="none" stroke="#9b6bff" stroke-width="20" stroke-dasharray="0 490" stroke-dashoffset="-308" transform="rotate(-90 100 100)"/>
+        <circle class="arco" data-l="70" cx="100" cy="100" r="78" fill="none" stroke="#7c8cff" stroke-width="20" stroke-dasharray="0 490" stroke-dashoffset="-372" transform="rotate(-90 100 100)"/></svg>
+      <div class="gb" data-conta="11.4" data-suff=" GB">0 GB</div>
+      <div class="gbn" data-t="tg">you can free up</div>
     </div>
   </div>
 </section>
@@ -307,9 +356,14 @@ footer a{color:var(--t2)}
 
 <script>
 (function(){
-  var IT={nav0:"Demo dal vivo",ctaDemo:"▶ Prova la demo dal vivo",k0:"Demo dal vivo",d0t:"Provala qui, adesso",
-  d0l:"Questa è la vera interfaccia di Orbita, nel tuo browser, con dati di esempio. Premi \"Scansiona\", guarda l'anello riempirsi, tocca i colori, prova una pulizia: sul tuo PC non viene toccato niente.",
-  d0b:"Avvia la demo interattiva",d0m:"La demo è pensata per lo schermo di un computer: apri questa pagina dal PC per provarla.",
+  var IT={nav0:"Demo dal vivo",ctaDemo:"▶ Provala qui, adesso",
+  vivoEti:"Dal vivo: è la vera app. Tocca i colori, prova la pulizia.",vivoN:"Dati di esempio, nel tuo browser: sul tuo PC non viene toccato niente.",
+  kp:"Tre passi",pt:"Da \"disco pieno\" a spazio libero in un minuto",pl:"Niente impostazioni da imparare. Orbita legge, tu decidi.",
+  p1t:"Scansiona",p1p:"Orbita legge tutto il disco in una trentina di secondi e lo disegna in un solo anello.",
+  p2t:"Capisci",p2p:"Tocca un colore e vedi cosa c'è dentro. Ogni voce dice cos'è e se si può togliere.",
+  p3t:"Pulisci",p3p:"Le voci sicure sono già spuntate. Un clic e l'anello si restringe davanti a te.",
+  kt:"In arrivo sul telefono",tt:"Anche il telefono è pieno. Lo sappiamo.",tl:"Orbita per Android e iPhone trova cosa occupa la memoria e ti lascia scegliere cosa cancellare, una foto alla volta.",
+  t1:"Foto e video doppi, uno accanto all'altro",t2:"Video enormi e screenshot dimenticati",t3:"App che non apri da mesi (Android)",t4:"Niente viene cancellato senza il tuo ok",presto:"in arrivo",presto2:"in arrivo",tg:"che puoi liberare",
   k5:"Perché è diversa",c0t:"Un pulitore che ti rispetta",c0l:"Molti programmi di pulizia vogliono un abbonamento, ti spaventano con avvisi rossi e non dicono cosa cancellano. Orbita fa il contrario.",
   c0x:"Pulitori tipici",c1:"Abbonamento",c1a:"Mai: paghi una volta",c1b:"Spesso annuale",c2:"Spiega ogni voce",c2a:"Sì, in parole semplici",c2b:"Raramente",
   c3:"Falsi allarmi \"PC a rischio\"",c3a:"Nessuno",c3b:"Frequenti",c4:"Altri programmi nell'installazione",c4a:"Mai",c4b:"A volte",
@@ -344,7 +398,7 @@ footer a{color:var(--t2)}
   var els=document.querySelectorAll("[data-t]"),EN={};
   els.forEach(function(e){EN[e.dataset.t]=e.hasAttribute("data-html")?e.innerHTML:e.textContent;});
   var btn=document.getElementById("lang"),shot=document.getElementById("shot"),tema="light";
-  function foto(){if(!shot||!shot.isConnected)return;shot.src="img/orbita-"+tema+"-"+document.documentElement.lang+".jpg?v=0911";var dp=document.getElementById("demoPoster");if(dp)dp.src="img/orbita-light-"+document.documentElement.lang+".jpg?v=0911";}
+  function foto(){if(!shot||!shot.isConnected)return;shot.src="img/orbita-"+tema+"-"+document.documentElement.lang+".jpg?v=0911";}
   function set(l){
     var d=l==="it"?IT:EN;
     els.forEach(function(e){var v=d[e.dataset.t];if(v==null)return;if(e.hasAttribute("data-html"))e.innerHTML=v;else e.textContent=v;});
@@ -363,24 +417,28 @@ footer a{color:var(--t2)}
       document.querySelectorAll("iframe").forEach(function(f){try{f.contentWindow.postMessage({orbitaTema:tema},"*");}catch(e){}});};
   });
   ["light","dark"].forEach(function(t){["it","en"].forEach(function(g){var i=new Image();i.src="img/orbita-"+t+"-"+g+".jpg?v=0911";});});
-  // Orbita vera, in funzione dentro la pagina (dati di esempio): in cima gira da sola in loop,
-  // nella sezione demo si carica quando ci arrivi e la usi tu.
-  var vivo=document.getElementById("vivo"),box=document.getElementById("demoBox"),avvia=document.getElementById("demoAvvia");
+  // Orbita vera, in funzione dentro la pagina (dati di esempio): la usa chi visita, niente loop.
+  var vivo=document.getElementById("vivo");
   function scala(c){var f=c&&c.querySelector("iframe");if(!f)return;var k=c.clientWidth/1360;f.style.transform="scale("+k+")";c.style.height=Math.round(860*k)+"px";}
-  function app(c,giro){
+  function app(c){
     var f=document.createElement("iframe");f.width=1360;f.height=860;f.title="Orbita";f.setAttribute("scrolling","no");
-    f.src="app/?lang="+document.documentElement.lang+"&tema="+tema+(giro?"&giro=1":"");
+    f.src="app/?lang="+document.documentElement.lang+"&tema="+tema;
     c.innerHTML="";c.appendChild(f);scala(c);return f;
   }
-  function ricarica(){if(vivo&&vivo.querySelector("iframe"))app(vivo,true);if(box&&box.querySelector("iframe"))app(box,false);}
+  function ricarica(){if(vivo&&vivo.querySelector("iframe"))app(vivo);}
   var piccolo=matchMedia("(max-width:760px)").matches;
-  if(!piccolo)addEventListener("load",function(){app(vivo,true);});
-  avvia.onclick=function(){app(box,false);};
-  if("IntersectionObserver" in window&&!piccolo){
-    var od=new IntersectionObserver(function(v){if(v[0].isIntersecting){app(box,false);od.disconnect();}},{rootMargin:"200px"});
-    od.observe(box);
-  }
-  addEventListener("resize",function(){scala(vivo);scala(box);});
+  if(!piccolo)addEventListener("load",function(){app(vivo);});
+  addEventListener("resize",function(){scala(vivo);});
+  // numeri che salgono e anello del telefono che si riempie quando entrano in vista
+  function conta(e){var fin=parseFloat(e.dataset.conta),suff=e.dataset.suff||"",dec=fin%1?1:0,t0=null,it=document.documentElement.lang==="it";
+    function f(t){t0=t0||t;var k=Math.min(1,(t-t0)/1400);k=1-Math.pow(1-k,3);var v=(fin*k).toFixed(dec);e.textContent=(it?v.replace(".",","):v)+suff;if(k<1)requestAnimationFrame(f);}
+    requestAnimationFrame(f);}
+  if("IntersectionObserver" in window){
+    var oc=new IntersectionObserver(function(v){v.forEach(function(x){if(x.isIntersecting){conta(x.target);oc.unobserve(x.target);}});},{threshold:.6});
+    document.querySelectorAll("[data-conta]").forEach(function(e){oc.observe(e);});
+    var ot=new IntersectionObserver(function(v){if(v[0].isIntersecting){document.querySelectorAll("#tel .arco").forEach(function(a,i){setTimeout(function(){a.setAttribute("stroke-dasharray",a.dataset.l+" 490");},i*180);});ot.disconnect();}},{threshold:.5});
+    ot.observe(document.getElementById("tel"));
+  }else document.querySelectorAll("#tel .arco").forEach(function(a){a.setAttribute("stroke-dasharray",a.dataset.l+" 490");});
   var nav=document.getElementById("nav");
   addEventListener("scroll",function(){nav.classList.toggle("ombra",scrollY>8);},{passive:true});
   if("IntersectionObserver" in window){
