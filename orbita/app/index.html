@@ -9,6 +9,7 @@
 </head>
 <body>
   <div class="griglia-sfondo" aria-hidden="true"></div>
+  <div class="profondo" aria-hidden="true"><i class="strato lontano"></i><i class="strato vicino"></i><i class="alone"></i></div>
 
   <header class="barra">
     <div class="logo">
@@ -51,6 +52,7 @@
             <radialGradient id="nucleo" cx="50%" cy="45%">
               <stop offset="0" style="stop-color:var(--nucleo1)"/><stop offset="1" style="stop-color:var(--nucleo2)"/>
             </radialGradient>
+            <filter id="sfuma" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="7"/></filter>
             <clipPath id="tagliaPianeta"><circle cx="300" cy="300" r="136"/></clipPath>
             <radialGradient id="luceP" cx="35%" cy="28%" r="80%">
               <stop offset="0" style="stop-color:var(--ciano);stop-opacity:.16"/><stop offset=".55" style="stop-color:var(--ciano);stop-opacity:0"/>
@@ -143,12 +145,13 @@
           <circle cx="300" cy="300" r="229" class="bordo-anello"/>
           <circle cx="300" cy="300" r="181" class="bordo-anello"/>
           <g id="settori" transform="rotate(-90 300 300)"></g>
-          <circle cx="300" cy="300" r="164" class="giro giro-punti"/>
+          <g class="riflesso-giro" aria-hidden="true"><circle cx="300" cy="300" r="205" class="riflesso"/></g>
+          <circle cx="300" cy="300" r="164" class="giro giro-punti gira-lento"/>
           <circle cx="300" cy="300" r="150" class="traccia-recuperabile"/>
           <circle cx="300" cy="300" r="150" id="arcoRecuperabile" class="recuperabile" transform="rotate(-90 300 300)"/>
           <circle cx="300" cy="300" r="138" fill="url(#nucleo)" class="pianeta"/>
           <g clip-path="url(#tagliaPianeta)" class="griglia-pianeta" aria-hidden="true">
-            <g transform="rotate(-18 300 300)"><ellipse cx="300" cy="195.8" rx="87.4" ry="9.0" class="parallelo"/><ellipse cx="300" cy="242.5" rx="123.3" ry="12.7" class="parallelo"/><ellipse cx="300" cy="300.0" rx="136.0" ry="14.0" class="parallelo"/><ellipse cx="300" cy="357.5" rx="123.3" ry="12.7" class="parallelo"/><ellipse cx="300" cy="404.2" rx="87.4" ry="9.0" class="parallelo"/><g class="meridiani"><ellipse cx="300" cy="300" rx="131.4" ry="136" class="meridiano"/><ellipse cx="300" cy="300" rx="96.2" ry="136" class="meridiano"/><ellipse cx="300" cy="300" rx="35.2" ry="136" class="meridiano"/></g></g>
+            <g transform="rotate(-18 300 300)"><ellipse cx="300" cy="195.8" rx="87.4" ry="9.0" class="parallelo"/><ellipse cx="300" cy="242.5" rx="123.3" ry="12.7" class="parallelo"/><ellipse cx="300" cy="300.0" rx="136.0" ry="14.0" class="parallelo"/><ellipse cx="300" cy="357.5" rx="123.3" ry="12.7" class="parallelo"/><ellipse cx="300" cy="404.2" rx="87.4" ry="9.0" class="parallelo"/><g class="meridiani"><ellipse cx="300" cy="300" rx="0" ry="136" class="meridiano"><animate attributeName="rx" values="0;136;0" keyTimes="0;0.5;1" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1" dur="36s" begin="0s" repeatCount="indefinite"/></ellipse><ellipse cx="300" cy="300" rx="0" ry="136" class="meridiano"><animate attributeName="rx" values="0;136;0" keyTimes="0;0.5;1" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1" dur="36s" begin="-9s" repeatCount="indefinite"/></ellipse><ellipse cx="300" cy="300" rx="0" ry="136" class="meridiano"><animate attributeName="rx" values="0;136;0" keyTimes="0;0.5;1" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1" dur="36s" begin="-18s" repeatCount="indefinite"/></ellipse><ellipse cx="300" cy="300" rx="0" ry="136" class="meridiano"><animate attributeName="rx" values="0;136;0" keyTimes="0;0.5;1" calcMode="spline" keySplines="0.4 0 0.6 1;0.4 0 0.6 1" dur="36s" begin="-27s" repeatCount="indefinite"/></ellipse></g></g>
           </g>
           <circle cx="300" cy="300" r="138" fill="url(#luceP)" class="luce-pianeta"/>
           <!-- orbite: meta' davanti, sopra al pianeta, e lune -->

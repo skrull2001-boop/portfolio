@@ -724,6 +724,56 @@ function esplosione() {
   }
 }
 
+// Parallasse: l'anello si inclina appena e gli strati dello sfondo si spostano a velocità
+// diverse seguendo il mouse (--px/--py tra -1 e 1, li usa style.css). Niente se Windows
+// chiede meno animazioni.
+(() => {
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  const radice = document.documentElement.style;
+  let x = 0, y = 0, inAttesa = false;
+  addEventListener("mousemove", (e) => {
+    x = (e.clientX / innerWidth) * 2 - 1;
+    y = (e.clientY / innerHeight) * 2 - 1;
+    if (inAttesa) return;
+    inAttesa = true;
+    requestAnimationFrame(() => {
+      radice.setProperty("--px", x.toFixed(3));
+      radice.setProperty("--py", y.toFixed(3));
+      inAttesa = false;
+    });
+  }, { passive: true });
+  // il mouse esce dalla finestra: l'anello torna dritto
+  document.addEventListener("mouseleave", () => { radice.setProperty("--px", "0"); radice.setProperty("--py", "0"); });
+})();
+
+// Riposo: le animazioni decorative costano processore (l'SVG si ridisegna a ogni fotogramma).
+// Girano mentre la persona usa Orbita; dopo 30 s senza mouse/tastiera, o quando la finestra
+// passa in secondo piano, si fermano. Ripartono al primo movimento. Mai durante la scansione.
+(() => {
+  const RIPOSO_MS = 30000;
+  const html = document.documentElement;
+  const svg = document.getElementById("anello");
+  let timer = null;
+  function dormi() {
+    if (window.maiRiposo) return;   // registrazione dei video promozionali (main.js --video)
+    if (stato.inScansione) { timer = setTimeout(dormi, RIPOSO_MS); return; }
+    html.classList.add("a-riposo");
+    if (svg && svg.pauseAnimations) svg.pauseAnimations();
+  }
+  function sveglia() {
+    if (html.classList.contains("a-riposo")) {
+      html.classList.remove("a-riposo");
+      if (svg && svg.unpauseAnimations) svg.unpauseAnimations();
+    }
+    clearTimeout(timer);
+    timer = setTimeout(dormi, RIPOSO_MS);
+  }
+  ["mousemove", "mousedown", "keydown", "wheel"].forEach((ev) => addEventListener(ev, sveglia, { passive: true }));
+  addEventListener("focus", sveglia);
+  addEventListener("blur", () => { clearTimeout(timer); dormi(); });
+  sveglia();
+})();
+
 document.getElementById("btnTema").onclick = () =>
   applicaTema(document.documentElement.dataset.tema === "chiaro" ? TEMA_SCURO : "chiaro");
 avvio();
