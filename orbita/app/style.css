@@ -454,3 +454,38 @@ html[data-tema="titanio"] {
 .in-scansione .giro-archi { animation-duration: 18s; }
 .barra-cat.viva { cursor: default; }
 .barra-cat.viva .bt b { transition: width .35s ease; }
+
+/* ------------------------------------------------------------ 0.4: Pro, aggiornamenti, app aperte */
+.pastiglia {
+  -webkit-app-region: no-drag; height: 32px; padding: 0 14px; border-radius: 999px; cursor: pointer;
+  font: 600 12.5px var(--font); white-space: nowrap; transition: transform .15s, box-shadow .2s, border-color .2s;
+}
+.pastiglia.pro { color: #fff; border: 0; background: linear-gradient(120deg, var(--blu), var(--viola));
+  box-shadow: 0 6px 18px rgba(var(--acc), .28); }
+.pastiglia.pro::before { content: "✦ "; }
+.pastiglia.pro:hover { transform: translateY(-1px); box-shadow: 0 10px 24px rgba(var(--acc), .36); }
+.pastiglia.aggiorna { color: var(--verde); background: rgba(var(--ok), .10); border: 1px solid rgba(var(--ok), .35); }
+.pastiglia.aggiorna:hover { border-color: var(--verde); }
+.punti-pro { list-style: none; padding: 0; margin: 12px auto 4px; display: inline-grid; gap: 7px; text-align: left; }
+.punti-pro li { color: var(--testo); font-size: 14px; padding-left: 26px; position: relative; }
+.punti-pro li::before { content: "✓"; position: absolute; left: 0; top: -1px; width: 18px; height: 18px; border-radius: 50%;
+  display: grid; place-items: center; font-size: 11px; font-weight: 700; color: #fff; background: var(--verde); }
+.avviso-app { margin: 12px 0 4px; padding: 12px 14px; border-radius: 12px; text-align: left;
+  background: rgba(194,120,3,.08); border: 1px solid rgba(194,120,3,.28); font-size: 13px; color: var(--testo); }
+.avviso-app .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.avviso-app .chip { padding: 3px 10px; border-radius: 999px; background: var(--vetro); border: 1px solid var(--bordo);
+  font-size: 12.5px; font-weight: 600; }
+.totale-orbita { color: var(--verde) !important; font-weight: 600; font-size: 13.5px; }
+html[data-tema="chiaro"] .riga-campi select, html[data-tema="chiaro"] .riga-campi input[type=time] { color-scheme: light; }
+
+/* tastiera: anello di fuoco visibile su tutto quello che si clicca */
+button:focus-visible, input:focus-visible, select:focus-visible, .barra-cat:focus-visible {
+  outline: 2px solid var(--ciano); outline-offset: 2px;
+}
+
+/* chi ha chiesto a Windows meno animazioni le ottiene anche qui */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important; scroll-behavior: auto !important; }
+  .particella { display: none; }
+}

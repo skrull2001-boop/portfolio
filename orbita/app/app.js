@@ -90,8 +90,11 @@ async function avvio() {
   $("btnPulisci").onclick = chiediConferma;
   $("btnIndietro").onclick = () => mostraVista("consigliata");
   $("btnImpostazioni").onclick = mostraImpostazioni;
+  $("btnPro").onclick = () => mostraLicenza(true);
+  aggiornaBottonePro();
   if (!stato.info.eulaAccettata) await mostraContratto(true);
   scansiona(stato.radice);
+  controllaAggiornamento();
 }
 
 function disegnaUnita() {
@@ -478,8 +481,48 @@ function collegaLista() {
 
 // ---------------------------------------------------------------- modali
 
-function apriModale(html, largo) { $("modale").className = "modale vetro" + (largo ? " largo" : ""); $("modale").innerHTML = html; $("velo").hidden = false; }
+function apriModale(html, largo) {
+  $("modale").className = "modale vetro" + (largo ? " largo" : "");
+  $("modale").innerHTML = html;
+  $("velo").hidden = false;
+  $("modale").setAttribute("role", "dialog");
+  $("modale").setAttribute("aria-modal", "true");
+  // tastiera: il fuoco va sul primo pulsante in basso, che è sempre quello prudente
+  // (Annulla, Chiudi, Più tardi): un Invio di troppo non avvia mai una pulizia.
+  // Si guarda l'ULTIMA fila di pulsanti: nella finestra Pro la prima è "Compra".
+  const file = $("modale").querySelectorAll(".bottoni");
+  const primo = file.length ? file[file.length - 1].querySelector("button:not([disabled])") : null;
+  if (primo) setTimeout(() => primo.focus(), 30);
+}
 function chiudiModale() { $("velo").hidden = true; }
+
+// Esc chiude le finestre che hanno un pulsante per chiudere (mai il contratto obbligatorio
+// né la pulizia in corso, che non hanno uscite).
+document.addEventListener("keydown", (e) => {
+  if (e.key !== "Escape" || $("velo").hidden) return;
+  const uscita = ["mChiudi", "mAnnulla", "impChiudi", "mOk"].map((id) => document.getElementById(id)).find(Boolean)
+    || (!document.getElementById("eulaAccetto") && document.getElementById("eulaOk"));
+  if (uscita) uscita.click();
+});
+
+/** Pulsante "Orbita Pro" in alto: solo se la licenza non è attiva. */
+function aggiornaBottonePro() {
+  const b = $("btnPro");
+  if (!b) return;
+  b.hidden = !!(stato.licenza && stato.licenza.attiva);
+}
+
+/** Versione nuova sul sito: pastiglia in alto (solo versione scaricata dal sito). */
+async function controllaAggiornamento() {
+  let r = null;
+  try { r = O.aggiornamento ? await O.aggiornamento() : null; } catch { r = null; }
+  const b = $("btnAggiorna");
+  if (!r || !b) return;
+  b.textContent = "↑ " + t("nuovaVersione", { v: r.versione });
+  b.title = t("nuovaVersioneTesto", { v: r.versione });
+  b.hidden = false;
+  b.onclick = () => O.apriAggiornamento(r.link);
+}
 
 /** Contratto di licenza: obbligatorio al primo avvio. */
 async function mostraContratto(obbligatorio) {
@@ -519,6 +562,15 @@ async function mostraImpostazioni() {
       </select></div>
     </div>
     <div class="sezione">
+      <h3>${esc(t("licenzaSopra"))}</h3>
+      <div class="riga-campi">
+        <p style="margin:0;flex:1">${esc(stato.licenza && stato.licenza.attiva ? t("proAttivo")
+          : t("proNonAttivo", { r: stato.licenza ? stato.licenza.rimaste : 0, g: stato.licenza ? stato.licenza.gratuite : 1 }))}</p>
+        ${stato.licenza && stato.licenza.attiva ? "" : `<button class="btn-piccolo" id="impPro">${esc(t("passaPro"))}</button>`}
+      </div>
+      <p class="copyright">${esc(info.totale ? t("totaleOrbita", { b: fmt(info.totale.byte), n: info.totale.pulizie }) : t("nessunTotale"))}</p>
+    </div>
+    <div class="sezione">
       <h3>${esc(t("autoTitolo"))} <span class="tag admin">PRO</span></h3>
       <p>${esc(t("autoTesto"))}</p>
       <div class="riga-campi">
@@ -537,6 +589,7 @@ async function mostraImpostazioni() {
     </div>
     <div class="bottoni"><button class="btn-secondario" id="impChiudi">${esc(t("chiudi"))}</button></div>`, true);
   $("impChiudi").onclick = chiudiModale;
+  if ($("impPro")) $("impPro").onclick = () => mostraLicenza(true);
   $("selLingua").onchange = () => O.lingua($("selLingua").value);
   $("leggiEula").onclick = async () => { await mostraContratto(false); mostraImpostazioni(); };
   $("autoOn").onclick = async () => {
@@ -547,20 +600,27 @@ async function mostraImpostazioni() {
   if ($("autoOff")) $("autoOff").onclick = async () => { await O.autoDisattiva(); mostraImpostazioni(); };
 }
 
-function chiediConferma() {
+async function chiediConferma() {
   const sel = [...stato.selezione.values()];
   const l = stato.licenza;
   if (!stato.info.prova && l && !l.attiva && l.rimaste <= 0) return mostraLicenza();
   const tot = sel.reduce((x, s) => x + s.byte, 0);
   const admin = stato.scan.pulibili.some((v) => v.admin && stato.selezione.has(chiaveP(v)));
   const file = sel.filter((x) => x.richiesta.tipo === "file").length;
+  // Browser e app aperti tengono bloccate le loro cache: diciamo quali chiudere.
+  const vociScelte = sel.filter((x) => x.richiesta.tipo === "pulibile").map((x) => x.richiesta.id);
+  let aperte = [];
+  try { aperte = (O.appAperte && await O.appAperte(vociScelte)) || []; } catch { aperte = []; }
+  const avvisoAperte = aperte.length
+    ? `<div class="avviso-app"><b>${esc(t("appAperte"))}</b><div class="chips">${aperte.map((a) => `<span class="chip">${esc(a.nome)}</span>`).join("")}</div></div>`
+    : `<p style="font-size:12px">${esc(t("consiglioChiudi"))}</p>`;
   apriModale(`
     <div class="pannello-sopra">${esc(stato.info.prova ? t("provaPiede1") : t("conferma"))}</div>
     <h2>${esc(t("liberare", { b: fmt(tot) + (sel.some((x) => x.stima) ? t("eOltre") : "") }))}</h2>
     <p>${esc(t("vociSel", { n: sel.length }))}${file ? esc(t("fileCestino", { n: file })) : ""}</p>
     ${admin ? `<p class="nota">${esc(t("notaAdmin"))}</p>` : ""}
     ${stato.info.prova ? `<p class="nota">${esc(t("notaProva"))}</p>` : ""}
-    <p style="font-size:12px">${esc(t("consiglioChiudi"))}</p>
+    ${avvisoAperte}
     <div class="bottoni"><button class="btn-secondario" id="mAnnulla">${esc(t("annulla"))}</button>
       <button class="btn-pulisci" id="mVai">${esc(t("pulisci"))}</button></div>`);
   $("mAnnulla").onclick = chiudiModale;
@@ -578,6 +638,8 @@ async function eseguiPulizia() {
     return;
   }
   if (r.licenza) stato.licenza = r.licenza;
+  if (r.totale) stato.info.totale = r.totale;
+  aggiornaBottonePro();
   const liberati = Math.max(r.liberatiDisco || 0, r.liberati || 0);
   const liberoPrima = stato.scan ? stato.scan.libero : 0;
   const saltati = r.esiti.reduce((x, e) => x + (e.saltati || 0), 0);
@@ -591,6 +653,7 @@ async function eseguiPulizia() {
     ${!r.prova && liberoPrima ? `<p>${esc(t("liberoPrimaDopo", { a: fmt(liberoPrima), b: fmt(liberoPrima + (r.liberatiDisco || liberati)) }))}</p>` : ""}
     <div class="dettagli">${righe || `<div><span>${esc(t("nienteDaLiberare"))}</span><span></span></div>`}</div>
     ${saltati > 20 ? `<p class="nota">${esc(t("fileInUso", { n: saltati.toLocaleString(T.codice) }))}</p>` : ""}
+    ${r.totale && r.totale.pulizie > 1 ? `<p class="totale-orbita">✦ ${esc(t("totaleOrbita", { b: fmt(r.totale.byte), n: r.totale.pulizie }))}</p>` : ""}
     <div class="bottoni"><button class="btn-pulisci" id="mOk">${esc(t("vediAggiornato"))}</button></div>`);
   esplosione();
   aggiornaPiede();
@@ -600,27 +663,47 @@ async function eseguiPulizia() {
   $("mOk").onclick = chiudiModale;
 }
 
-async function mostraLicenza() {
-  const p = await O.prezzo();
-  const prezzoHtml = p.lancio
-    ? `<span class="badge-lancio">${esc(t("prezzoLancio"))}</span><div class="prezzo">${esc(p.lancio.testo)}<s>${esc(p.testo)}</s></div>`
-    : `<div class="prezzo">${esc(p.testo)}</div>`;
+/**
+ * Orbita Pro. `volontaria`: aperta dall'utente (pulsante in alto o impostazioni),
+ * non perché le pulizie gratuite sono finite.
+ */
+async function mostraLicenza(volontaria) {
+  const l = stato.licenza;
+  if (volontaria && l && l.attiva) {
+    apriModale(`
+      <div class="pannello-sopra">${esc(t("licenzaSopra"))}</div>
+      <h2>✦ ${esc(t("proAttivo"))}</h2>
+      ${stato.info.totale ? `<p>${esc(t("totaleOrbita", { b: fmt(stato.info.totale.byte), n: stato.info.totale.pulizie }))}</p>` : ""}
+      <div class="bottoni"><button class="btn-secondario" id="mChiudi">${esc(t("chiudi"))}</button></div>`);
+    $("mChiudi").onclick = chiudiModale;
+    return;
+  }
+  const finite = !volontaria || (l && !l.attiva && l.rimaste <= 0);
   apriModale(`
     <div class="pannello-sopra">${esc(t("licenzaSopra"))}</div>
-    <h2>${esc(t("licenzaTitolo", { g: stato.licenza ? stato.licenza.gratuite : 3 }))}</h2>
-    <p>${esc(t("licenzaTesto"))}</p>
+    <h2>${esc(finite ? t("licenzaTitolo", { g: l ? l.gratuite : 1 }) : t("proSblocca"))}</h2>
+    <p>${esc(t("proTesto"))}</p>
+    <ul class="punti-pro">${["pro1", "pro2", "pro3", "pro4"].map((k) => `<li>${esc(t(k))}</li>`).join("")}</ul>
     <div class="slogan">${esc(t("slogan"))}</div>
-    ${prezzoHtml}
-    <div class="prezzo-sotto">${esc(t("unaVolta"))}${p.lancio ? " · " + esc(t("poi", { p: p.testo })) : ""}</div>
+    <div class="bottoni compra">
+      <button class="btn-pulisci" id="mVita">${esc(t("compraVita"))}</button>
+    </div>
     <p class="nota">${esc(t("acquistoPresto"))}</p>
     <input id="mChiave" placeholder="${esc(t("chiaveSegnaposto"))}" spellcheck="false">
     <div class="bottoni"><button class="btn-secondario" id="mChiudi">${esc(t("piuTardi"))}</button>
       <button class="btn-pulisci" id="mAttiva">${esc(t("attiva"))}</button></div>`);
   $("mChiudi").onclick = chiudiModale;
+  $("mVita").onclick = () => O.compra && O.compra("vita");
   $("mAttiva").onclick = async () => {
+    $("mAttiva").disabled = true;
     const r = await O.attiva($("mChiave").value);
-    if (r.ok) { stato.licenza = r.stato; aggiornaPiede(); chiudiModale(); }
-    else $("mChiave").style.borderColor = "var(--rosso)";
+    $("mAttiva").disabled = false;
+    if (r.ok) { stato.licenza = r.stato; aggiornaPiede(); aggiornaBottonePro(); chiudiModale(); esplosione(); return; }
+    $("mChiave").style.borderColor = "var(--rosso)";
+    const msg = { formato: "errFormato", rete: "errRete", limite: "errLimite" }[r.errore] || "errChiave";
+    let n = document.getElementById("mErrore");
+    if (!n) { n = document.createElement("p"); n.id = "mErrore"; n.className = "nota"; n.style.color = "var(--rosso)"; $("mChiave").after(n); }
+    n.textContent = t(msg);
   };
 }
 

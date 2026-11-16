@@ -86,7 +86,7 @@
   window.orbita = {
     demo: true,
     testi: () => caricaLingua(lingua),
-    info: async () => ({ prova: true, admin: false, ia: false, versione: "0.3.0", anno: 2026, lingua,
+    info: async () => ({ prova: true, admin: false, ia: false, versione: "0.4.0", anno: 2026, lingua,
       lingue: [["en","English"],["it","Italiano"],["es","Español"],["pt","Português"],["de","Deutsch"],["fr","Français"]].map(([codice, nome]) => ({ codice, nome })),
       eulaAccettata: accettato }),
     lingua: async (c) => { location.search = "?lang=" + c; },
@@ -134,6 +134,11 @@
     appInstallate: async () => {},
     licenza: async () => ({ attiva: false, gratuite: 1, usate: 0, rimaste: 1 }),
     attiva: async () => ({ ok: false }),
+    // dalla demo del sito si può comprare davvero: stesso checkout dell'app
+    compra: async () => { window.open("https://studiovacchini.lemonsqueezy.com/checkout/buy/30f823e4-913a-4b8e-acdc-c689fd8a90e7", "_blank", "noopener"); },
+    appAperte: async (voci) => (voci.includes("cache_browser") ? [{ nome: "Google Chrome", voce: "cache_browser" }] : []),
+    aggiornamento: async () => null,
+    apriAggiornamento: async () => {},
     onProgresso: (cb) => { window._prog = cb; },
     onPasso: () => {},
   };
