@@ -63,6 +63,7 @@ module.exports = {
     hudOk: '● ANÁLISE OK · {n} ARQUIVOS · {s} S', hudScan: '● ANALISANDO…', hudPronto: '● PRONTO',
     compraVita: "Escolha o seu plano · desde 9,99 €", compraAnno: "Anual · 4,99 €/ano", errFormato: "A chave não tem o formato certo.", errRete: "Sem conexão: verifique a internet e tente de novo.", errLimite: "Esta chave já está ativa no número máximo de PCs do seu plano.", errChiave: "Chave inválida.",
     impostazioni: "Configurações",
+    fileProtetto: "Protegido pelo Windows: abra a pasta",
     appAperte: "Feche antes estes programas para libertar mais espaço:",
     totaleOrbita: "O Orbita já libertou {b} no total ({n} limpezas).",
     nessunTotale: "Ainda nenhuma limpeza real.",

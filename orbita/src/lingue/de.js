@@ -63,6 +63,7 @@ module.exports = {
     hudOk: '● SCAN OK · {n} DATEIEN · {s} S', hudScan: '● SCAN LÄUFT…', hudPronto: '● BEREIT',
     compraVita: "Paket wählen · ab 9,99 €", compraAnno: "Jährlich · 4,99 €/Jahr", errFormato: "Der Schlüssel hat nicht das richtige Format.", errRete: "Keine Verbindung: Internet prüfen und erneut versuchen.", errLimite: "Dieser Schlüssel ist bereits auf der maximalen Anzahl PCs seines Pakets aktiv.", errChiave: "Ungültiger Schlüssel.",
     impostazioni: "Einstellungen",
+    fileProtetto: "Von Windows geschützt: Ordner öffnen",
     appAperte: "Schließe zuerst diese Programme, dann wird mehr Platz frei:",
     totaleOrbita: "Orbita hat insgesamt {b} freigegeben ({n} Bereinigungen).",
     nessunTotale: "Noch keine echte Bereinigung.",

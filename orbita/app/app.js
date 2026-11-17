@@ -416,12 +416,12 @@ function htmlFile(f) {
   const k = chiaveF(f);
   const sel = stato.selezione.has(k);
   return `<div class="voce ${sel ? "attiva" : ""}" data-k="${esc(k)}" data-p="${esc(f.p)}" data-b="${f.byte}">
-    ${f.sistema ? `<div class="icona-voce">≋</div>` : `<input type="checkbox" class="spunta" ${sel ? "checked" : ""} data-k="${esc(k)}">`}
+    ${f.sistema || f.protetto ? `<div class="icona-voce">≋</div>` : `<input type="checkbox" class="spunta" ${sel ? "checked" : ""} data-k="${esc(k)}">`}
     <div style="min-width:0"><div class="nome">${esc(nomeFile(f.p))}</div><div class="percorso">${esc(f.p)}</div></div>
     <div class="dim">${fmt(f.byte)}</div>
     <div class="riga2">${f.mtime ? `<span class="tag vecchio">${esc(eta(f.mtime))}</span>` : ""}
       <button class="mini" data-azione="apri">${esc(t("mostraCartella"))}</button>
-      ${f.sistema ? `<span class="tag attenzione">${esc(t("fileSistema"))}</span>` : `<span class="tag vecchio">${esc(t("vaNelCestino"))}</span>`}</div>
+      ${f.sistema ? `<span class="tag attenzione">${esc(t("fileSistema"))}</span>` : f.protetto ? `<span class="tag attenzione">${esc(t("fileProtetto"))}</span>` : `<span class="tag vecchio">${esc(t("vaNelCestino"))}</span>`}</div>
   </div>`;
 }
 
@@ -643,9 +643,14 @@ async function eseguiPulizia() {
   const liberati = Math.max(r.liberatiDisco || 0, r.liberati || 0);
   const liberoPrima = stato.scan ? stato.scan.libero : 0;
   const saltati = r.esiti.reduce((x, e) => x + (e.saltati || 0), 0);
-  const righe = r.esiti.filter((e) => e.liberati > 0 || e.nota).map((e) =>
+  // WinSxS (DISM) non si misura voce per voce: se è l'unica voce così, le diamo il resto
+  // dello spazio liberato sul disco, così si vede quanto ha fatto davvero.
+  const daDisco = r.esiti.filter((e) => e.misuraDaDisco);
+  const sommaVoci = r.esiti.filter((e) => !e.misuraDaDisco).reduce((x, e) => x + (e.liberati || 0), 0);
+  const restoDisco = !r.prova && daDisco.length === 1 ? Math.max(0, (r.liberatiDisco || 0) - sommaVoci) : 0;
+  const righe = r.esiti.filter((e) => e.liberati > 0 || e.nota || e.misuraDaDisco).map((e) =>
     `<div><span>${esc(e.nome)}${e.nota ? `<br><small class="nota">${esc(e.nota)}</small>` : ""}</span>
-     <span>${e.misuraDaDisco ? (e.prova ? "—" : "✓") : fmt(e.liberati)}</span></div>`).join("");
+     <span>${e.misuraDaDisco ? (e.prova ? "—" : restoDisco > MB ? fmt(restoDisco) : "✓") : fmt(e.liberati)}</span></div>`).join("");
   apriModale(`
     <div class="pannello-sopra">${esc(r.prova ? t("simulazione") : t("fatto"))}</div>
     <div class="grande">${fmt(liberati)}</div>

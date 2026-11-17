@@ -63,6 +63,7 @@ module.exports = {
     hudOk: '● ANALYSE OK · {n} FICHIERS · {s} S', hudScan: '● ANALYSE EN COURS…', hudPronto: '● PRÊT',
     compraVita: "Choisir votre offre · dès 9,99 €", compraAnno: "Annuel · 4,99 €/an", errFormato: "La clé n'a pas le bon format.", errRete: "Pas de connexion : vérifie internet et réessaie.", errLimite: "Cette clé est déjà active sur le nombre maximal de PC de son offre.", errChiave: "Clé non valide.",
     impostazioni: "Paramètres",
+    fileProtetto: "Protégé par Windows : ouvrez son dossier",
     appAperte: "Fermez d'abord ces programmes pour libérer plus d'espace :",
     totaleOrbita: "Orbita a libéré {b} au total ({n} nettoyages).",
     nessunTotale: "Aucun vrai nettoyage pour l'instant.",
