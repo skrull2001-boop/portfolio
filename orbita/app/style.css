@@ -590,3 +590,6 @@ html[data-tema="chiaro"] .riflesso { stroke: rgba(255,255,255,.42); }
 .avanz-perc { font: 700 15px var(--num); color: var(--ciano); }
 .voce.gruppo-protetti { cursor: pointer; } .voce.gruppo-protetti:hover { border-color: var(--bordo-forte); }
 .elenco-protetti { padding-left: 14px; border-left: 2px solid var(--bordo); margin-left: 8px; }
+
+.gruppo-azioni { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.gruppo-azioni span { display: flex; gap: 6px; }

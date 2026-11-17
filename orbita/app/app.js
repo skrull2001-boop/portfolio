@@ -401,7 +401,8 @@ async function mostraVista(vista) {
     if (d.cartelle.length) html += `<div class="gruppo">${esc(t("gruppoCartelle"))}</div>` + d.cartelle.map((x) => htmlCartella(x, totCat, c.colore)).join("");
     const normali = d.file.filter((f) => !f.sistema && !f.protetto);
     const protetti = d.file.filter((f) => f.sistema || f.protetto);
-    if (normali.length) html += `<div class="gruppo">${esc(t("gruppoFile"))}</div>` + normali.map(htmlFile).join("");
+    if (normali.length) html += `<div class="gruppo gruppo-azioni">${esc(t("gruppoFile"))} · ${fmt(normali.reduce((x, f) => x + f.byte, 0))}
+      <span><button class="mini" data-tuttifile="si">${esc(t("vecchiTutti"))}</button><button class="mini" data-tuttifile="no">${esc(t("vecchiNessuno"))}</button></span></div>` + normali.map(htmlFile).join("");
     if (protetti.length) {
       const tot = protetti.reduce((x, f) => x + f.byte, 0);
       html += `<div class="voce gruppo-protetti" data-protetti="1"><div class="icona-voce">🔒</div>
@@ -497,6 +498,18 @@ function collegaLista() {
         }
       } else stato.selezione.delete(k);
       voce.classList.toggle("attiva", cb.checked);
+      aggiornaPiede();
+    };
+  });
+  lista.querySelectorAll("[data-tuttifile]").forEach((b) => {
+    b.onclick = () => {
+      const si = b.dataset.tuttifile === "si";
+      lista.querySelectorAll(".voce[data-p] .spunta").forEach((cb) => {
+        const k = cb.dataset.k, voce = cb.closest(".voce");
+        if (!k || !k.startsWith("f:")) return;
+        if (si) seleziona(k, { tipo: "file", p: k.slice(2) }, Number(voce.dataset.b) || 0, false); else stato.selezione.delete(k);
+        cb.checked = si; voce.classList.toggle("attiva", si);
+      });
       aggiornaPiede();
     };
   });
