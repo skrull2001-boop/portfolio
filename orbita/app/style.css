@@ -560,3 +560,33 @@ html[data-tema="chiaro"] .riflesso { stroke: rgba(255,255,255,.42); }
 
 /* a riposo (vedi app.js): tutto ciò che è decorazione si ferma dov'è; i settori e la festa no */
 .a-riposo *:not(.settore):not(.particella), .a-riposo *::before, .a-riposo *::after { animation-play-state: paused !important; }
+
+/* ------------------------------------------------------------ 0.5: file vecchi, voci pulite, Cestino, guida */
+.vecchi-card { display: grid; grid-template-columns: auto 1fr; gap: 6px 16px; align-items: center; padding: 16px 18px; margin: 4px 0 8px;
+  border-radius: 16px; border: 1.5px solid rgba(var(--acc), .35); background: rgba(var(--acc), .07); }
+.vecchi-card .vc-num { font: 700 30px var(--num); color: var(--ciano); grid-row: span 2; }
+.vecchi-card .vc-txt { font-size: 13px; color: var(--testo2); }
+.vecchi-card .vc-txt b { color: var(--verde); }
+.vecchi-card .vc-btn { display: flex; gap: 8px; }
+.vc-altri { display: block; margin: 6px auto 10px; }
+.voce.pulita { opacity: .7; } .voce.pulita .dim { color: var(--verde); font-weight: 700; } .voce.pulita .icona-voce { color: var(--verde); }
+.nota-vecchi { font-size: 12.5px; color: var(--ciano); font-weight: 600; text-align: center; margin: 0 0 8px; min-height: 16px; }
+.cestino-box { margin: 14px 0 4px; padding: 14px 16px; border-radius: 14px; background: rgba(194,120,3,.08); border: 1px solid rgba(194,120,3,.28); }
+.cestino-box p { font-size: 13px; margin: 0 0 10px; }
+#guida { position: fixed; inset: 0; z-index: 30; }
+#guida .g-luce { position: fixed; border-radius: 18px; box-shadow: 0 0 0 9999px rgba(8,12,28,.62), 0 0 0 3px var(--ciano);
+  transition: all .35s cubic-bezier(.2,.7,.2,1); pointer-events: none; }
+#guida .g-box { position: fixed; width: 360px; background: var(--vetro); color: var(--testo); border-radius: 18px; padding: 20px 22px;
+  box-shadow: 0 24px 60px rgba(0,0,0,.35); border: 1px solid var(--bordo); transition: all .35s cubic-bezier(.2,.7,.2,1); }
+#guida .g-passo { font: 600 11px var(--mono); letter-spacing: .14em; color: var(--ciano); text-transform: uppercase; }
+#guida h3 { margin: 6px 0 6px; font: 700 19px var(--font); }
+#guida p { margin: 0 0 16px; font-size: 14px; line-height: 1.5; color: var(--testo2); }
+#guida .g-btn { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+#guida .g-btn span { display: flex; gap: 8px; }
+#guida .btn-pulisci, #guida .btn-secondario { padding: 10px 18px; font-size: 14px; }
+
+.avanz { height: 10px; border-radius: 99px; background: rgba(var(--linea), .1); overflow: hidden; margin: 18px 0 6px; }
+.avanz i { display: block; height: 100%; width: 0; border-radius: 99px; background: linear-gradient(90deg, var(--blu), var(--verde)); transition: width .4s ease; }
+.avanz-perc { font: 700 15px var(--num); color: var(--ciano); }
+.voce.gruppo-protetti { cursor: pointer; } .voce.gruppo-protetti:hover { border-color: var(--bordo-forte); }
+.elenco-protetti { padding-left: 14px; border-left: 2px solid var(--bordo); margin-left: 8px; }

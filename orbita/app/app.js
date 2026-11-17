@@ -22,6 +22,9 @@ const stato = {
   licenza: null,
   grandi: [],
   inScansione: false,
+  vecchi: { byte: 0, n: 0, lista: [] },   // file personali non toccati da 6 mesi
+  vecchiEspansi: false,
+  pulitiOra: new Set(),                   // voci appena pulite: mostrano "✓ Pulito" e valgono 0
 };
 
 // ---------------------------------------------------------------- utilità
@@ -84,13 +87,14 @@ async function avvio() {
   disegnaUnita();
   aggiornaPiede();
   O.onProgresso(mostraProgresso);
-  O.onPasso((testo) => { const el = $("passo"); if (el) el.textContent = testo; });
+  O.onPasso((testo) => { const el = $("passo"); if (el) el.textContent = testo; if (stato.suPasso) stato.suPasso(); });
   $("btnScansiona").onclick = () => scansiona(stato.radice);
   $("btnAnnulla").onclick = () => O.annulla();
   $("btnPulisci").onclick = chiediConferma;
   $("btnIndietro").onclick = () => mostraVista("consigliata");
   $("btnImpostazioni").onclick = mostraImpostazioni;
   $("btnPro").onclick = () => mostraLicenza(true);
+  if ($("btnGuida")) $("btnGuida").onclick = () => { if (stato.scan) { mostraVista("consigliata").then(avviaGuida); } };
   aggiornaBottonePro();
   if (!stato.info.eulaAccettata) await mostraContratto(true);
   scansiona(stato.radice);
@@ -108,7 +112,8 @@ function disegnaUnita() {
 
 // ---------------------------------------------------------------- scansione
 
-async function scansiona(radice) {
+async function scansiona(radice, dopoPulizia) {
+  if (!dopoPulizia) stato.pulitiOra = new Set();
   stato.inScansione = true;
   stato.scan = null;
   stato.selezione.clear();
@@ -142,9 +147,16 @@ async function scansiona(radice) {
   stato.scan = r;
   hud("ok");
   for (const v of r.pulibili) {
+    if (stato.pulitiOra.has(v.id)) continue;
+    if (v.admin && !stato.info.admin) continue;   // niente richiesta di Windows se non la chiedi tu
     if (v.preselezionato && (v.byte > 0 || v.stimaParziale)) seleziona(chiaveP(v), richiestaP(v), v.byte, v.stimaParziale);
   }
   try { stato.grandi = await O.grandi(); } catch { stato.grandi = []; }
+  try { stato.vecchi = (O.vecchi && await O.vecchi()) || { byte: 0, n: 0, lista: [] }; } catch { stato.vecchi = { byte: 0, n: 0, lista: [] }; }
+  stato.vecchiEspansi = false;
+  // installer e archivi vecchi nei Download: si spuntano da soli (vanno comunque nel Cestino)
+  for (const f of stato.vecchi.lista) if (f.sicuro) seleziona(chiaveF(f), { tipo: "file", p: f.p }, f.byte, false);
+  if (!stato.info.guidaVista && !stato.info.prova) setTimeout(avviaGuida, 900);
   disegnaAnello($("settori").childElementCount > 0);
   disegnaLegenda();
   aggiornaCentro();
@@ -307,13 +319,16 @@ function aggiornaCentro() {
   }
 }
 
-const totaleRecuperabile = () => (stato.scan ? stato.scan.pulibili.reduce((x, v) => x + v.byte, 0) : 0);
+// sotto 1 MB non conta: dopo una pulizia deve leggersi "0", non "1 KB"
+const totaleRecuperabile = () => { const b = stato.scan ? stato.scan.pulibili.filter((v) => !stato.pulitiOra.has(v.id)).reduce((x, v) => x + v.byte, 0) : 0; return b < MB ? 0 : b; };
 
 function aggiornaRiepilogo() {
   const s = stato.scan;
   $("rUsato").textContent = fmt(s.usato);
   $("rLibero").textContent = fmt(s.libero);
   $("rRecuperabile").textContent = fmt(totaleRecuperabile());
+  const rv = $("rVecchi");
+  if (rv) rv.textContent = stato.vecchi.byte > 100 * MB ? t("vecchiRecuperabili", { b: fmt(stato.vecchi.byte) }) : "";
 }
 
 function aggiornaRecuperabile(byte) {
@@ -361,11 +376,10 @@ async function mostraVista(vista) {
     $("pannelloIntro").textContent = t("consigliataIntro");
     const sicure = stato.scan.pulibili.filter((v) => v.sicurezza === "sicuro");
     const valuta = stato.scan.pulibili.filter((v) => v.sicurezza !== "sicuro");
-    const vecchi = stato.grandi.filter((f) => f.mtime && Date.now() - f.mtime > 90 * 864e5).slice(0, 8);
     lista.innerHTML =
       (sicure.length ? `<div class="gruppo">${esc(t("gruppoSicuro"))}</div>` + sicure.map(htmlPulibile).join("") : "") +
-      (valuta.length ? `<div class="gruppo">${esc(t("gruppoValuta"))}</div>` + valuta.map(htmlPulibile).join("") : "") +
-      (vecchi.length ? `<div class="gruppo">${esc(t("gruppoVecchi"))}</div>` + vecchi.map(htmlFile).join("") : "") ||
+      htmlVecchi() +
+      (valuta.length ? `<div class="gruppo">${esc(t("gruppoValuta"))}</div>` + valuta.map(htmlPulibile).join("") : "") ||
       `<div class="vuoto">${esc(t("niente"))}</div>`;
   } else {
     const c = catDi(vista);
@@ -385,7 +399,16 @@ async function mostraVista(vista) {
         <button class="mini" data-azione="app">${esc(t("apri"))}</button></div>`;
     }
     if (d.cartelle.length) html += `<div class="gruppo">${esc(t("gruppoCartelle"))}</div>` + d.cartelle.map((x) => htmlCartella(x, totCat, c.colore)).join("");
-    if (d.file.length) html += `<div class="gruppo">${esc(t("gruppoFile"))}</div>` + d.file.map(htmlFile).join("");
+    const normali = d.file.filter((f) => !f.sistema && !f.protetto);
+    const protetti = d.file.filter((f) => f.sistema || f.protetto);
+    if (normali.length) html += `<div class="gruppo">${esc(t("gruppoFile"))}</div>` + normali.map(htmlFile).join("");
+    if (protetti.length) {
+      const tot = protetti.reduce((x, f) => x + f.byte, 0);
+      html += `<div class="voce gruppo-protetti" data-protetti="1"><div class="icona-voce">🔒</div>
+        <div><div class="nome">${esc(t("fileProtettiTitolo", { n: protetti.length }))}</div><div class="percorso">${esc(t("fileProtetto"))}</div></div>
+        <div class="dim">${fmt(tot)}</div></div>
+        <div class="elenco-protetti" hidden>${protetti.map(htmlFile).join("")}</div>`;
+    }
     lista.innerHTML = html || `<div class="vuoto">${esc(t("nienteQui"))}</div>`;
   }
   collegaLista();
@@ -399,6 +422,10 @@ function tagSicurezza(v) {
 
 function htmlPulibile(v) {
   const k = chiaveP(v);
+  if (stato.pulitiOra.has(v.id)) {
+    return `<div class="voce pulita"><div class="icona-voce">✓</div><div><div class="nome">${esc(v.nome)}</div></div>
+      <div class="dim">${esc(t("pulitoOra"))}</div></div>`;
+  }
   const sel = stato.selezione.has(k);
   const dim = v.stimaParziale
     ? `<div class="dim">${esc(t("finoA"))}<small>${esc(t("cartellaDim", { b: fmt(v.byteCartella) }))}</small></div>`
@@ -423,6 +450,21 @@ function htmlFile(f) {
       <button class="mini" data-azione="apri">${esc(t("mostraCartella"))}</button>
       ${f.sistema ? `<span class="tag attenzione">${esc(t("fileSistema"))}</span>` : f.protetto ? `<span class="tag attenzione">${esc(t("fileProtetto"))}</span>` : `<span class="tag vecchio">${esc(t("vaNelCestino"))}</span>`}</div>
   </div>`;
+}
+
+/** Riquadro "file che non apri da mesi": totale, Seleziona tutti / Togli tutti, elenco espandibile. */
+function htmlVecchi() {
+  const V = stato.vecchi;
+  if (!V || !V.n) return "";
+  const quanti = stato.vecchiEspansi ? 400 : 8;
+  const sel = V.lista.filter((f) => stato.selezione.has(chiaveF(f))).reduce((x, f) => x + f.byte, 0);
+  return `<div class="gruppo">${esc(t("vecchiTitolo"))}</div>
+    <div class="vecchi-card"><div class="vc-num">${fmt(V.byte)}</div>
+      <div class="vc-txt">${esc(t("vecchiTesto", { b: fmt(V.byte), n: V.n.toLocaleString(T.codice) }))}${sel ? ` <b>· ${fmt(sel)} ✓</b>` : ""}</div>
+      <div class="vc-btn"><button class="mini" data-vecchi="tutti">${esc(t("vecchiTutti"))}</button>
+        <button class="mini" data-vecchi="nessuno">${esc(t("vecchiNessuno"))}</button></div></div>` +
+    V.lista.slice(0, quanti).map(htmlFile).join("") +
+    (V.lista.length > 8 ? `<button class="link vc-altri" data-vecchi="mostra">${esc(stato.vecchiEspansi ? t("vecchiMeno") : t("vecchiMostra", { n: V.lista.length.toLocaleString(T.codice) }))}</button>` : "");
 }
 
 function htmlCartella(x, totCat, colore) {
@@ -456,6 +498,20 @@ function collegaLista() {
       } else stato.selezione.delete(k);
       voce.classList.toggle("attiva", cb.checked);
       aggiornaPiede();
+    };
+  });
+  lista.querySelectorAll("[data-protetti]").forEach((b) => {
+    b.onclick = () => { const e = b.nextElementSibling; if (e) e.hidden = !e.hidden; b.classList.toggle("aperta", !e.hidden); };
+  });
+  lista.querySelectorAll("[data-vecchi]").forEach((b) => {
+    b.onclick = () => {
+      const az = b.dataset.vecchi;
+      if (az === "tutti") for (const f of stato.vecchi.lista) seleziona(chiaveF(f), { tipo: "file", p: f.p }, f.byte, false);
+      if (az === "nessuno") for (const f of stato.vecchi.lista) stato.selezione.delete(chiaveF(f));
+      if (az === "mostra") stato.vecchiEspansi = !stato.vecchiEspansi;
+      const su = lista.scrollTop;
+      aggiornaPiede();
+      mostraVista("consigliata").then(() => { lista.scrollTop = su; });
     };
   });
   lista.querySelectorAll("[data-azione]").forEach((b) => {
@@ -628,9 +684,25 @@ async function chiediConferma() {
 }
 
 async function eseguiPulizia() {
-  apriModale(`<div class="spinner"></div><h2>${esc(t("puliziaInCorso"))}</h2><div class="passo" id="passo">${esc(t("preparo"))}</div>`);
+  apriModale(`<div class="spinner"></div><h2>${esc(t("puliziaInCorso"))}</h2>
+    <div class="avanz"><i id="avanzBarra"></i></div><div class="avanz-perc" id="avanzPerc">0%</div>
+    <div class="passo" id="passo">${esc(t("preparo"))}</div>`);
   const richieste = [...stato.selezione.values()].map((x) => x.richiesta);
+  // passi attesi: una voce per riga del catalogo, più i file scelti a mano e lo script da amministratore
+  const nVoci = richieste.filter((x) => x.tipo === "pulibile").length;
+  const attesi = Math.max(1, nVoci + (richieste.some((x) => x.tipo === "file") ? 1 : 0) + 1);
+  let fatti = 0, finto = 0;
+  stato.suPasso = () => { fatti++; finto = 0; };
+  const timerAvanz = setInterval(() => {
+    // tra un passo e l'altro avanza piano da solo (DISM può durare minuti), senza mai arrivare al 100%
+    finto = Math.min(0.9, finto + (1 - finto) * 0.04);
+    const p = Math.min(97, Math.round(((fatti + finto) / attesi) * 100));
+    if ($("avanzBarra")) { $("avanzBarra").style.width = p + "%"; $("avanzPerc").textContent = p + "%"; }
+  }, 400);
   const r = await O.pulisci(richieste);
+  clearInterval(timerAvanz);
+  stato.suPasso = null;
+  if (!r.bloccato && !r.errore) stato.pulitiOra = new Set(richieste.filter((x) => x.tipo === "pulibile").map((x) => x.id));
   if (r.bloccato) { stato.licenza = r.licenza; aggiornaPiede(); return mostraLicenza(); }
   if (r.errore) {
     apriModale(`<h2>${esc(t("ops"))}</h2><div class="bottoni"><button class="btn-secondario" id="mOk">${esc(t("chiudi"))}</button></div>`);
@@ -647,6 +719,7 @@ async function eseguiPulizia() {
   // dello spazio liberato sul disco, così si vede quanto ha fatto davvero.
   const daDisco = r.esiti.filter((e) => e.misuraDaDisco);
   const sommaVoci = r.esiti.filter((e) => !e.misuraDaDisco).reduce((x, e) => x + (e.liberati || 0), 0);
+  const cestinoByte = !r.prova ? r.esiti.filter((e) => e.id === "file").reduce((x, e) => x + (e.liberati || 0), 0) : 0;
   const restoDisco = !r.prova && daDisco.length === 1 ? Math.max(0, (r.liberatiDisco || 0) - sommaVoci) : 0;
   const righe = r.esiti.filter((e) => e.liberati > 0 || e.nota || e.misuraDaDisco).map((e) =>
     `<div><span>${esc(e.nome)}${e.nota ? `<br><small class="nota">${esc(e.nota)}</small>` : ""}</span>
@@ -659,12 +732,15 @@ async function eseguiPulizia() {
     <div class="dettagli">${righe || `<div><span>${esc(t("nienteDaLiberare"))}</span><span></span></div>`}</div>
     ${saltati > 20 ? `<p class="nota">${esc(t("fileInUso", { n: saltati.toLocaleString(T.codice) }))}</p>` : ""}
     ${r.totale && r.totale.pulizie > 1 ? `<p class="totale-orbita">✦ ${esc(t("totaleOrbita", { b: fmt(r.totale.byte), n: r.totale.pulizie }))}</p>` : ""}
-    <div class="bottoni"><button class="btn-pulisci" id="mOk">${esc(t("vediAggiornato"))}</button></div>`);
+    ${cestinoByte > 0 ? `<div class="cestino-box"><p>${esc(t("cestinoTesto"))}</p>
+      <button class="btn-pulisci" id="mCestino">🗑 ${esc(t("cestinoTitolo", { b: fmt(cestinoByte) }))}</button></div>` : ""}
+    <div class="bottoni"><button class="btn-secondario" id="mOk">${esc(t("vediAggiornato"))}</button></div>`);
   esplosione();
   aggiornaPiede();
+  if ($("mCestino")) $("mCestino").onclick = () => chiediSvuotaCestino(cestinoByte);
   // La mappa si rifà subito da sola: i numeri mostrano com'è il disco ADESSO,
   // non lo spazio "ancora da liberare" di prima della pulizia.
-  scansiona(stato.radice);
+  scansiona(stato.radice, true);
   $("mOk").onclick = chiudiModale;
 }
 
@@ -672,6 +748,64 @@ async function eseguiPulizia() {
  * Orbita Pro. `volontaria`: aperta dall'utente (pulsante in alto o impostazioni),
  * non perché le pulizie gratuite sono finite.
  */
+/** Svuota il Cestino (dopo conferma): è lì che finiscono i file scelti a mano. */
+function chiediSvuotaCestino(byte) {
+  apriModale(`<div class="pannello-sopra">${esc(t("conferma"))}</div>
+    <h2>${esc(t("cestinoTitolo", { b: fmt(byte) }))}</h2><p>${esc(t("cestinoConferma"))}</p>
+    <div class="bottoni"><button class="btn-secondario" id="mAnnulla">${esc(t("annulla"))}</button>
+      <button class="btn-pulisci" id="mSvuota">${esc(t("cestinoSi"))}</button></div>`);
+  $("mAnnulla").onclick = chiudiModale;
+  $("mSvuota").onclick = async () => {
+    apriModale(`<div class="spinner"></div><h2>${esc(t("cestinoSi"))}…</h2>`);
+    const r = await O.svuotaCestino();
+    apriModale(`<div class="pannello-sopra">${esc(t("fatto"))}</div><div class="grande">${fmt((r && r.liberati) || byte)}</div>
+      <h2>${esc(t("cestinoFatto", { b: fmt((r && r.liberati) || byte) }))}</h2>
+      <div class="bottoni"><button class="btn-pulisci" id="mOk">${esc(t("chiudi"))}</button></div>`);
+    esplosione();
+    $("mOk").onclick = chiudiModale;
+    scansiona(stato.radice, true);
+  };
+}
+
+// ---------------------------------------------------------------- guida rapida
+const PASSI_GUIDA = [
+  ["#orbitaWrap", "guida1T", "guida1"],
+  ["#legenda", "guida2T", "guida2"],
+  ["#lista .voce", "guida3T", "guida3"],
+  [".vecchi-card", "guida4T", "guida4"],
+  ["#btnPulisci", "guida5T", "guida5"],
+];
+function avviaGuida() {
+  if (!stato.scan) return;
+  const passi = PASSI_GUIDA.filter(([sel]) => document.querySelector(sel));
+  let i = 0;
+  let g = $("guida");
+  if (!g) { g = document.createElement("div"); g.id = "guida"; document.body.appendChild(g); }
+  const fine = () => { g.remove(); O.guidaVista && O.guidaVista(); stato.info.guidaVista = true; };
+  const mostra = () => {
+    const [sel, tit, txt] = passi[i];
+    const el = document.querySelector(sel);
+    el.scrollIntoView({ block: "nearest" });
+    const r = el.getBoundingClientRect();
+    const pad = 8;
+    const destra = r.left + r.width / 2 < innerWidth / 2;
+    const bx = Math.min(innerWidth - 380, Math.max(20, destra ? r.right + 24 : r.left - 384));
+    const by = Math.min(innerHeight - 260, Math.max(70, r.top + r.height / 2 - 110));
+    g.innerHTML = `<div class="g-luce" style="left:${r.left - pad}px;top:${r.top - pad}px;width:${r.width + pad * 2}px;height:${r.height + pad * 2}px"></div>
+      <div class="g-box" style="left:${bx}px;top:${by}px">
+        <div class="g-passo">${esc(t("guidaPasso", { i: i + 1, n: passi.length }))}</div>
+        <h3>${esc(t(tit))}</h3><p>${esc(t(txt))}</p>
+        <div class="g-btn"><button class="link" id="gSalta">${esc(t("guidaSalta"))}</button>
+          <span>${i ? `<button class="btn-secondario" id="gIndietro">${esc(t("guidaIndietro"))}</button>` : ""}
+          <button class="btn-pulisci" id="gAvanti">${esc(i === passi.length - 1 ? t("guidaFine") : t("guidaAvanti"))}</button></span></div></div>`;
+    $("gSalta").onclick = fine;
+    $("gAvanti").onclick = () => { if (i === passi.length - 1) fine(); else { i++; mostra(); } };
+    if ($("gIndietro")) $("gIndietro").onclick = () => { i--; mostra(); };
+    $("gAvanti").focus();
+  };
+  mostra();
+}
+
 async function mostraLicenza(volontaria) {
   const l = stato.licenza;
   if (volontaria && l && l.attiva) {
