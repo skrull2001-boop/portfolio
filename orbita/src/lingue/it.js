@@ -64,6 +64,8 @@ module.exports = {
     compraVita: "Scegli il pacchetto · da 9,99 €", compraAnno: "Annuale · 4,99 €/anno", errFormato: "La chiave non ha il formato giusto.", errRete: "Non riesco a collegarmi: controlla internet e riprova.", errLimite: "Questa chiave è già attiva sul numero massimo di PC del suo pacchetto.", errChiave: "Chiave non valida.",
     impostazioni: "Impostazioni",
     fileProtettiTitolo: "File di sistema e protetti ({n})",
+    cartelleSistemaTitolo: "Cartelle di sistema ({n})",
+    cartelleSistemaSotto: "Servono a Windows e ai programmi: meglio non toccarle. Clicca per vederle.",
     vecchiTitolo: "File che non apri da più di 6 mesi",
     vecchiTesto: "{b} in {n} file. Finiscono nel Cestino: puoi recuperarli.",
     vecchiTutti: "Seleziona tutti",

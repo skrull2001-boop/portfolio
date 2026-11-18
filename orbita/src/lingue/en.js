@@ -64,6 +64,8 @@ module.exports = {
     compraVita: "Choose your plan · from €9.99", compraAnno: "Yearly · €4.99/year", errFormato: "The key doesn't look right.", errRete: "Can't connect: check your internet and try again.", errLimite: "This key is already active on the maximum number of PCs for its plan.", errChiave: "Invalid key.",
     impostazioni: "Settings",
     fileProtettiTitolo: "System and protected files ({n})",
+    cartelleSistemaTitolo: "System folders ({n})",
+    cartelleSistemaSotto: "Windows and your programs need them: best left alone. Click to see them.",
     vecchiTitolo: "Files you haven't opened in over 6 months",
     vecchiTesto: "{b} in {n} files. They go to the Recycle Bin: you can restore them.",
     vecchiTutti: "Select all",

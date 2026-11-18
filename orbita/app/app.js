@@ -322,11 +322,18 @@ function aggiornaCentro() {
 // sotto 1 MB non conta: dopo una pulizia deve leggersi "0", non "1 KB"
 const totaleRecuperabile = () => { const b = stato.scan ? stato.scan.pulibili.filter((v) => !stato.pulitiOra.has(v.id)).reduce((x, v) => x + v.byte, 0) : 0; return b < MB ? 0 : b; };
 
+/** Tutto quello che si può liberare: voci del catalogo non ancora pulite + tutti i file vecchi.
+    Mai meno di quanto è già spuntato (la selezione può comprendere file scelti a mano). */
+function totaleLiberabile() {
+  const sel = [...stato.selezione.values()].reduce((x, s) => x + s.byte, 0);
+  return Math.max(totaleRecuperabile() + (stato.vecchi.byte || 0), sel);
+}
+
 function aggiornaRiepilogo() {
   const s = stato.scan;
   $("rUsato").textContent = fmt(s.usato);
   $("rLibero").textContent = fmt(s.libero);
-  $("rRecuperabile").textContent = fmt(totaleRecuperabile());
+  $("rRecuperabile").textContent = fmt(totaleLiberabile());
   const rv = $("rVecchi");
   if (rv) rv.textContent = stato.vecchi.byte > 100 * MB ? t("vecchiRecuperabili", { b: fmt(stato.vecchi.byte) }) : "";
 }
@@ -354,6 +361,11 @@ function aggiornaPiede() {
     (fileTuoi ? t("selFile", { b: fmt(fileTuoi) }) : "");
   $("btnPulisci").disabled = !sel.length || !stato.scan;
   aggiornaRecuperabile(tot);
+  // il totale "si può liberare" segue la selezione, a sinistra e in cima al pannello
+  if (stato.scan) {
+    $("rRecuperabile").textContent = fmt(totaleLiberabile());
+    if (stato.vista === "consigliata") $("pannelloDim").textContent = fmt(totaleLiberabile());
+  }
   const l = stato.licenza;
   if (stato.info.prova) $("gratuite").innerHTML = `${esc(t("provaPiede1"))}<br><b>${esc(t("provaPiede2"))}</b>`;
   else if (l && l.attiva) $("gratuite").innerHTML = `${esc(t("licenzaAttiva"))} <b>${esc(t("attivaParola"))}</b>`;
@@ -361,6 +373,9 @@ function aggiornaPiede() {
 }
 
 // ---------------------------------------------------------------- pannello
+
+// categorie fatte di cartelle tecniche: le "Cartelle più pesanti" stanno chiuse in una riga
+const CAT_SISTEMA = new Set(["sistema", "aggiornamenti", "programmi", "appdata", "protetto", "memoria", "temp"]);
 
 async function mostraVista(vista) {
   if (!stato.scan) return;
@@ -372,7 +387,7 @@ async function mostraVista(vista) {
   if (vista === "consigliata") {
     $("pannelloSopra").textContent = t("sezPulizia");
     $("pannelloTitolo").textContent = t("consigliataTitolo");
-    $("pannelloDim").textContent = fmt(totaleRecuperabile());
+    $("pannelloDim").textContent = fmt(totaleLiberabile());
     $("pannelloIntro").textContent = t("consigliataIntro");
     const sicure = stato.scan.pulibili.filter((v) => v.sicurezza === "sicuro");
     const valuta = stato.scan.pulibili.filter((v) => v.sicurezza !== "sicuro");
@@ -398,11 +413,19 @@ async function mostraVista(vista) {
         <div><div class="nome">${esc(t("appInstallate"))}</div><div class="percorso">${esc(t("appInstallatePercorso"))}</div></div>
         <button class="mini" data-azione="app">${esc(t("apri"))}</button></div>`;
     }
-    if (d.cartelle.length) html += `<div class="gruppo">${esc(t("gruppoCartelle"))}</div>` + d.cartelle.map((x) => htmlCartella(x, totCat, c.colore)).join("");
+    if (d.cartelle.length && CAT_SISTEMA.has(vista)) {
+      // nomi tecnici che non dicono niente a nessuno: una riga sola, si apre a richiesta
+      const tot = d.cartelle.reduce((x, y) => x + y.byte, 0);
+      html += `<div class="gruppo">${esc(t("gruppoCartelle"))}</div>
+        <div class="voce gruppo-protetti" data-protetti="1"><div class="icona-voce">📁</div>
+        <div><div class="nome">${esc(t("cartelleSistemaTitolo", { n: d.cartelle.length }))}</div><div class="percorso">${esc(t("cartelleSistemaSotto"))}</div></div>
+        <div class="dim">${fmt(tot)}</div></div>
+        <div class="elenco-protetti" hidden>${d.cartelle.map((x) => htmlCartella(x, totCat, c.colore)).join("")}</div>`;
+    } else if (d.cartelle.length) html += `<div class="gruppo">${esc(t("gruppoCartelle"))}</div>` + d.cartelle.map((x) => htmlCartella(x, totCat, c.colore)).join("");
     const normali = d.file.filter((f) => !f.sistema && !f.protetto);
     const protetti = d.file.filter((f) => f.sistema || f.protetto);
     if (normali.length) html += `<div class="gruppo gruppo-azioni">${esc(t("gruppoFile"))} · ${fmt(normali.reduce((x, f) => x + f.byte, 0))}
-      <span><button class="mini" data-tuttifile="si">${esc(t("vecchiTutti"))}</button><button class="mini" data-tuttifile="no">${esc(t("vecchiNessuno"))}</button></span></div>` + normali.map(htmlFile).join("");
+      <span><button class="btn-sel pieno" data-tuttifile="si">${esc(t("vecchiTutti"))}</button><button class="btn-sel" data-tuttifile="no">${esc(t("vecchiNessuno"))}</button></span></div>` + normali.map(htmlFile).join("");
     if (protetti.length) {
       const tot = protetti.reduce((x, f) => x + f.byte, 0);
       html += `<div class="voce gruppo-protetti" data-protetti="1"><div class="icona-voce">🔒</div>
@@ -462,8 +485,8 @@ function htmlVecchi() {
   return `<div class="gruppo">${esc(t("vecchiTitolo"))}</div>
     <div class="vecchi-card"><div class="vc-num">${fmt(V.byte)}</div>
       <div class="vc-txt">${esc(t("vecchiTesto", { b: fmt(V.byte), n: V.n.toLocaleString(T.codice) }))}${sel ? ` <b>· ${fmt(sel)} ✓</b>` : ""}</div>
-      <div class="vc-btn"><button class="mini" data-vecchi="tutti">${esc(t("vecchiTutti"))}</button>
-        <button class="mini" data-vecchi="nessuno">${esc(t("vecchiNessuno"))}</button></div></div>` +
+      <div class="vc-btn"><button class="btn-sel pieno" data-vecchi="tutti">${esc(t("vecchiTutti"))}</button>
+        <button class="btn-sel" data-vecchi="nessuno">${esc(t("vecchiNessuno"))}</button></div></div>` +
     V.lista.slice(0, quanti).map(htmlFile).join("") +
     (V.lista.length > 8 ? `<button class="link vc-altri" data-vecchi="mostra">${esc(stato.vecchiEspansi ? t("vecchiMeno") : t("vecchiMostra", { n: V.lista.length.toLocaleString(T.codice) }))}</button>` : "");
 }
@@ -776,7 +799,15 @@ function chiediSvuotaCestino(byte) {
       <div class="bottoni"><button class="btn-pulisci" id="mOk">${esc(t("chiudi"))}</button></div>`);
     esplosione();
     $("mOk").onclick = chiudiModale;
-    scansiona(stato.radice, true);
+    // niente nuova scansione (un milione di file = 3 secondi di blocco): basta rileggere lo spazio libero
+    try {
+      stato.unita = await O.unita();
+      disegnaUnita();
+      const u = stato.unita.find((x) => x.radice === stato.radice);
+      if (u && stato.scan) stato.scan.libero = u.libero;
+      aggiornaCentro();
+      if (stato.scan) aggiornaRiepilogo();
+    } catch { /* niente: resta il valore di prima */ }
   };
 }
 

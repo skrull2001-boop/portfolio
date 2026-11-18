@@ -64,6 +64,8 @@ module.exports = {
     compraVita: "Paket wählen · ab 9,99 €", compraAnno: "Jährlich · 4,99 €/Jahr", errFormato: "Der Schlüssel hat nicht das richtige Format.", errRete: "Keine Verbindung: Internet prüfen und erneut versuchen.", errLimite: "Dieser Schlüssel ist bereits auf der maximalen Anzahl PCs seines Pakets aktiv.", errChiave: "Ungültiger Schlüssel.",
     impostazioni: "Einstellungen",
     fileProtettiTitolo: "System- und geschützte Dateien ({n})",
+    cartelleSistemaTitolo: "Systemordner ({n})",
+    cartelleSistemaSotto: "Windows und Ihre Programme brauchen sie: besser nicht anfassen. Klicken zum Anzeigen.",
     vecchiTitolo: "Dateien, die du seit über 6 Monaten nicht geöffnet hast",
     vecchiTesto: "{b} in {n} Dateien. Sie kommen in den Papierkorb: du kannst sie wiederherstellen.",
     vecchiTutti: "Alle auswählen",

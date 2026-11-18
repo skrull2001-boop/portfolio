@@ -64,6 +64,8 @@ module.exports = {
     compraVita: "Choisir votre offre · dès 9,99 €", compraAnno: "Annuel · 4,99 €/an", errFormato: "La clé n'a pas le bon format.", errRete: "Pas de connexion : vérifie internet et réessaie.", errLimite: "Cette clé est déjà active sur le nombre maximal de PC de son offre.", errChiave: "Clé non valide.",
     impostazioni: "Paramètres",
     fileProtettiTitolo: "Fichiers système et protégés ({n})",
+    cartelleSistemaTitolo: "Dossiers système ({n})",
+    cartelleSistemaSotto: "Windows et vos programmes en ont besoin : mieux vaut ne pas y toucher. Cliquez pour les voir.",
     vecchiTitolo: "Fichiers non ouverts depuis plus de 6 mois",
     vecchiTesto: "{b} dans {n} fichiers. Ils vont dans la Corbeille : vous pouvez les récupérer.",
     vecchiTutti: "Tout sélectionner",

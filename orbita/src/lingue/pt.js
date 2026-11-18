@@ -64,6 +64,8 @@ module.exports = {
     compraVita: "Escolha o seu plano · desde 9,99 €", compraAnno: "Anual · 4,99 €/ano", errFormato: "A chave não tem o formato certo.", errRete: "Sem conexão: verifique a internet e tente de novo.", errLimite: "Esta chave já está ativa no número máximo de PCs do seu plano.", errChiave: "Chave inválida.",
     impostazioni: "Configurações",
     fileProtettiTitolo: "Ficheiros de sistema e protegidos ({n})",
+    cartelleSistemaTitolo: "Pastas do sistema ({n})",
+    cartelleSistemaSotto: "O Windows e os seus programas precisam delas: melhor não mexer. Clique para vê-las.",
     vecchiTitolo: "Ficheiros que não abre há mais de 6 meses",
     vecchiTesto: "{b} em {n} ficheiros. Vão para a Reciclagem: pode recuperá-los.",
     vecchiTutti: "Selecionar todos",

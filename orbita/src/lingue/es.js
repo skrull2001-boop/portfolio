@@ -64,6 +64,8 @@ module.exports = {
     compraVita: "Elige tu plan · desde 9,99 €", compraAnno: "Anual · 4,99 €/año", errFormato: "La clave no tiene el formato correcto.", errRete: "No hay conexión: revisa internet e inténtalo de nuevo.", errLimite: "Esta clave ya está activa en el máximo de PC de su plan.", errChiave: "Clave no válida.",
     impostazioni: "Ajustes",
     fileProtettiTitolo: "Archivos de sistema y protegidos ({n})",
+    cartelleSistemaTitolo: "Carpetas del sistema ({n})",
+    cartelleSistemaSotto: "Windows y tus programas las necesitan: mejor no tocarlas. Haz clic para verlas.",
     vecchiTitolo: "Archivos que no abres desde hace más de 6 meses",
     vecchiTesto: "{b} en {n} archivos. Van a la Papelera: puedes recuperarlos.",
     vecchiTutti: "Seleccionar todos",
