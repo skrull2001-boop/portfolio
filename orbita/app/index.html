@@ -31,6 +31,12 @@
   <main class="griglia">
     <!-- SINISTRA: categorie e numeri -->
     <section class="col-sx vetro">
+      <div class="mesi-card" id="mesiCard" hidden>
+        <div class="mesi-tit"><span class="mesi-ic">🧹</span><span data-t="mesiTitolo"></span></div>
+        <div class="mesi-riga"><select id="mesiSel" aria-label="mesi"></select>
+          <button class="btn-sel pieno" id="btnMesi" data-t="mesiSeleziona"></button></div>
+        <div class="mesi-esito" id="mesiEsito"></div>
+      </div>
       <div class="etichetta-hud" data-t="sezCategorie"></div>
       <div class="barre" id="legenda"></div>
       <div class="riempi"></div>

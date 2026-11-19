@@ -22,8 +22,10 @@ const stato = {
   licenza: null,
   grandi: [],
   inScansione: false,
-  vecchi: { byte: 0, n: 0, lista: [] },   // file personali non toccati da 6 mesi
-  vecchiEspansi: false,
+  vecchi: { byte: 0, n: 0, lista: [] },   // file personali non toccati da almeno 1 mese
+  mesi: 6,                                // periodo scelto: "inutilizzati da più di N mesi"
+  gruppiAperti: new Set(),                // gruppi per tipo di file aperti dall'utente
+  fileGruppi: {},                         // gruppo -> file mostrati adesso (per "Seleziona tutti" del gruppo)
   pulitiOra: new Set(),                   // voci appena pulite: mostrano "✓ Pulito" e valgono 0
 };
 
@@ -49,6 +51,15 @@ function eta(ms) {
   if (giorni < 365) return t("mesi", { n: Math.round(giorni / 30) });
   return t("anni", { n: (giorni / 365).toLocaleString(T.codice, { maximumFractionDigits: 1 }) });
 }
+const GIORNO = 864e5;
+const MESI_SCELTA = [1, 2, 3, 4, 6, 9, 12, 18, 24, 36];
+const TIPI_GRUPPO = [["video", "🎬", "tipoVideo"], ["foto", "🖼", "tipoFoto"], ["musica", "♫", "tipoMusica"],
+  ["documenti", "📄", "tipoDocumenti"], ["archivi", "📦", "tipoArchivi"], ["altri", "◇", "tipoAltri"]];
+/** File vecchi del periodo scelto (compresi gli importanti, che si mostrano ma non si selezionano da soli). */
+const vecchiDelPeriodo = () => { const lim = Date.now() - stato.mesi * 30 * GIORNO; return stato.vecchi.lista.filter((f) => f.mtime && f.mtime < lim); };
+const vecchiSelezionabili = () => vecchiDelPeriodo().filter((f) => !f.importante);
+const byteVecchi = () => vecchiSelezionabili().reduce((x, f) => x + f.byte, 0);
+const selezionaFile = (f) => seleziona(chiaveF(f), { tipo: "file", p: f.p }, f.byte, false);
 const catDi = (id) => (stato.scan && stato.scan.categorie.find((c) => c.id === id)) || null;
 
 function applicaTesti() {
@@ -153,9 +164,11 @@ async function scansiona(radice, dopoPulizia) {
   }
   try { stato.grandi = await O.grandi(); } catch { stato.grandi = []; }
   try { stato.vecchi = (O.vecchi && await O.vecchi()) || { byte: 0, n: 0, lista: [] }; } catch { stato.vecchi = { byte: 0, n: 0, lista: [] }; }
-  stato.vecchiEspansi = false;
-  // installer e archivi vecchi nei Download: si spuntano da soli (vanno comunque nel Cestino)
-  for (const f of stato.vecchi.lista) if (f.sicuro) seleziona(chiaveF(f), { tipo: "file", p: f.p }, f.byte, false);
+  stato.gruppiAperti = new Set();
+  // installer e archivi vecchi nei Download (non da 1 mese: da 6): si spuntano da soli e vanno nel Cestino
+  const seiMesi = Date.now() - 180 * GIORNO;
+  for (const f of stato.vecchi.lista) if (f.sicuro && f.mtime < seiMesi) selezionaFile(f);
+  preparaMesi();
   if (!stato.info.guidaVista && !stato.info.prova) setTimeout(avviaGuida, 900);
   disegnaAnello($("settori").childElementCount > 0);
   disegnaLegenda();
@@ -326,7 +339,7 @@ const totaleRecuperabile = () => { const b = stato.scan ? stato.scan.pulibili.fi
     Mai meno di quanto è già spuntato (la selezione può comprendere file scelti a mano). */
 function totaleLiberabile() {
   const sel = [...stato.selezione.values()].reduce((x, s) => x + s.byte, 0);
-  return Math.max(totaleRecuperabile() + (stato.vecchi.byte || 0), sel);
+  return Math.max(totaleRecuperabile() + byteVecchi(), sel);
 }
 
 function aggiornaRiepilogo() {
@@ -335,7 +348,7 @@ function aggiornaRiepilogo() {
   $("rLibero").textContent = fmt(s.libero);
   $("rRecuperabile").textContent = fmt(totaleLiberabile());
   const rv = $("rVecchi");
-  if (rv) rv.textContent = stato.vecchi.byte > 100 * MB ? t("vecchiRecuperabili", { b: fmt(stato.vecchi.byte) }) : "";
+  if (rv) rv.textContent = byteVecchi() > 100 * MB ? t("vecchiRecuperabili", { b: fmt(byteVecchi()) }) : "";
 }
 
 function aggiornaRecuperabile(byte) {
@@ -424,8 +437,9 @@ async function mostraVista(vista) {
     } else if (d.cartelle.length) html += `<div class="gruppo">${esc(t("gruppoCartelle"))}</div>` + d.cartelle.map((x) => htmlCartella(x, totCat, c.colore)).join("");
     const normali = d.file.filter((f) => !f.sistema && !f.protetto);
     const protetti = d.file.filter((f) => f.sistema || f.protetto);
-    if (normali.length) html += `<div class="gruppo gruppo-azioni">${esc(t("gruppoFile"))} · ${fmt(normali.reduce((x, f) => x + f.byte, 0))}
-      <span><button class="btn-sel pieno" data-tuttifile="si">${esc(t("vecchiTutti"))}</button><button class="btn-sel" data-tuttifile="no">${esc(t("vecchiNessuno"))}</button></span></div>` + normali.map(htmlFile).join("");
+    stato.fileVista = normali;
+    if (normali.length) html += `<div class="gruppo gruppo-azioni">${esc(t("gruppoFile"))} · ${fmt(normali.filter((f) => !f.importante).reduce((x, f) => x + f.byte, 0))}
+      <span><button class="btn-sel pieno" data-tuttifile="si">${esc(t("vecchiTutti"))}</button><button class="btn-sel" data-tuttifile="no">${esc(t("vecchiNessuno"))}</button></span></div>` + htmlGruppiFile(normali);
     if (protetti.length) {
       const tot = protetti.reduce((x, f) => x + f.byte, 0);
       html += `<div class="voce gruppo-protetti" data-protetti="1"><div class="icona-voce">🔒</div>
@@ -476,20 +490,54 @@ function htmlFile(f) {
   </div>`;
 }
 
-/** Riquadro "file che non apri da mesi": totale, Seleziona tutti / Togli tutti, elenco espandibile. */
+/** Riquadro "file che non apri da più di N mesi": totale, Seleziona tutti / Togli tutti, file divisi per tipo. */
 function htmlVecchi() {
-  const V = stato.vecchi;
-  if (!V || !V.n) return "";
-  const quanti = stato.vecchiEspansi ? 400 : 8;
-  const sel = V.lista.filter((f) => stato.selezione.has(chiaveF(f))).reduce((x, f) => x + f.byte, 0);
-  return `<div class="gruppo">${esc(t("vecchiTitolo"))}</div>
-    <div class="vecchi-card"><div class="vc-num">${fmt(V.byte)}</div>
-      <div class="vc-txt">${esc(t("vecchiTesto", { b: fmt(V.byte), n: V.n.toLocaleString(T.codice) }))}${sel ? ` <b>· ${fmt(sel)} ✓</b>` : ""}</div>
+  if (!stato.vecchi || !stato.vecchi.n) return "";
+  const lista = vecchiDelPeriodo();
+  const buoni = lista.filter((f) => !f.importante);
+  const byte = buoni.reduce((x, f) => x + f.byte, 0);
+  const sel = buoni.filter((f) => stato.selezione.has(chiaveF(f))).reduce((x, f) => x + f.byte, 0);
+  return `<div class="gruppo">${esc(t("vecchiTitolo", { m: stato.mesi }))}</div>
+    <div class="vecchi-card"><div class="vc-num">${fmt(byte)}</div>
+      <div class="vc-txt">${esc(t("vecchiTesto", { b: fmt(byte), n: buoni.length.toLocaleString(T.codice) }))}${sel ? ` <b>· ${fmt(sel)} ✓</b>` : ""}</div>
       <div class="vc-btn"><button class="btn-sel pieno" data-vecchi="tutti">${esc(t("vecchiTutti"))}</button>
         <button class="btn-sel" data-vecchi="nessuno">${esc(t("vecchiNessuno"))}</button></div></div>` +
-    V.lista.slice(0, quanti).map(htmlFile).join("") +
-    (V.lista.length > 8 ? `<button class="link vc-altri" data-vecchi="mostra">${esc(stato.vecchiEspansi ? t("vecchiMeno") : t("vecchiMostra", { n: V.lista.length.toLocaleString(T.codice) }))}</button>` : "");
+    (lista.length ? htmlGruppiFile(lista) : `<div class="vuoto">${esc(t("mesiNiente"))}</div>`);
 }
+
+const MAX_PER_GRUPPO = 250;
+/**
+ * File divisi per tipo (Film e video, Foto, Musica, Documenti, Archivi, Altri): una riga per gruppo,
+ * si apre con un clic, con Seleziona tutti / Togli tutti del gruppo. I documenti importanti
+ * (fatture, tasse, contratti...) stanno in un gruppo a parte e non si selezionano mai in blocco.
+ */
+function htmlGruppiFile(files) {
+  const normali = files.filter((f) => !f.importante);
+  const importanti = files.filter((f) => f.importante);
+  let h = "";
+  for (const [id, icona, chiave] of TIPI_GRUPPO) {
+    const g = normali.filter((f) => (f.gruppo || "altri") === id);
+    if (!g.length) continue;
+    stato.fileGruppi[id] = g;
+    const nSel = g.filter((f) => stato.selezione.has(chiaveF(f))).length;
+    const aperto = stato.gruppiAperti.has(id);
+    h += `<div class="voce gruppo-tipo ${aperto ? "aperta" : ""}" data-gtipo="${id}"><div class="icona-voce">${icona}</div>
+      <div><div class="nome">${esc(t(chiave))}</div><div class="percorso">${esc(t("gruppoN", { n: g.length.toLocaleString(T.codice) }))}${nSel ? ` · ${nSel} ✓` : ""}</div></div>
+      <div class="dim">${fmt(g.reduce((x, f) => x + f.byte, 0))}</div>
+      <div class="riga2"><button class="btn-sel piccolo pieno" data-gsel="${id}" data-si="1">${esc(t("vecchiTutti"))}</button>
+        <button class="btn-sel piccolo" data-gsel="${id}" data-si="0">${esc(t("vecchiNessuno"))}</button></div></div>
+      <div class="elenco-protetti" ${aperto ? "" : "hidden"}>${aperto ? htmlElencoGruppo(g) : ""}</div>`;
+  }
+  if (importanti.length) {
+    h += `<div class="voce gruppo-protetti gruppo-importanti" data-protetti="1"><div class="icona-voce">🔒</div>
+      <div><div class="nome">${esc(t("importantiTitolo", { n: importanti.length }))}</div><div class="percorso">${esc(t("importantiSotto"))}</div></div>
+      <div class="dim">${fmt(importanti.reduce((x, f) => x + f.byte, 0))}</div></div>
+      <div class="elenco-protetti" hidden>${importanti.slice(0, MAX_PER_GRUPPO).map(htmlFile).join("")}</div>`;
+  }
+  return h;
+}
+const htmlElencoGruppo = (g) => g.slice(0, MAX_PER_GRUPPO).map(htmlFile).join("") +
+  (g.length > MAX_PER_GRUPPO ? `<div class="vuoto">+ ${(g.length - MAX_PER_GRUPPO).toLocaleString(T.codice)}</div>` : "");
 
 function htmlCartella(x, totCat, colore) {
   const p = Math.max(2, Math.round((x.byte / totCat) * 100));
@@ -527,27 +575,43 @@ function collegaLista() {
   lista.querySelectorAll("[data-tuttifile]").forEach((b) => {
     b.onclick = () => {
       const si = b.dataset.tuttifile === "si";
-      lista.querySelectorAll(".voce[data-p] .spunta").forEach((cb) => {
-        const k = cb.dataset.k, voce = cb.closest(".voce");
-        if (!k || !k.startsWith("f:")) return;
-        if (si) seleziona(k, { tipo: "file", p: k.slice(2) }, Number(voce.dataset.b) || 0, false); else stato.selezione.delete(k);
-        cb.checked = si; voce.classList.toggle("attiva", si);
-      });
+      for (const f of (stato.fileVista || [])) {
+        if (si && !f.importante) selezionaFile(f); else if (!si) stato.selezione.delete(chiaveF(f));
+      }
       aggiornaPiede();
+      ridisegnaLista();
     };
   });
-  lista.querySelectorAll("[data-protetti]").forEach((b) => {
+  lista.querySelectorAll("[data-protetti]:not([data-gtipo])").forEach((b) => {
     b.onclick = () => { const e = b.nextElementSibling; if (e) e.hidden = !e.hidden; b.classList.toggle("aperta", !e.hidden); };
   });
   lista.querySelectorAll("[data-vecchi]").forEach((b) => {
     b.onclick = () => {
       const az = b.dataset.vecchi;
-      if (az === "tutti") for (const f of stato.vecchi.lista) seleziona(chiaveF(f), { tipo: "file", p: f.p }, f.byte, false);
+      if (az === "tutti") for (const f of vecchiSelezionabili()) selezionaFile(f);
       if (az === "nessuno") for (const f of stato.vecchi.lista) stato.selezione.delete(chiaveF(f));
-      if (az === "mostra") stato.vecchiEspansi = !stato.vecchiEspansi;
-      const su = lista.scrollTop;
       aggiornaPiede();
-      mostraVista("consigliata").then(() => { lista.scrollTop = su; });
+      ridisegnaLista();
+    };
+  });
+  // gruppi per tipo: clic sulla riga = apri/chiudi; pulsanti = seleziona/togli tutto il gruppo
+  lista.querySelectorAll("[data-gtipo]").forEach((riga) => {
+    riga.onclick = (e) => {
+      if (e.target.closest("[data-gsel]")) return;
+      const id = riga.dataset.gtipo, elenco = riga.nextElementSibling;
+      const apri = elenco.hidden;
+      if (apri) { stato.gruppiAperti.add(id); elenco.innerHTML = htmlElencoGruppo(stato.fileGruppi[id] || []); collegaLista(); }
+      else stato.gruppiAperti.delete(id);
+      elenco.hidden = !apri; riga.classList.toggle("aperta", apri);
+    };
+  });
+  lista.querySelectorAll("[data-gsel]").forEach((b) => {
+    b.onclick = (e) => {
+      e.stopPropagation();
+      const si = b.dataset.si === "1";
+      for (const f of (stato.fileGruppi[b.dataset.gsel] || [])) { if (si) selezionaFile(f); else stato.selezione.delete(chiaveF(f)); }
+      aggiornaPiede();
+      ridisegnaLista();
     };
   });
   lista.querySelectorAll("[data-azione]").forEach((b) => {
@@ -756,6 +820,8 @@ async function eseguiPulizia() {
   const daDisco = r.esiti.filter((e) => e.misuraDaDisco);
   const sommaVoci = r.esiti.filter((e) => !e.misuraDaDisco).reduce((x, e) => x + (e.liberati || 0), 0);
   const cestinoByte = !r.prova ? r.esiti.filter((e) => e.id === "file").reduce((x, e) => x + (e.liberati || 0), 0) : 0;
+  let cestinoTot = cestinoByte;
+  if (!r.prova) { try { cestinoTot = Math.max(cestinoByte, Number(await O.cestino()) || 0); } catch { /* resta quello della pulizia */ } }
   const restoDisco = !r.prova && daDisco.length === 1 ? Math.max(0, (r.liberatiDisco || 0) - sommaVoci) : 0;
   const righe = r.esiti.filter((e) => e.liberati > 0 || e.nota || e.misuraDaDisco).map((e) =>
     `<div><span>${esc(e.nome)}${e.nota ? `<br><small class="nota">${esc(e.nota)}</small>` : ""}</span>
@@ -768,12 +834,12 @@ async function eseguiPulizia() {
     <div class="dettagli">${righe || `<div><span>${esc(t("nienteDaLiberare"))}</span><span></span></div>`}</div>
     ${saltati > 20 ? `<p class="nota">${esc(t("fileInUso", { n: saltati.toLocaleString(T.codice) }))}</p>` : ""}
     ${r.totale && r.totale.pulizie > 1 ? `<p class="totale-orbita">✦ ${esc(t("totaleOrbita", { b: fmt(r.totale.byte), n: r.totale.pulizie }))}</p>` : ""}
-    ${cestinoByte > 0 ? `<div class="cestino-box"><p>${esc(t("cestinoTesto"))}</p>
-      <button class="btn-pulisci" id="mCestino">🗑 ${esc(t("cestinoTitolo", { b: fmt(cestinoByte) }))}</button></div>` : ""}
+    ${cestinoTot > MB ? `<div class="cestino-box"><p>${esc(t("cestinoTesto"))}</p>
+      <button class="btn-pulisci" id="mCestino">🗑 ${esc(t("cestinoTitolo", { b: fmt(cestinoTot) }))}</button></div>` : ""}
     <div class="bottoni"><button class="btn-secondario" id="mOk">${esc(t("vediAggiornato"))}</button></div>`);
   esplosione();
   aggiornaPiede();
-  if ($("mCestino")) $("mCestino").onclick = () => chiediSvuotaCestino(cestinoByte);
+  if ($("mCestino")) $("mCestino").onclick = () => chiediSvuotaCestino(cestinoTot);
   // La mappa si rifà subito da sola: i numeri mostrano com'è il disco ADESSO,
   // non lo spazio "ancora da liberare" di prima della pulizia.
   scansiona(stato.radice, true);
@@ -794,8 +860,9 @@ function chiediSvuotaCestino(byte) {
   $("mSvuota").onclick = async () => {
     apriModale(`<div class="spinner"></div><h2>${esc(t("cestinoSi"))}…</h2>`);
     const r = await O.svuotaCestino();
-    apriModale(`<div class="pannello-sopra">${esc(t("fatto"))}</div><div class="grande">${fmt((r && r.liberati) || byte)}</div>
-      <h2>${esc(t("cestinoFatto", { b: fmt((r && r.liberati) || byte) }))}</h2>
+    const liberati = Math.max((r && r.liberati) || 0, r && r.prova ? byte : 0);
+    apriModale(`<div class="pannello-sopra">${esc(t("fatto"))}</div><div class="grande">${fmt(liberati)}</div>
+      <h2>${esc(t("cestinoFatto", { b: fmt(liberati) }))}</h2>
       <div class="bottoni"><button class="btn-pulisci" id="mOk">${esc(t("chiudi"))}</button></div>`);
     esplosione();
     $("mOk").onclick = chiudiModale;
@@ -960,3 +1027,41 @@ function esplosione() {
 document.getElementById("btnTema").onclick = () =>
   applicaTema(document.documentElement.dataset.tema === "chiaro" ? TEMA_SCURO : "chiaro");
 avvio();
+
+// ---------------------------------------------------------------- inutilizzati da più di N mesi
+
+/** Riquadro in alto a sinistra: scegli il periodo, un clic seleziona tutti i file vecchi (mai gli importanti). */
+function preparaMesi() {
+  const card = $("mesiCard"), sel = $("mesiSel");
+  if (!card || !sel) return;
+  try { const m = Number(localStorage.getItem("orbita-mesi")); if (MESI_SCELTA.includes(m)) stato.mesi = m; } catch { /* niente */ }
+  sel.innerHTML = MESI_SCELTA.map((m) => `<option value="${m}" ${m === stato.mesi ? "selected" : ""}>${esc(m === 1 ? t("mese1") : t("mesiN", { n: m }))}</option>`).join("");
+  card.hidden = !stato.vecchi.n;
+  $("mesiEsito").textContent = "";
+  sel.onchange = () => {
+    stato.mesi = Number(sel.value);
+    try { localStorage.setItem("orbita-mesi", String(stato.mesi)); } catch { /* niente */ }
+    $("mesiEsito").textContent = "";
+    aggiornaRiepilogo(); aggiornaPiede();
+    if (stato.vista === "consigliata") ridisegnaLista();
+  };
+  $("btnMesi").onclick = () => {
+    for (const f of stato.vecchi.lista) stato.selezione.delete(chiaveF(f));
+    const scelti = vecchiSelezionabili();
+    for (const f of scelti) selezionaFile(f);
+    $("mesiEsito").textContent = scelti.length
+      ? t("mesiFatto", { n: scelti.length.toLocaleString(T.codice), b: fmt(scelti.reduce((x, f) => x + f.byte, 0)) })
+      : t("mesiNiente");
+    aggiornaPiede();
+    mostraVista("consigliata").then(() => {
+      const c = document.querySelector(".vecchi-card");
+      if (c) c.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  };
+}
+
+/** Ridisegna il pannello di destra tenendo la posizione di scorrimento. */
+function ridisegnaLista() {
+  const lista = $("lista"), su = lista.scrollTop;
+  return mostraVista(stato.vista).then(() => { lista.scrollTop = su; });
+}

@@ -140,6 +140,7 @@
     aggiornamento: async () => null,
     vecchi: async () => ({ byte: 0, n: 0, lista: [] }),
     svuotaCestino: async () => ({ liberati: 0 }),
+    cestino: async () => 0,
     guidaVista: async () => true,
     apriAggiornamento: async () => {},
     onProgresso: (cb) => { window._prog = cb; },
