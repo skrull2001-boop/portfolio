@@ -1,412 +1,455 @@
-<!doctype html>
-<html lang="it" data-type="software" data-radius="soft" data-ground="sage" data-buttons="solid" data-motion>
+<!DOCTYPE html>
+<html lang="it">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Andrea Vacchini: AI Automation Engineer a Milano</title>
-<meta name="description" content="Strumenti con l'IA costruiti e messi in uso: Orbita su Microsoft Store, il controllo fatture di un ospedale, uno staff di 12 agenti.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Andrea Vacchini: AI Automation Engineer a Milano">
-<meta property="og:description" content="Orbita su Microsoft Store, 16.000 fatture controllate, 12 agenti IA al lavoro.">
-<meta property="og:image" content="https://skrull2001-boop.github.io/portfolio/share.jpg">
-<meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
-<meta name="theme-color" content="#c3d7e5">
-<!-- <link rel="canonical" href="https://[dominio]/"> -->
-<meta name="site-kind" content="software">
-<meta name="page-type" content="software">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400..700&family=Figtree:wght@400..600&family=Martian+Mono:wght@400..500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="assets/system.css">
-<link rel="stylesheet" href="assets/ui/cards.css">
-<link rel="stylesheet" href="assets/motion/motion.css">
-<link rel="stylesheet" href="assets/backgrounds/backgrounds.css">
-<link rel="stylesheet" href="assets/layout/layout.css">
-<link rel="stylesheet" href="assets/icons/icon.css">
-<style>
-:root {
-  --p-bg: #c3d7e5; --p-surface: #d0e0eb; --p-ink: #141414; --p-muted: #4a5068;
-  --p-accent: #0f5257; --p-accent-ink: #ffffff; --p-action: #0f5257; --p-action-ink: #ffffff;
-  --p-inv-bg: #141414; --p-inv-surface: #1e1f20; --p-inv-ink: #c3d7e5; --p-inv-muted: #808b94;
-  --p-inv-accent: #c3d7e5; --p-inv-accent-ink: #141414; --p-inv-action: #c3d7e5; --p-inv-action-ink: #141414;
-  --font-display: "Sora", system-ui, sans-serif;
-  --font-text: "Figtree", system-ui, sans-serif;
-  --font-mono: "Martian Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
-  --display-weight: 400;
-  --display-tracking: -0.035em;
-  --display-tracking-xl: -0.045em;
-  --ly-scale: 0.9;
-}
-</style>
-<link rel="stylesheet" href="assets/layout/demo.css">
-<link rel="stylesheet" href="assets/ui/base.css">
-<link rel="stylesheet" href="assets/ui/terminal-run/fragment.css">
-<link rel="stylesheet" href="assets/ui/chat/fragment.css">
-<link rel="stylesheet" href="assets/ui/checklist/fragment.css">
-<link rel="stylesheet" href="assets/ui/pipeline-board/fragment.css">
-<script>document.documentElement.classList.add('m-enter');setTimeout(()=>document.documentElement.classList.add('m-enter-done'),700)</script>
-<script src="assets/backgrounds/backgrounds.js"></script>
-<script>document.documentElement.classList.add('mo-js');setTimeout(()=>document.documentElement.classList.add('mo-safe'),2500)</script>
-<link rel="modulepreload" href="assets/moments/moments.js">
-<link rel="modulepreload" href="assets/moments/lib.js">
-<link rel="modulepreload" href="assets/moments/liquid-type/moment.js">
-<link rel="modulepreload" href="assets/moments/marquee-row/moment.js">
-<style>
-  /* hero: Orbita's window over the dealt mesh ground; the result card over its lower left */
-  .hero__art > .ly-piece--note { left: var(--s-6); bottom: var(--s-6); width: 300px; z-index: 2; }
-  .d-note__line { display: flex; align-items: center; gap: 10px; padding: 7px 0; font-size: 13px; color: #3d4247; border-top: 1px solid rgb(0 0 0 / .06); }
-  .d-note__line:first-of-type { border-top: 0; }
-  .d-note__line i { width: 18px; height: 18px; border-radius: 50%; flex: none; display: grid; place-items: center; background: #e2f1ee; color: #0f5257; font-style: normal; font-size: 13px; font-weight: 600; }
-  .d-note__line b { font-weight: 500; color: #16181a; }
-  .hero__proof { font-size: var(--t-small); color: var(--ink); }
-  .ly-piece--main .d-row { grid-template-columns: 36px minmax(0, 1fr) 72px 88px; }
-  .ly-piece--main .d-main { padding-right: var(--ly-cut-room); }
-  @media (max-width: 639px) { .ly-piece--main .d-row { grid-template-columns: 36px minmax(0, 1fr) 88px; } }
-  @media (max-width: 1023px) { .hero__art > .ly-piece--note { left: var(--s-4); bottom: var(--s-4); width: 270px; } }
-  /* the four projects: one panel height for the group */
-  #progetti .panel { --p-h: 300px; }
-  @media (min-width: 1024px) and (max-width: 1279px) { #progetti .panel { --p-h: 236px; } }
-  /* the other work grows to two screens where its cards go two-up or stack */
-  @media (min-width: 640px) and (max-width: 1279px) { #lavori { --h: 2; } }
-  @media (max-width: 639px) { #lavori { --hm: 2; } }
-  #principio .grid { margin-top: var(--s-8); }
-  @media (max-width: 639px) { #progetti .panel { --p-h: 190px; } #progetti .ui-chat__day { display: none; } #progetti .stage { --fade-h: 40px; } }
-  /* the other work: three linked cards with a screen in each panel */
-  #lavori .panel { --p-h: 260px; height: var(--p-h); }
-  #lavori .panel .frame__img { height: 100%; object-fit: cover; object-position: top; }
-  /* Orbita on the dark band: its real screen in one frame */
-  #orbita .frame { aspect-ratio: 1400 / 885; }
-  #percorso .frame { aspect-ratio: 4 / 3; }
-  #percorso .frame .frame__img { object-fit: cover; object-position: top; }
-  @media (max-width: 639px) { #percorso, #orbita { --hm: 2; } #lavori .panel { --p-h: 190px; } }
-  @media (max-width: 639px) { #progetti .panel { --p-h: 160px; } }
-  @media (max-width: 359px) { #percorso .rows p { display: none; } }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Andrea Vacchini · AI Automation Specialist</title>
+    <meta name="description" id="meta-desc" content="Andrea Vacchini, Milano. Porto l'IA nel lavoro di ogni giorno: strumenti collaudati su dati veri e messi in uso. Agenti IA, automazioni, siti.">
+    <meta name="theme-color" content="#0b1020">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+    <meta property="og:title" content="Andrea Vacchini · AI Automation Specialist">
+    <meta property="og:description" content="Porto l'IA nel lavoro di ogni giorno. Strumenti collaudati su dati veri e messi in uso.">
+    <meta property="og:image" content="https://skrull2001-boop.github.io/portfolio/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:url" content="https://skrull2001-boop.github.io/portfolio/">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="it_IT">
+    <meta property="og:locale:alternate" content="en_US">
+    <meta name="twitter:card" content="summary_large_image">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Sora:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<!-- type: software (an engineer who builds and sells his own software)
-     deal: hero collage, nav nav-centre, close close-word, footer footer-statement, rhythm dark-band, buttons solid, mark ring, ground sage
-     palette swap-pastels: a cool putty ground and a teal accent, the light calm of an engineering desk, the opposite of the dark pages before
-     effect: gradient-mesh behind Orbita's window in the hero
-     moments: liquid-type (#principio, the statement), marquee-row (#lavori, the tools row) -->
+    <a class="skip" href="#main" data-i18n="skip">Vai al contenuto</a>
+    <div class="progress" aria-hidden="true"><span id="progress-bar"></span></div>
 
-<header class="nav nav--centre">
-  <div class="wrap nav__bar">
-    <a class="skip-link" href="#top">Vai al contenuto</a>
-    <a class="nav__logo" href="#top"><span class="mark" data-mark="ring" aria-hidden="true"></span>Andrea Vacchini</a>
-    <nav class="nav__links" aria-label="Principale">
-      <div class="nav__item">
-        <a class="nav__link" href="#progetti">Progetti <svg class="chev" viewBox="0 0 12 12" aria-hidden="true"><path d="M3 4.5l3 3 3-3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-        <div class="nav__menu">
-          <div class="wrap grid">
-            <div class="menu-col span-3">
-              <p class="t-label">In uso</p>
-              <a href="#progetti">Controllo fatture<span>16.000 fatture in un ospedale</span></a>
-              <a href="#progetti">Staff di 12 agenti<span>Lavoro interno con il mio sì</span></a>
-              <a href="#progetti">Lead pipeline<span>2.800 attività trovate</span></a>
+    <nav class="nav" id="nav">
+        <div class="wrap nav-inner">
+            <a href="#top" class="logo" aria-label="Andrea Vacchini">AV<em>.</em></a>
+            <div class="nav-links">
+                <a href="#progetti" data-sec="progetti" data-i18n="nav.work">Progetti</a>
+                <a href="#settori" data-sec="settori" data-i18n="nav.sectors">Per settore</a>
+                <a href="#metodo" data-sec="metodo" data-i18n="nav.approach">Come lavoro</a>
+                <a href="#percorso" data-sec="percorso" data-i18n="nav.background">Percorso</a>
+                <a href="#contatti" data-sec="contatti" data-i18n="nav.contact">Contatti</a>
             </div>
-            <div class="menu-col span-3">
-              <p class="t-label">Online</p>
-              <a href="#progetti">RispostaFacile<span>Bozze per commercialisti</span></a>
-              <a href="#lavori">Gestionali per mestieri<span>Tre demo da provare</span></a>
-              <a href="#lavori">GymPage<span>Siti per palestre</span></a>
-            </div>
-            <a class="menu-card span-3 start-10" href="#orbita">
-              <div class="panel"><img class="frame__img" src="img/orbita-dark-it.jpg" alt="La schermata principale di Orbita con l'anello del disco"></div>
-              <span class="t-card">Orbita su Microsoft Store</span>
-              <span class="t-small muted">La mia app per liberare spazio</span>
-            </a>
-          </div>
+            <button type="button" class="lang" id="lang" aria-label="Lingua: italiano. Passa all'inglese">
+                <span data-l="it">IT</span><span class="sep">/</span><span data-l="en">EN</span>
+            </button>
         </div>
-      </div>
-      <div class="nav__item"><a class="nav__link" href="#orbita">Orbita</a></div>
-      <div class="nav__item"><a class="nav__link" href="#principio">Metodo</a></div>
-      <div class="nav__item"><a class="nav__link" href="#percorso">Percorso</a></div>
     </nav>
-    <div class="nav__actions">
-      <a class="btn btn--primary" href="cv/CV-Andrea-Vacchini-IT.pdf" download>Scarica il CV</a>
-    </div>
-    <button class="nav__toggle" type="button" aria-expanded="false" aria-label="Menu">
-      <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true"><path d="M2 5h14M2 13h14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
-    </button>
-  </div>
-</header>
 
-<main id="top">
-  <section class="hero hero--collage" data-enter aria-labelledby="hero-h">
-    <div class="wrap"><div class="hero-text grid hero__grid">
-      <div class="hero__text span-5">
-        <h1 id="hero-h">AI Automation Engineer a Milano</h1>
-        <p class="hero__lead">Costruisco strumenti con l'IA e li porto in produzione. Orbita è su Microsoft Store e il mio controllo fatture ha gestito 16.000 fatture in un ospedale.</p>
-        <div class="btn-row"><a class="btn btn--primary" href="cv/CV-Andrea-Vacchini-IT.pdf" download>Scarica il CV<svg class="m-arrow" viewBox="0 0 12 12" aria-hidden="true"><path class="m-arrow__stem" d="M1 6h8"/><path class="m-arrow__head" d="M4.5 2.5 8 6l-3.5 3.5"/></svg></a><a class="btn btn--secondary" href="#progetti">Guarda i progetti</a></div>
-        <p class="hero__proof">Sei anni di IT, due di progetti AI in produzione. Disponibile anche all'estero.</p>
-      </div>
-      <div class="hero__art span-6 start-7" data-fx="gradient-mesh" data-fx-seed="31" role="img" aria-label="Orbita mostra 40,2 GB da liberare sul disco C:, già spuntati perché sicuri">
-        <div class="ly-piece ly-piece--main d-win" aria-hidden="true">
-          <div class="d-win__bar"><span class="d-win__dots"><i></i><i></i><i></i></span><span>Orbita · Disco C: · 281 GB liberi</span></div>
-          <div class="d-win__body">
-            <div class="d-side">
-              <span><i></i>Disco</span><span class="is-on"><i></i>Pulizia</span><span><i></i>File vecchi</span><span><i></i>Doppioni</span><span><i></i>Cestino</span>
-              <span class="d-side__label">Dischi</span><span><i></i>C: 952 GB</span>
+    <main id="main">
+        <!-- Hero -->
+        <header class="hero dark" id="top">
+            <div class="wrap hero-inner">
+                <div class="hero-text">
+                    <p class="term"><span data-i18n="hero.whoami">Andrea Vacchini · AI Automation Specialist · Milano</span></p>
+                    <p class="avail"><span class="dot" aria-hidden="true"></span><span data-i18n="hero.status">Disponibile per ruoli e progetti</span></p>
+                    <h1 data-i18n="hero.title">Porto l'IA nel <span class="grad">lavoro di ogni giorno</span>.</h1>
+                    <p class="hero-sub" data-i18n="hero.sub">Guardo come lavorano le persone, trovo il passaggio che mangia ore e costruisco lo strumento che lo toglie. Il codice lo scrive l'IA sotto la mia guida; io decido cosa costruire, collaudo su dati veri e lo metto in uso.</p>
+                    <div class="hero-cta">
+                        <a href="#progetti" class="btn btn-solid" data-i18n="hero.cta">Guarda i progetti</a>
+                        <a href="mailto:vacchiniandrea2001@gmail.com" class="btn btn-line mono">vacchiniandrea2001@gmail.com</a>
+                    </div>
+                </div>
+                <div class="hero-visual" id="stack-area">
+                    <div class="stack" id="stack">
+                        <div class="fl fl1"><figure class="f1">
+                            <img src="img/gp.jpg" width="1200" height="750" data-i18n-alt="alt.gp" alt="Pagina iniziale di GymPage">
+                            <figcaption data-i18n="cap.gp">GymPage · online</figcaption>
+                        </figure></div>
+                        <div class="fl fl2"><figure class="f2">
+                            <img src="img/rf.jpg" width="1200" height="500" data-i18n-alt="alt.rf" alt="Pagina iniziale di RispostaFacile">
+                            <figcaption data-i18n="cap.rf">RispostaFacile · online</figcaption>
+                        </figure></div>
+                        <div class="fl fl3"><figure class="f3">
+                            <img src="img/kit.jpg" width="1200" height="750" data-i18n-alt="alt.kit" alt="Prima schermata del kit di lancio per un libro">
+                            <figcaption data-i18n="cap.kit">Kit di lancio · prototipo</figcaption>
+                        </figure></div>
+                    </div>
+                </div>
             </div>
-            <div class="d-main">
-              <div class="d-main__head"><h4>Cosa puoi liberare</h4><span class="d-btn">Pulisci ora</span></div>
-              <div class="d-tabs"><span class="is-on">Sicuro 9</span><span>Da guardare</span><span>Importanti esclusi</span></div>
-              <div class="d-rows">
-                <div class="d-row"><span class="d-thumb" style="background:#f2b13d"></span><div><b>Cache grafica dei giochi</b><small>NVIDIA, AMD, Intel</small></div><span class="num">23,4 GB</span><span class="d-chip">Sicuro</span></div>
-                <div class="d-row"><span class="d-thumb" style="background:#4fd1a5"></span><div><b>Cache per sviluppatori</b><small>npm, pip, yarn</small></div><span class="num">12,1 GB</span><span class="d-chip">Sicuro</span></div>
-                <div class="d-row"><span class="d-thumb" style="background:#7aa7f5"></span><div><b>Cache dei browser</b><small>Chrome, Edge, Firefox</small></div><span class="num">2,2 GB</span><span class="d-chip">Sicuro</span></div>
-                <div class="d-row"><span class="d-thumb" style="background:#c9d3dd"></span><div><b>File temporanei</b><small>Cartella Temp dell'utente</small></div><span class="num">2 GB</span><span class="d-chip">Sicuro</span></div>
-                <div class="d-row"><span class="d-thumb" style="background:#e7c9a5"></span><div><b>Anteprime delle immagini</b><small>Si rifanno da sole</small></div><span class="num">106 MB</span><span class="d-chip">Sicuro</span></div>
-                <div class="d-row"><span class="d-thumb" style="background:#e3a3a3"></span><div><b>Rapporti di errore</b><small>Crash vecchi</small></div><span class="num">68 MB</span><span class="d-chip">Sicuro</span></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="ly-piece ly-piece--note d-card" aria-hidden="true" data-ly-steps="700">
-          <div class="d-card__row"><h5>Scansione del disco C:</h5><span class="d-chip" data-step data-step-at="4">Fatta</span></div>
-          <div class="d-note__line" data-step><i>✓</i><span><b>864.116 file</b> letti in 20 secondi</span></div>
-          <div class="d-note__line" data-step><i>✓</i><span>Documenti importanti <b>lasciati fuori</b></span></div>
-          <div class="d-note__line" data-step><i>✓</i><span><b>40,2 GB</b> pronti da liberare</span></div>
-        </div>
-      </div>
-    </div></div>
-  </section>
+            <a class="cue mono" href="#manifesto"><span data-i18n="cue">scorri</span> <span class="cue-arrow" aria-hidden="true">↓</span></a>
+        </header>
 
-  <section class="section g2" id="progetti" aria-labelledby="progetti-h">
-    <div class="wrap">
-      <div class="group">
-        <div class="section-head">
-          <h2 id="progetti-h">Strumenti in uso. <span class="muted">Ognuno toglie un lavoro che prima si faceva a mano.</span></h2>
-        </div>
-        <div class="grid">
-          <article class="card card--row card--open span-6">
-            <h3>Controlla le fatture contro gli ordini</h3>
-            <p>In una struttura ospedaliera vicino a Milano: 16.000 fatture XML gestite, solo le differenze da guardare.</p>
-            <div class="panel">
-              <div class="stage stage--fade-b"><div class="at-rise fit" style="--fit-max:440px;--ax:max(24px, 50% - 220px);--ay:40px;--ay-sm:16px" data-ui-loop>
-                <div class="ui ui-panel ui-term" data-ui="terminal-run">
-                  <div class="ui-term__head">
-                    <span class="ui-dots" aria-hidden="true"><i></i><i></i><i></i></span>
-                    <span class="ui-term__title">controllo-fatture</span>
-                    <span class="ui-meta">offline</span>
-                    <span class="ui-spacer"></span>
-                  </div>
-                  <div class="ui-term__screen" data-term-screen>
-                    <div class="ui-term__track" data-term-track>
-                      <div class="ui-term__ln ui-term__cmd"><span class="ui-term__cwd">~/fatture</span><span class="ui-term__sig">$</span><span class="ui-term__typed" data-term-cmd>confronta</span></div>
-                      <div class="ui-term__ln ui-term__meter" data-term-out data-term-meter><span class="ui-term__bar" style="--p:1"><i></i></span><span class="ui-term__count" data-term-count>4 di 4 fornitori</span></div>
-                      <div class="ui-term__ln ui-term__log" data-term-out data-term-step><svg class="ui-term__tick" viewBox="0 0 16 16" aria-hidden="true"><path d="m3.5 8.4 2.8 2.8 6.2-6.4"/></svg><span class="ui-term__path">medica-nord.xml</span><span class="ui-term__n">412 righe</span><span class="ui-term__t">0,8 s</span></div>
-                      <div class="ui-term__ln ui-term__log" data-term-out data-term-step><svg class="ui-term__tick" viewBox="0 0 16 16" aria-hidden="true"><path d="m3.5 8.4 2.8 2.8 6.2-6.4"/></svg><span class="ui-term__path">farmaco-sud.xml</span><span class="ui-term__n">388 righe</span><span class="ui-term__t">0,7 s</span></div>
-                      <div class="ui-term__ln ui-term__log" data-term-out data-term-step><svg class="ui-term__tick" viewBox="0 0 16 16" aria-hidden="true"><path d="m3.5 8.4 2.8 2.8 6.2-6.4"/></svg><span class="ui-term__path">lab-service.xml</span><span class="ui-term__n">301 righe</span><span class="ui-term__t">0,5 s</span></div>
-                      <div class="ui-term__ln ui-term__log" data-term-out data-term-step><svg class="ui-term__tick" viewBox="0 0 16 16" aria-hidden="true"><path d="m3.5 8.4 2.8 2.8 6.2-6.4"/></svg><span class="ui-term__path">steril-pro.xml</span><span class="ui-term__n">147 righe</span><span class="ui-term__t">0,4 s</span></div>
-                      <div class="ui-term__ln ui-term__gap" data-term-out aria-hidden="true"></div>
-                      <div class="ui-term__ln ui-term__sum" data-term-out><span class="ui-term__key">Uguali all'ordine</span><span class="ui-term__val">1.231</span><span class="ui-term__dim">(1.248)</span></div>
-                      <div class="ui-term__ln ui-term__sum" data-term-out><span class="ui-term__key">Da guardare</span><span class="ui-term__val">17</span><span class="ui-term__dim">differenze</span></div>
-                      <div class="ui-term__ln ui-term__done" data-term-out data-term-done><span class="ui-term__ok"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4.5 8.3 2.4 2.4 4.6-5"/></svg></span><b>Fatto</b><span class="ui-term__dim">in 2,4 s</span></div>
-                      <div class="ui-term__ln ui-term__cmd" data-term-next><span class="ui-term__cwd">~/fatture</span><span class="ui-term__sig">$</span><span class="ui-term__typed"></span><i class="ui-term__caret" aria-hidden="true"></i></div>
-                    </div>
-                  </div>
-                </div>
-              </div></div>
+        <!-- Manifesto -->
+        <section class="manifesto light" id="manifesto">
+            <div class="wrap">
+                <p class="mani" id="mani" data-i18n="mani">Il codice lo scrive l'IA. <em>Le decisioni le prendo io.</em></p>
             </div>
-          </article>
-          <article class="card card--row card--open span-6">
-            <h3>Scrive le risposte per i commercialisti</h3>
-            <p>RispostaFacile prepara la bozza alla domanda del cliente; il professionista la legge e la invia.</p>
-            <div class="panel">
-              <div class="stage stage--fade-b"><div class="at-rise fit" style="--fit-max:420px;--ax:max(24px, 50% - 210px);--ay:40px;--ay-sm:16px">
-                <div class="ui ui-panel ui-chat" data-ui="chat">
-                  <div class="ui-head"><span class="ui-agent" aria-hidden="true"></span><div class="ui-title">RispostaFacile</div><span class="ui-chat__online">Bozza</span><span class="ui-spacer"></span></div>
-                  <div class="ui-chat__body">
-                    <div class="ui-chat__day">Oggi, 9:41</div>
-                    <div class="ui-msg ui-msg--me" data-chat-q><span class="ui-msg__text">Entro quando devo pagare il saldo IMU?</span></div>
-                    <div class="ui-msg ui-msg--bot" data-chat-a>
-                      <span class="ui-agent ui-msg__av" aria-hidden="true"></span>
-                      <span class="ui-msg__col">
-                        <span class="ui-chat__typing" aria-hidden="true"><i></i><i></i><i></i></span>
-                        <span class="ui-chat__answer">Il saldo IMU si versa entro il <b>16 dicembre</b>. Le preparo il modello F24 con l'acconto già pagato a giugno.</span>
-                        <span class="ui-chat__srcs"><span class="ui-chat__src"><svg class="ui-icon" viewBox="0 0 16 16"><path d="M4 2.5h5l3 3v8H4z"/><path d="M9 2.5v3h3"/></svg>Da approvare</span></span>
-                      </span>
-                    </div>
-                  </div>
-                  <div class="ui-chat__input"><span class="ui-chat__ph">Modifica la bozza</span><span class="ui-chat__send" aria-hidden="true"><svg viewBox="0 0 16 16" width="14" height="14"><path d="M8 13V3.5M3.8 7.5 8 3.3l4.2 4.2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div>
+        </section>
+
+        <!-- Numeri -->
+        <section class="figures light" aria-label="In numeri" data-i18n-aria="numbers.aria">
+            <div class="wrap figures-row">
+                <div class="fig rv">
+                    <p class="lbl mono" data-i18n="n.a.l">Controllo fatture</p>
+                    <p class="fig-n" data-i18n="n.a.n">16.000</p>
+                    <p class="fig-t" data-i18n="n.a.t">fatture gestite in una struttura ospedaliera</p>
                 </div>
-              </div></div>
+                <div class="fig rv">
+                    <p class="lbl mono">Studio</p>
+                    <p class="fig-n">12</p>
+                    <p class="fig-t" data-i18n="n.d.t">agenti IA, una persona che decide</p>
+                </div>
+                <div class="fig rv">
+                    <p class="lbl mono">Trading Lab</p>
+                    <p class="fig-n">120+</p>
+                    <p class="fig-t" data-i18n="n.f.t">bot costruiti e testati</p>
+                </div>
+                <div class="fig rv">
+                    <p class="lbl mono">IT</p>
+                    <p class="fig-n" data-i18n="n.h.n">6 <span class="unit">anni</span></p>
+                    <p class="fig-t" data-i18n="n.h.t">di infrastruttura, reti, Microsoft 365 e help desk</p>
+                </div>
             </div>
-          </article>
-        </div>
-      </div>
-      <div class="grid">
-        <article class="card card--row card--open span-6">
-          <h3>Coordina 12 agenti IA con il mio sì</h3>
-          <p>Commerciale, progetti, qualità e conti preparano bozze e controlli; niente esce senza approvazione.</p>
-          <div class="panel">
-            <div class="stage stage--fade-b"><div class="at-rise fit" style="--fit-max:540px;--ax:max(24px, 50% - 270px);--ay:48px;--ay-sm:16px">
-              <div class="ui ui-panel ui-checks" data-ui="checklist">
-                <div class="ui-checks__head">
-                  <div class="ui-title">Da approvare oggi</div>
-                  <span class="ui-spacer"></span>
-                  <div class="ui-meta" data-checks-count>2 di 5</div>
+        </section>
+
+        <div id="progetti">
+            <section class="intro light">
+                <div class="wrap narrow rv">
+                    <h2 data-i18n="work.title">Progetti</h2>
+                    <p class="lead" data-i18n="work.sub">Strumenti veri: in uso, online o da provare.</p>
                 </div>
-                <div class="ui-checks__bar"><i data-checks-bar style="--k:0.4"></i></div>
-                <ul class="ui-checks__list">
-                  <li class="ui-check is-done"><span class="ui-check__box"><svg viewBox="0 0 16 16"><path d="m4.5 8.2 2.3 2.3 4.7-5"/></svg></span><span class="ui-check__label">Report settimanale dei progetti</span></li>
-                  <li class="ui-check is-done"><span class="ui-check__box"><svg viewBox="0 0 16 16"><path d="m4.5 8.2 2.3 2.3 4.7-5"/></svg></span><span class="ui-check__label">Controllo qualità del sito di un cliente</span></li>
-                  <li class="ui-check"><span class="ui-check__box"><svg viewBox="0 0 16 16"><path d="m4.5 8.2 2.3 2.3 4.7-5"/></svg></span><span class="ui-check__label">Preventivo per un sito da barbiere</span></li>
-                  <li class="ui-check"><span class="ui-check__box"><svg viewBox="0 0 16 16"><path d="m4.5 8.2 2.3 2.3 4.7-5"/></svg></span><span class="ui-check__label">Bozze di messaggio a 6 attività</span></li>
-                  <li class="ui-check"><span class="ui-check__box"><svg viewBox="0 0 16 16"><path d="m4.5 8.2 2.3 2.3 4.7-5"/></svg></span><span class="ui-check__label">Aggiornare il registro delle decisioni</span></li>
+            </section>
+
+            <!-- 01 Kit di lancio -->
+            <section class="show light" id="kit">
+                <div class="wrap show-grid">
+                    <figure class="media">
+                        <div class="card3d tilt"><div class="frame scroller"><div class="scroll-track"><img src="img/kit-full.jpg" width="1200" height="2098" loading="lazy" data-i18n-alt="alt.kit" alt="Prima schermata del kit di lancio per un libro"></div><span class="scroll-hint mono" aria-hidden="true" data-i18n="hint">passa sopra per scorrere</span><span class="glare" aria-hidden="true"></span></div></div>
+                    </figure>
+                    <div class="copy rv">
+                        <p class="idx mono">01<span>/09</span></p>
+                        <p class="over mono" data-i18n="p1.over">Editoria · costruito in un pomeriggio</p>
+                        <h3 data-i18n="p1.title">Kit di lancio per un libro</h3>
+                        <p class="prob" data-i18n="p1.prob">Per lanciare un libro servono tanti materiali diversi, tutti coerenti con la stessa scheda.</p>
+                        <p data-i18n="p1.what">5 agenti in sequenza trasformano la scheda di un libro in 8 materiali di campagna; l'ultimo controlla spoiler e tono, poi approva una persona.</p>
+                        <div class="stat"><b data-i18n="n.e.n">1 pomeriggio</b><span data-i18n="n.e.t">dall'idea al prototipo funzionante</span></div>
+                        <div class="act"><span class="st st-proto" data-i18n="st.proto">Prototipo</span><a class="more" href="kit-lancio/" data-i18n="p1.link">Prova il prototipo →</a></div>
+                        <p class="small" data-i18n="p1.note">Proposto a PLAI. Prototipo indipendente, non affiliato al Gruppo Mondadori.</p>
+                    </div>
+                </div>
+                <div class="wrap"><a class="next mono" href="#fatture" data-i18n="next1">Prossimo: Controllo fatture e ordini →</a></div>
+            </section>
+
+            <!-- 02 Controllo fatture -->
+            <section class="show light rev" id="fatture">
+                <div class="wrap show-grid">
+                    <figure class="media">
+                        <div class="card3d tilt"><div class="frame invoice">
+                            <div class="inv-top"><span class="mono" data-i18n="inv.note">Dati illustrativi</span></div>
+                            <table>
+                                <caption class="sr" data-i18n="inv.caption">Esempio di controllo fattura e ordine, dati illustrativi</caption>
+                                <thead>
+                                    <tr><th scope="col" data-i18n="inv.h1">Fattura</th><th scope="col" data-i18n="inv.h2">Ordine</th><th scope="col" data-i18n="inv.h3">Esito</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td data-i18n="inv.r1a">INV&nbsp;2291 · €&nbsp;1.240,00</td><td data-i18n="inv.r1b">PO&nbsp;8812 · €&nbsp;1.240,00</td><td class="ok">ok</td></tr>
+                                    <tr><td data-i18n="inv.r2a">INV&nbsp;2292 · €&nbsp;318,50</td><td data-i18n="inv.r2b">PO&nbsp;8820 · €&nbsp;318,50</td><td class="ok">ok</td></tr>
+                                    <tr class="flag"><td data-i18n="inv.r3a">INV&nbsp;2293 · €&nbsp;96,00</td><td data-i18n="inv.r3b">PO&nbsp;8823 · €&nbsp;90,00</td><td class="ko" data-i18n="inv.diff">€&nbsp;6,00 di differenza</td></tr>
+                                    <tr><td data-i18n="inv.r4a">INV&nbsp;2294 · €&nbsp;2.015,30</td><td data-i18n="inv.r4b">PO&nbsp;8831 · €&nbsp;2.015,30</td><td class="ok">ok</td></tr>
+                                </tbody>
+                            </table>
+                        <span class="glare" aria-hidden="true"></span></div></div>
+                    </figure>
+                    <div class="copy rv">
+                        <p class="idx mono">02<span>/09</span></p>
+                        <p class="over mono" data-i18n="p3.over">Struttura ospedaliera vicino a Milano</p>
+                        <h3 data-i18n="p3.title">Controllo fatture e ordini</h3>
+                        <p class="prob" data-i18n="p3.prob">Chi liquida le fatture doveva confrontare a mano ogni fattura elettronica con il suo ordine.</p>
+                        <p data-i18n="p3.what">Abbina fatture e ordini in automatico e mostra solo le differenze da guardare. Funziona offline. Collaudato su 4.000 coppie, oggi ha gestito circa 16.000 fatture.</p>
+                        <div class="stat"><b>~2 ms</b><span data-i18n="n.b.t">per fattura controllata</span></div>
+                        <div class="act"><span class="st st-use" data-i18n="st.use">In uso</span></div>
+                    </div>
+                </div>
+                <div class="wrap"><a class="next mono" href="#rispostafacile" data-i18n="next2">Prossimo: RispostaFacile →</a></div>
+            </section>
+
+            <!-- 03 RispostaFacile -->
+            <section class="show light" id="rispostafacile">
+                <div class="wrap show-grid">
+                    <figure class="media">
+                        <div class="card3d tilt"><div class="frame scroller"><div class="scroll-track"><img src="img/rf-full.jpg" width="1200" height="3867" loading="lazy" data-i18n-alt="alt.rf" alt="Pagina iniziale di RispostaFacile"></div><span class="scroll-hint mono" aria-hidden="true" data-i18n="hint">passa sopra per scorrere</span><span class="glare" aria-hidden="true"></span></div></div>
+                    </figure>
+                    <div class="copy rv">
+                        <p class="idx mono">03<span>/09</span></p>
+                        <p class="over mono" data-i18n="p6.over">Studi commercialisti</p>
+                        <h3>RispostaFacile</h3>
+                        <p class="prob" data-i18n="p6.prob">I clienti fanno al commercialista le stesse domande tutto il giorno.</p>
+                        <p data-i18n="p6.what">Prepara la bozza di risposta; il commercialista la legge, la corregge se serve e la invia.</p>
+                        <div class="stat"><b>2</b><span data-i18n="n.c.t">prodotti online con dominio proprio</span></div>
+                        <div class="act"><span class="st st-live" data-i18n="st.live">Online</span><a class="more" href="rispostafacile/">Vetrina del progetto →</a></div>
+                    </div>
+                </div>
+                <div class="wrap"><a class="next mono" href="#orbita" data-i18n="next3">Prossimo: Orbita →</a></div>
+            </section>
+
+            <!-- 04 Orbita (scuro) -->
+            <section class="show dark rev" id="orbita">
+                <div class="wrap show-grid">
+                    <figure class="media">
+                        <div class="card3d tilt"><div class="frame"><img src="img/orbita.jpg?v=0911" width="1200" height="720" loading="lazy" data-i18n-alt="alt.orb" alt="Orbita: anello del disco per categorie e pulizia consigliata"><span class="glare" aria-hidden="true"></span></div></div>
+                    </figure>
+                    <div class="copy rv">
+                        <p class="idx mono">04<span>/09</span></p>
+                        <p class="over mono" data-i18n="po.over">App per Windows · prodotto mio</p>
+                        <h3>Orbita</h3>
+                        <p class="prob" data-i18n="po.prob">Pulire il disco fa paura: non sai cosa stai cancellando, e i programmi seri si pagano in abbonamento.</p>
+                        <p data-i18n="po.what">Un anello mostra cosa occupa il disco; le voci sicure sono già spuntate, ognuna spiegata in parole semplici. Sul mio PC ha trovato 38 GB da liberare, 23 di cache grafica NVIDIA. Sei lingue, prezzi per paese, pulizia automatica settimanale. Paghi una volta, è tua per sempre.</p>
+                        <div class="stat"><b>~30 s</b><span data-i18n="po.stat">per leggere 800.000 file</span></div>
+                        <div class="act"><span class="st st-proto" data-i18n="st.proto">Prototipo</span><a class="more" href="orbita/" data-i18n="po.link">Sito di Orbita →</a></div>
+                    </div>
+                </div>
+                <div class="wrap"><a class="next mono" href="#cervello" data-i18n="next3b">Prossimo: Uno staff di 12 agenti IA →</a></div>
+            </section>
+
+            <!-- 05 Staff di 12 agenti IA (scuro) -->
+            <section class="show dark rev" id="cervello">
+                <div class="wrap show-grid">
+                    <figure class="media">
+                        <div class="card3d tilt const-card"><div class="const-frame">
+                        <div class="constellation" id="constellation" role="group" aria-label="I 12 agenti dello studio" data-i18n-aria="const.aria">
+                            <svg viewBox="0 0 100 100" class="links" aria-hidden="true"><defs><linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22e3ff"/><stop offset="1" stop-color="#8b6bff"/></linearGradient></defs><circle class="ring" cx="50" cy="50" r="43"/><circle class="ring" cx="50" cy="50" r="28"/><line class="base" x1="50" y1="50" x2="50.0" y2="7.0" pathLength="1" style="--i:0"/><line class="base" x1="50" y1="50" x2="64.0" y2="25.75" pathLength="1" style="--i:1"/><line class="base" x1="50" y1="50" x2="87.24" y2="28.5" pathLength="1" style="--i:2"/><line class="base" x1="50" y1="50" x2="78.0" y2="50.0" pathLength="1" style="--i:3"/><line class="base" x1="50" y1="50" x2="87.24" y2="71.5" pathLength="1" style="--i:4"/><line class="base" x1="50" y1="50" x2="64.0" y2="74.25" pathLength="1" style="--i:5"/><line class="base" x1="50" y1="50" x2="50.0" y2="93.0" pathLength="1" style="--i:6"/><line class="base" x1="50" y1="50" x2="36.0" y2="74.25" pathLength="1" style="--i:7"/><line class="base" x1="50" y1="50" x2="12.76" y2="71.5" pathLength="1" style="--i:8"/><line class="base" x1="50" y1="50" x2="22.0" y2="50.0" pathLength="1" style="--i:9"/><line class="base" x1="50" y1="50" x2="12.76" y2="28.5" pathLength="1" style="--i:10"/><line class="base" x1="50" y1="50" x2="36.0" y2="25.75" pathLength="1" style="--i:11"/><line class="hl" x1="50" y1="50" x2="50.0" y2="7.0" data-i="0"/><line class="hl" x1="50" y1="50" x2="64.0" y2="25.75" data-i="1"/><line class="hl" x1="50" y1="50" x2="87.24" y2="28.5" data-i="2"/><line class="hl" x1="50" y1="50" x2="78.0" y2="50.0" data-i="3"/><line class="hl" x1="50" y1="50" x2="87.24" y2="71.5" data-i="4"/><line class="hl" x1="50" y1="50" x2="64.0" y2="74.25" data-i="5"/><line class="hl" x1="50" y1="50" x2="50.0" y2="93.0" data-i="6"/><line class="hl" x1="50" y1="50" x2="36.0" y2="74.25" data-i="7"/><line class="hl" x1="50" y1="50" x2="12.76" y2="71.5" data-i="8"/><line class="hl" x1="50" y1="50" x2="22.0" y2="50.0" data-i="9"/><line class="hl" x1="50" y1="50" x2="12.76" y2="28.5" data-i="10"/><line class="hl" x1="50" y1="50" x2="36.0" y2="25.75" data-i="11"/><circle class="pulse" cx="50.0" cy="7.0" r="1.3" data-i="0" style="--dx:0.0px;--dy:43.0px"/><circle class="pulse" cx="64.0" cy="25.75" r="1.3" data-i="1" style="--dx:-14.0px;--dy:24.25px"/><circle class="pulse" cx="87.24" cy="28.5" r="1.3" data-i="2" style="--dx:-37.24px;--dy:21.5px"/><circle class="pulse" cx="78.0" cy="50.0" r="1.3" data-i="3" style="--dx:-28.0px;--dy:0.0px"/><circle class="pulse" cx="87.24" cy="71.5" r="1.3" data-i="4" style="--dx:-37.24px;--dy:-21.5px"/><circle class="pulse" cx="64.0" cy="74.25" r="1.3" data-i="5" style="--dx:-14.0px;--dy:-24.25px"/><circle class="pulse" cx="50.0" cy="93.0" r="1.3" data-i="6" style="--dx:0.0px;--dy:-43.0px"/><circle class="pulse" cx="36.0" cy="74.25" r="1.3" data-i="7" style="--dx:14.0px;--dy:-24.25px"/><circle class="pulse" cx="12.76" cy="71.5" r="1.3" data-i="8" style="--dx:37.24px;--dy:-21.5px"/><circle class="pulse" cx="22.0" cy="50.0" r="1.3" data-i="9" style="--dx:28.0px;--dy:0.0px"/><circle class="pulse" cx="12.76" cy="28.5" r="1.3" data-i="10" style="--dx:37.24px;--dy:21.5px"/><circle class="pulse" cx="36.0" cy="25.75" r="1.3" data-i="11" style="--dx:14.0px;--dy:24.25px"/></svg>
+                            <ul class="nodes"><li><button type="button" class="node" data-i="0"><span class="nm" data-i18n="r0">Coordinamento</span><span class="sr ds">: <span data-i18n="r0.d">smista le richieste e tiene il cruscotto e i report settimanali.</span></span></button></li><li><button type="button" class="node" data-i="1"><span class="nm" data-i18n="r1">Commerciale</span><span class="sr ds">: <span data-i18n="r1.d">prepara preventivi e bozze di messaggi, non invia nulla.</span></span></button></li><li><button type="button" class="node" data-i="2"><span class="nm" data-i18n="r2">Progetti</span><span class="sr ds">: <span data-i18n="r2.d">pianifica i progetti, stima i tempi e segue le consegne.</span></span></button></li><li><button type="button" class="node" data-i="3"><span class="nm" data-i18n="r3">Sviluppo</span><span class="sr ds">: <span data-i18n="r3.d">scrive e corregge il codice dei progetti.</span></span></button></li><li><button type="button" class="node" data-i="4"><span class="nm" data-i18n="r4">Qualità</span><span class="sr ds">: <span data-i18n="r4.d">controlla codice e siti prima delle consegne.</span></span></button></li><li><button type="button" class="node" data-i="5"><span class="nm" data-i18n="r5">Rischi</span><span class="sr ds">: <span data-i18n="r5.d">controlla privacy, contratti e rischi.</span></span></button></li><li><button type="button" class="node" data-i="6"><span class="nm" data-i18n="r6">Amministrazione</span><span class="sr ds">: <span data-i18n="r6.d">tiene entrate, uscite e scadenze.</span></span></button></li><li><button type="button" class="node" data-i="7"><span class="nm" data-i18n="r7">Ricerca</span><span class="sr ds">: <span data-i18n="r7.d">analizza i dati del trading lab.</span></span></button></li><li><button type="button" class="node" data-i="8"><span class="nm" data-i18n="r8">Carriera</span><span class="sr ds">: <span data-i18n="r8.d">cerca e filtra offerte di lavoro.</span></span></button></li><li><button type="button" class="node" data-i="9"><span class="nm" data-i18n="r9">Marketing</span><span class="sr ds">: <span data-i18n="r9.d">scrive testi per siti, post e casi studio.</span></span></button></li><li><button type="button" class="node" data-i="10"><span class="nm" data-i18n="r10">Tecnologia</span><span class="sr ds">: <span data-i18n="r10.d">sceglie architettura e strumenti e scrive le specifiche.</span></span></button></li><li><button type="button" class="node" data-i="11"><span class="nm" data-i18n="r11">Business</span><span class="sr ds">: <span data-i18n="r11.d">valuta idee e mercati prima di costruire.</span></span></button></li></ul>
+                            <button type="button" class="core" data-i18n="roles.me">Andrea decide</button>
+                            <div class="role-tip" id="role-tip" aria-hidden="true"><b></b><span></span></div>
+                        </div>
+                        <span class="glare" aria-hidden="true"></span></div></div>
+                    </figure>
+                    <div class="copy rv">
+                        <p class="idx mono">05<span>/09</span></p>
+                        <p class="over mono" data-i18n="p2.over">Il mio studio · agenti IA</p>
+                        <h3 data-i18n="p2.title">Uno staff di 12 agenti IA</h3>
+                        <p class="prob" data-i18n="p2.prob">Da solo devo seguire vendite, progetti, conti, qualità e ricerca, senza perdere il filo delle decisioni.</p>
+                        <p data-i18n="p2.what">12 agenti con ruoli precisi preparano proposte, bozze e controlli e scrivono tutto: schede progetto, registro delle decisioni, ricerca. Decido io; niente esce senza il mio sì.</p>
+                        <div class="act"><span class="st st-use" data-i18n="st.use">In uso</span></div>
+                    </div>
+                </div>
+                <div class="wrap"><a class="next mono" href="#trading" data-i18n="next4">Prossimo: Trading Lab →</a></div>
+            </section>
+
+            <!-- 05 Trading Lab (scuro) -->
+            <section class="show dark" id="trading">
+                <div class="wrap show-grid">
+                    <figure class="media">
+                        <div class="card3d tilt" aria-hidden="true"><div class="terminal mono">
+                            <div class="term-bar">~/trading-lab</div>
+                            <div class="term-body">
+                                <p><span class="prompt">$</span> lab status</p>
+                                <p>bots_tested: <b>120+</b></p>
+                                <p>lookahead_check: <b class="on">on</b></p>
+                                <p>auto_reconnect: <b class="on">on</b></p>
+                            </div>
+                        <span class="glare" aria-hidden="true"></span></div></div>
+                    </figure>
+                    <div class="copy rv">
+                        <p class="idx mono">06<span>/09</span></p>
+                        <p class="over mono" data-i18n="p5.over">Ricerca · sistemi automatici</p>
+                        <h3>Trading Lab</h3>
+                        <p class="prob" data-i18n="p5.prob">Nel trading automatico è facile ingannarsi: un test che "vede" dati del futuro fa sembrare buona qualsiasi strategia.</p>
+                        <p data-i18n="p5.what">Un laboratorio di ricerca con controllo anti-lookahead. Oltre 120 bot costruiti e testati: trend following, multi-timeframe, mean reversion, reinforcement learning. Monitoraggio con riconnessione automatica e un parser LLM che legge i segnali da Telegram.</p>
+                        <div class="act"><span class="st st-res" data-i18n="st.res">Ricerca</span></div>
+                    </div>
+                </div>
+                <div class="wrap"><a class="next mono" href="#lead" data-i18n="next5">Prossimo: Lead Pipeline →</a></div>
+            </section>
+
+            <!-- 06 Lead Pipeline -->
+            <section class="show light rev" id="lead">
+                <div class="wrap show-grid">
+                    <figure class="media">
+                        <div class="huge-fig">
+                            <span class="huge-n" data-i18n="n.g.n">2.800+</span>
+                            <span class="huge-t" data-i18n="n.g.t">attività locali trovate e qualificate da fonti pubbliche</span>
+                        </div>
+                    </figure>
+                    <div class="copy rv">
+                        <p class="idx mono">07<span>/09</span></p>
+                        <p class="over mono" data-i18n="p4.over">Automazione commerciale</p>
+                        <h3>Lead Pipeline</h3>
+                        <p class="prob" data-i18n="p4.prob">Trovare a mano le attività locali che hanno bisogno di un sito richiede ore di ricerca.</p>
+                        <p data-i18n="p4.what">Cerca da fonti pubbliche attività locali (parrucchieri, palestre) senza sito o con un sito vecchio, le qualifica e prepara una bozza del sito e del messaggio di contatto. Oltre 2.800 attività nel database. Il messaggio lo rivedo e lo mando io.</p>
+                        <div class="act"><span class="st st-int" data-i18n="st.int">Interno</span></div>
+                    </div>
+                </div>
+                <div class="wrap"><a class="next mono" href="#gympage" data-i18n="next6">Prossimo: GymPage e Secondo cervello su Obsidian →</a></div>
+            </section>
+
+            <!-- 07-08 GymPage e Secondo cervello, affiancati -->
+            <section class="duo light" id="gympage">
+                <div class="wrap duo-grid">
+                    <article class="duo-item">
+                    <figure class="media">
+                        <div class="card3d tilt"><div class="frame scroller"><div class="scroll-track"><img src="img/gp-full.jpg" width="1200" height="3583" loading="lazy" data-i18n-alt="alt.gp" alt="Pagina iniziale di GymPage"></div><span class="scroll-hint mono" aria-hidden="true" data-i18n="hint">passa sopra per scorrere</span><span class="glare" aria-hidden="true"></span></div></div>
+                    </figure>
+                    <div class="copy rv">
+                        <p class="idx mono">08<span>/09</span></p>
+                        <p class="over mono" data-i18n="p7.over">Palestre e personal trainer</p>
+                        <h3>GymPage</h3>
+                        <p class="prob" data-i18n="p7.prob">Una palestra ha bisogno di un sito chiaro, senza dover seguire un progetto web.</p>
+                        <p data-i18n="p7.what">Siti pronti con servizi, orari, prezzi e contatti.</p>
+                        <div class="act"><span class="st st-live" data-i18n="st.live">Online</span><a class="more" href="gympage/">Vetrina del progetto →</a></div>
+                    </div>
+                </article>
+                    <article class="duo-item" id="obsidian">
+                    <figure class="media">
+                        <div class="card3d tilt"><div class="frame graph" id="graph"><svg class="graph-svg" viewBox="0 0 480 300" aria-hidden="true"><g class="g-edges"><line x1="240" y1="150" x2="140" y2="95" data-a="2" data-b="0"/><line x1="240" y1="150" x2="330" y2="70" data-a="2" data-b="1"/><line x1="240" y1="150" x2="110" y2="215" data-a="2" data-b="3"/><line x1="240" y1="150" x2="385" y2="185" data-a="2" data-b="4"/><line x1="240" y1="150" x2="265" y2="240" data-a="2" data-b="5"/><line x1="240" y1="150" x2="58" y2="120" data-a="2" data-b="6"/><line x1="140" y1="95" x2="58" y2="120" data-a="0" data-b="6"/><line x1="140" y1="95" x2="330" y2="70" data-a="0" data-b="1"/><line x1="330" y1="70" x2="385" y2="185" data-a="1" data-b="4"/><line x1="110" y1="215" x2="265" y2="240" data-a="3" data-b="5"/><line x1="385" y1="185" x2="265" y2="240" data-a="4" data-b="5"/><line x1="140" y1="95" x2="200" y2="58" data-a="0" data-b="7"/><line x1="330" y1="70" x2="262" y2="42" data-a="1" data-b="8"/><line x1="330" y1="70" x2="412" y2="108" data-a="1" data-b="9"/><line x1="385" y1="185" x2="412" y2="108" data-a="4" data-b="9"/><line x1="385" y1="185" x2="440" y2="242" data-a="4" data-b="10"/><line x1="265" y1="240" x2="332" y2="268" data-a="5" data-b="11"/><line x1="265" y1="240" x2="170" y2="272" data-a="5" data-b="12"/><line x1="110" y1="215" x2="170" y2="272" data-a="3" data-b="12"/><line x1="110" y1="215" x2="42" y2="258" data-a="3" data-b="13"/><line x1="58" y1="120" x2="30" y2="58" data-a="6" data-b="14"/><line x1="58" y1="120" x2="96" y2="38" data-a="6" data-b="15"/><line x1="140" y1="95" x2="96" y2="38" data-a="0" data-b="15"/><line x1="240" y1="150" x2="196" y2="205" data-a="2" data-b="16"/><line x1="330" y1="70" x2="300" y2="112" data-a="1" data-b="17"/><line x1="385" y1="185" x2="362" y2="132" data-a="4" data-b="18"/><line x1="140" y1="95" x2="182" y2="128" data-a="0" data-b="19"/><line x1="240" y1="150" x2="182" y2="128" data-a="2" data-b="19"/><line x1="265" y1="240" x2="196" y2="205" data-a="5" data-b="16"/><line x1="110" y1="215" x2="58" y2="120" data-a="3" data-b="6"/><line x1="200" y1="58" x2="262" y2="42" data-a="7" data-b="8"/><line x1="440" y1="242" x2="332" y2="268" data-a="10" data-b="11"/></g><g class="g-nodes"><circle class="big b0" cx="140" cy="95" r="7" data-i="0"/><circle class="big b1" cx="330" cy="70" r="7" data-i="1"/><circle class="big b2" cx="240" cy="150" r="7" data-i="2"/><circle class="big b0" cx="110" cy="215" r="7" data-i="3"/><circle class="big b1" cx="385" cy="185" r="7" data-i="4"/><circle class="big b2" cx="265" cy="240" r="7" data-i="5"/><circle class="big b0" cx="58" cy="120" r="7" data-i="6"/><circle class="small" cx="200" cy="58" r="3.2" data-i="7"/><circle class="small" cx="262" cy="42" r="3.2" data-i="8"/><circle class="small" cx="412" cy="108" r="3.2" data-i="9"/><circle class="small" cx="440" cy="242" r="3.2" data-i="10"/><circle class="small" cx="332" cy="268" r="3.2" data-i="11"/><circle class="small" cx="170" cy="272" r="3.2" data-i="12"/><circle class="small" cx="42" cy="258" r="3.2" data-i="13"/><circle class="small" cx="30" cy="58" r="3.2" data-i="14"/><circle class="small" cx="96" cy="38" r="3.2" data-i="15"/><circle class="small" cx="196" cy="205" r="3.2" data-i="16"/><circle class="small" cx="300" cy="112" r="3.2" data-i="17"/><circle class="small" cx="362" cy="132" r="3.2" data-i="18"/><circle class="small" cx="182" cy="128" r="3.2" data-i="19"/><text x="140" y="115" data-n="0" data-i18n="g.proj">Progetti</text><text x="330" y="90" data-n="1" data-i18n="g.cli">Clienti</text><text x="240" y="170" data-n="2" data-i18n="g.dec">Decisioni</text><text x="110" y="235" data-n="3" data-i18n="g.meet">Riunioni</text><text x="385" y="205" data-n="4" data-i18n="g.res">Ricerca</text><text x="265" y="260" data-n="5" data-i18n="g.agents">Agenti</text><text x="58" y="140" data-n="6" data-i18n="g.proc">Processi</text></g></svg><span class="graph-note mono" data-i18n="g.note">illustrativo</span><span class="glare" aria-hidden="true"></span></div></div>
+                    </figure>
+                    <div class="copy rv">
+                        <p class="idx mono">09<span>/09</span></p>
+                        <p class="over mono" data-i18n="p9.over">Il mio studio · Obsidian</p>
+                        <h3 data-i18n="p9.title">Secondo cervello su Obsidian</h3>
+                        <p class="prob" data-i18n="p9.prob">Un vault Obsidian che tiene insieme progetti, clienti, decisioni, riunioni e ricerca, collegati tra loro, con mappe visuali dello studio e del trading lab.</p>
+                        <p data-i18n="p9.what">È la memoria da cui lavorano gli agenti. Con questo sistema ho scelto le offerte di lavoro a cui candidarmi.</p>
+                        <div class="act"><span class="st st-use" data-i18n="st.use">In uso</span></div>
+                    </div>
+                </article>
+                </div>
+            </section>
+
+            <!-- Altri progetti -->
+            <section class="others light" aria-labelledby="others-title">
+                <div class="wrap">
+                    <div class="others-head rv">
+                        <h3 id="others-title" data-i18n="others.title">Altri progetti</h3>
+                        <p class="mono cmd" data-i18n="others.cmd">$ ls ~/progetti</p>
+                    </div>
+                    <ul class="others-list rv">
+                        <li><div class="o-top"><b>Job Scanner</b><span class="st st-int" data-i18n="st.int">Interno</span></div><p data-i18n="o1">Raccoglie offerte da API pubbliche di annunci e le ordina rispetto a un profilo. Provato anche su profili non tecnici.</p></li>
+                        <li><div class="o-top"><b>Network Manager</b><span class="st st-int" data-i18n="st.int">Interno</span></div><p data-i18n="o2">App desktop per Windows che trova i dispositivi in rete e aiuta a gestire subnet e indirizzi IP.</p></li>
+                        <li><div class="o-top"><b data-i18n="o3.name">Hub dei progetti</b><span class="st st-int" data-i18n="st.int">Interno</span></div><p data-i18n="o3">Un'app che raccoglie e avvia tutti i miei progetti da un'unica finestra.</p></li>
+                    </ul>
+                </div>
+            </section>
+        </div>
+
+        <!-- App su misura per settore -->
+        <section class="sectors dark" id="settori" aria-labelledby="sectors-title">
+            <div class="wrap">
+                <div class="sectors-head rv">
+                    <p class="mono cmd" data-i18n="sec.cmd">$ ls ~/demo</p>
+                    <h2 id="sectors-title" data-i18n="sec.title">App su misura per settore</h2>
+                    <p class="lead" data-i18n="sec.sub">Gestionali per mestieri pieni di carte, scadenze e telefonate, che non hanno un software fatto per loro. Tre demo da provare, con un'azienda e dati inventati.</p>
+                </div>
+                <ul class="sector-list">
+                    <li class="sector rv">
+                        <p class="over mono" data-i18n="sa.over">Bonifica amianto e coperture</p>
+                        <h3 data-i18n="sa.title">Cantieri amianto</h3>
+                        <p class="prob" data-i18n="sa.prob">Piano di lavoro da presentare 30 giorni prima, formulari e pesate da abbinare, corsi e visite degli operai da seguire. Oggi è tutto sparso tra fogli e cartelle.</p>
+                        <ul class="feats">
+                            <li data-i18n="sa.f1">Sopralluogo con foto e misure, preventivo dal computo</li>
+                            <li data-i18n="sa.f2">Piano di lavoro pronto per GeMA, con il conto alla rovescia</li>
+                            <li data-i18n="sa.f3">Scadenze di formazione e idoneità degli operai</li>
+                            <li data-i18n="sa.f4">Formulari rifiuti abbinati e bozza della relazione annuale</li>
+                        </ul>
+                        <div class="act"><span class="st st-demo">Demo</span><a class="more" href="demo/amianto/" data-i18n="sec.try">Prova la demo →</a></div>
+                    </li>
+                    <li class="sector rv">
+                        <p class="over mono" data-i18n="sd.over">Domotica e sicurezza per ville</p>
+                        <h3 data-i18n="sd.title">Impianti e assistenza</h3>
+                        <p class="prob" data-i18n="sd.prob">Preventivi stanza per stanza con listini di marche diverse. Indirizzi, schemi e credenziali dell'impianto spesso restano nel portatile del tecnico.</p>
+                        <ul class="feats">
+                            <li data-i18n="sd.f1">Preventivo per stanze, con il margine sempre visibile</li>
+                            <li data-i18n="sd.f2">Elenco materiali e magazzino</li>
+                            <li data-i18n="sd.f3">Fascicolo impianto da consegnare al cliente</li>
+                            <li data-i18n="sd.f4">Contratti di assistenza, ticket e rapportino firmato sul telefono</li>
+                        </ul>
+                        <div class="act"><span class="st st-demo">Demo</span><a class="more" href="demo/domotica/" data-i18n="sec.try">Prova la demo →</a></div>
+                    </li>
+                    <li class="sector rv">
+                        <p class="over mono" data-i18n="sn.over">Cantieri nautici e rimessaggi</p>
+                        <h3 data-i18n="sn.title">Rimessaggio e lavori</h3>
+                        <p class="prob" data-i18n="sn.prob">Vari, alaggi e posti barca si organizzano al telefono e su WhatsApp. A fine stagione si ricostruiscono a mano lavori, contratti e rate da incassare.</p>
+                        <ul class="feats">
+                            <li data-i18n="sn.f1">Barche e posti tra capannone, piazzale e pontile</li>
+                            <li data-i18n="sn.f2">Calendario di vari e alaggi, con gru e scivolo</li>
+                            <li data-i18n="sn.f3">Lavori con preventivo da mandare all'armatore</li>
+                            <li data-i18n="sn.f4">Contratti stagionali, rate e magazzino ricambi</li>
+                        </ul>
+                        <div class="act"><span class="st st-demo">Demo</span><a class="more" href="demo/nautica/" data-i18n="sec.try">Prova la demo →</a></div>
+                    </li>
                 </ul>
-              </div>
-            </div></div>
-          </div>
-        </article>
-        <article class="card card--row card--open span-6">
-          <h3>Trova le attività locali senza sito</h3>
-          <p>Da fonti pubbliche, 2.800 attività in Brianza qualificate; per ognuna una bozza di sito e di messaggio.</p>
-          <div class="panel">
-            <div class="stage stage--fade-b"><div class="at-rise fit" style="--fit-max:560px;--ax:max(24px, 50% - 280px);--ay:48px;--ay-sm:16px">
-              <div class="ui ui-panel ui-pipe" data-ui="pipeline-board">
-                <div class="ui-pipe__head">
-                  <svg class="ui-icon ui-pipe__branch" viewBox="0 0 16 16" aria-hidden="true"><circle cx="4.5" cy="3.5" r="1.5"/><circle cx="4.5" cy="12.5" r="1.5"/><circle cx="11.5" cy="5" r="1.5"/><path d="M4.5 5v6M11.5 6.5c0 2.6-2.2 3.6-5.6 4.6"/></svg>
-                  <span class="ui-pipe__repo">lead-pipeline</span><i class="ui-pipe__slash">/</i><code class="ui-pipe__ref">brianza</code>
-                  <span class="ui-spacer"></span>
-                  <span class="ui-chip ui-chip--ink ui-chip--live ui-pipe__chip" data-pipe-chip data-done="Pronto">In corso</span>
+                <div class="sectors-method rv">
+                    <p class="mono label" data-i18n="sec.m.l">Il metodo</p>
+                    <p class="big" data-i18n="sec.m.t">Una base comune, personalizzata in pochi giorni, con la conferma umana sui dati letti dall'IA.</p>
+                    <p data-i18n="sec.m.p">È lo stesso approccio di <a href="#fatture">Controllo fatture e ordini</a>: circa 16.000 fatture gestite in una struttura ospedaliera, e la persona guarda solo le differenze.</p>
                 </div>
-                <ol class="ui-pipe__steps">
-                  <li class="ui-pipe__step is-done" data-step="cerca"><span class="ui-pipe__ico"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4.5 8.2 2.3 2.3 4.7-5"/></svg></span><span class="ui-pipe__name"><span class="ui-pipe__nm">Cerca</span></span><code class="ui-pipe__cmd">fonti pubbliche</code><span class="ui-pipe__time" data-time>2.812</span><span class="ui-pipe__bar"><i></i></span></li>
-                  <li class="ui-pipe__step is-done" data-step="filtra"><span class="ui-pipe__ico"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4.5 8.2 2.3 2.3 4.7-5"/></svg></span><span class="ui-pipe__name"><span class="ui-pipe__nm">Filtra</span></span><code class="ui-pipe__cmd">senza sito</code><span class="ui-pipe__time" data-time>271</span><span class="ui-pipe__bar"><i></i></span></li>
-                  <li class="ui-pipe__step is-run" data-step="bozza" style="--k:0.6"><span class="ui-pipe__ico"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4.5 8.2 2.3 2.3 4.7-5"/></svg></span><span class="ui-pipe__name"><span class="ui-pipe__nm">Bozza sito</span></span><code class="ui-pipe__cmd">template</code><span class="ui-pipe__time" data-time="271">164</span><span class="ui-pipe__bar"><i></i></span></li>
-                  <li class="ui-pipe__step" data-step="messaggio"><span class="ui-pipe__ico"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="m4.5 8.2 2.3 2.3 4.7-5"/></svg></span><span class="ui-pipe__name"><span class="ui-pipe__nm">Messaggio</span></span><code class="ui-pipe__cmd">attende il mio ok</code><span class="ui-pipe__time" data-time="271">In coda</span><span class="ui-pipe__bar"><i></i></span></li>
+                <div class="sectors-cta rv">
+                    <p data-i18n="sec.cta">Lavori in uno di questi settori, o in uno simile? Scrivimi: ti mostro la demo sui tuoi casi.</p>
+                    <a class="btn btn-solid mono" href="mailto:studiovacchini@gmail.com?subject=App%20su%20misura">studiovacchini@gmail.com</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Come lavoro -->
+        <section class="method light" id="metodo">
+            <div class="wrap">
+                <div class="narrow rv">
+                    <p class="mono cmd" data-i18n="ap.cmd">$ cat metodo.txt</p>
+                    <h2 data-i18n="ap.title">Come lavoro</h2>
+                </div>
+                <div class="steps" id="steps">
+                    <div class="track" aria-hidden="true"><span class="fill"></span></div>
+                    <ol>
+                        <li class="step"><span class="mono n">01</span><h3 data-i18n="s1.t">Guardo</h3><p data-i18n="s1.p">Mi faccio mostrare il lavoro da chi lo fa ogni giorno, non solo da chi lo descrive.</p></li>
+                        <li class="step"><span class="mono n">02</span><h3 data-i18n="s2.t">Costruisco</h3><p data-i18n="s2.p">Una prima versione da provare su dati veri, poi la rifinisco con chi la usa.</p></li>
+                        <li class="step"><span class="mono n">03</span><h3 data-i18n="s3.t">Collaudo</h3><p data-i18n="s3.p">Prima di metterla in uso la provo sui casi veri, compresi quelli scomodi.</p></li>
+                        <li class="step"><span class="mono n">04</span><h3 data-i18n="s4.t">Resto</h3><p data-i18n="s4.p">Dopo la consegna sono ancora io la persona da chiamare quando qualcosa cambia.</p></li>
+                    </ol>
+                </div>
+                <div class="ai-note rv">
+                    <h3 data-i18n="ai.title">Come uso l'IA</h3>
+                    <p data-i18n="ai.text">Non scrivo codice a mano. Costruisco guidando Claude Code e Gemini: scelgo il problema, descrivo cosa serve, leggo i risultati e collaudo. Rispondo io di quello che va in uso. Nei sistemi che costruisco l'IA prepara, una persona approva.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Percorso -->
+        <section class="path light" id="percorso">
+            <div class="wrap path-grid">
+                <div class="path-intro rv">
+                    <h2 data-i18n="bg.title">Percorso</h2>
+                    <p class="lead" data-i18n="bg.intro">Vengo dall'IT: sei anni a far funzionare reti, server e Microsoft 365 per persone che hanno altro da fare. Da lì ho imparato a guardare un processo e a capire dove si perde tempo. Oggi uso l'IA per togliere quel tempo perso.</p>
+                </div>
+                <ol class="timeline rv">
+                    <li><span class="mono when" data-i18n="t1.when">Da dic 2025</span><p data-i18n="t1"><b>Studio Vacchini</b> · freelance. Automazioni con IA, strumenti su misura e siti per piccole attività.</p></li>
+                    <li><span class="mono when" data-i18n="t2.when">Oggi</span><p data-i18n="t2">Infrastruttura IT per catene di ristorazione in tutta Italia.</p></li>
+                    <li><span class="mono when" data-i18n="t3.when">Prima</span><p data-i18n="t3">Fibra FTTH. Microsoft 365 e formazione degli utenti. SQL e help desk.</p></li>
                 </ol>
-              </div>
-            </div></div>
-          </div>
-        </article>
-      </div>
-    </div>
-  </section>
+            </div>
+        </section>
 
-  <section class="section" id="principio" aria-labelledby="principio-h">
-    <div class="wrap">
-      <div data-moment="liquid-type" class="section-head" style="max-width:none">
-        <h2 id="principio-h" class="mo-lt__type">L'IA prepara il lavoro, una persona lo approva</h2>
-        <p>È la regola di ogni sistema che costruisco. Uso Claude Code per scrivere più in fretta; architettura, collaudo e rilascio restano miei.</p>
-      </div>
-      <div class="grid">
-        <div class="span-4 stack-2"><p class="t-card">Controllo fatture</p><p>Le fatture uguali all'ordine passano da sole; le differenze le guarda chi liquida.</p></div>
-        <div class="span-4 stack-2"><p class="t-card">RispostaFacile</p><p>Ogni bozza resta ferma finché il commercialista non la invia.</p></div>
-        <div class="span-4 stack-2"><p class="t-card">Staff di agenti</p><p>Preventivi, messaggi e spese escono solo con il mio sì.</p></div>
-      </div>
-    </div>
-  </section>
+        <!-- Contatti -->
+        <section class="contact" id="contatti">
+            <div class="wrap contact-inner rv">
+                <p class="mono contact-cmd">$ contact --andrea</p>
+                <h2 data-i18n="c.title">Hai un processo che mangia ore ogni settimana?</h2>
+                <p class="contact-text" data-i18n="c.text">Se cerchi qualcuno che porti l'IA nei processi della tua azienda, o hai un'attività con un lavoro ripetitivo da togliere, scrivimi o chiamami.</p>
+                <div class="contact-links">
+                    <a class="cl cl-main mono" href="mailto:vacchiniandrea2001@gmail.com">vacchiniandrea2001@gmail.com</a>
+                    <a class="cl mono" href="tel:+393312510052">+39 331 251 0052</a>
+                    <a class="cl" href="https://wa.me/393312510052" target="_blank" rel="noopener" data-i18n="c.wa">Scrivimi su WhatsApp</a>
+                    <a class="cl" href="https://www.linkedin.com/in/andrea-vacchini-it" target="_blank" rel="noopener">LinkedIn ↗</a>
+                </div>
+            </div>
+        </section>
+    </main>
 
-  <section class="section ground-inverse" id="orbita" aria-labelledby="orbita-h">
-    <div class="wrap">
-      <div class="section-head">
-        <h2 id="orbita-h">Orbita, la mia app per liberare spazio. <span class="muted">Su Microsoft Store, Android in test.</span></h2>
-      </div>
-      <div class="grid grid--top fill">
-        <div class="span-5 stack-4">
-          <ul class="rows">
-            <li><span class="rows__name">Windows</span><p>Electron: legge oltre un milione di file in circa 25 secondi.</p></li>
-            <li><span class="rows__name">Android</span><p>React Native con un modulo Kotlin che trova le foto doppie.</p></li>
-            <li><span class="rows__name">Vendita</span><p>Stripe e Google Play, licenze firmate, sei lingue.</p></li>
-          </ul>
-          <p><a class="link" href="orbita/">Apri il sito di Orbita</a></p>
+    <footer class="footer">
+        <div class="wrap footer-inner">
+            <span data-i18n="f.left">© 2026 Andrea Vacchini · Studio Vacchini · Milano</span>
+            <span class="mono" data-i18n="f.right">Sito costruito guidando Claude Code.</span>
         </div>
-        <div class="frame frame--photo span-6 start-7">
-          <img class="frame__img" src="img/orbita-dark-it.jpg" alt="Orbita su Windows: l'anello del disco, le categorie e 40,2 GB da liberare" loading="lazy" data-source="client" data-subject="Orbita">
-        </div>
-      </div>
-    </div>
-  </section>
+    </footer>
 
-  <section class="section" id="lavori" aria-labelledby="lavori-h">
-    <div class="wrap">
-      <div class="section-head">
-        <h2 id="lavori-h">Altri lavori da provare. <span class="muted">Demo, siti e prototipi.</span></h2>
-      </div>
-      <div class="grid">
-        <a class="card card--open span-4" href="demo/amianto/">
-          <div class="panel"><img class="frame__img" src="img/demo.jpg" alt="Il cruscotto della demo per cantieri amianto" loading="lazy"></div>
-          <h3>Gestionali per tre mestieri</h3>
-          <p>Cantieri amianto, impianti e rimessaggio barche, con dati inventati.</p>
-        </a>
-        <a class="card card--open span-4" href="gympage/">
-          <div class="panel"><img class="frame__img" src="img/gp.jpg" alt="La pagina iniziale di GymPage" loading="lazy"></div>
-          <h3>Siti pronti per le palestre</h3>
-          <p>GymPage: servizi, orari e prezzi online in un giorno.</p>
-        </a>
-        <a class="card card--open span-4" href="kit-lancio/">
-          <div class="panel"><img class="frame__img" src="img/kit.jpg" alt="Il kit di lancio per un libro" loading="lazy"></div>
-          <h3>Lancia un libro con cinque agenti</h3>
-          <p>Dalla scheda del libro a otto materiali di campagna.</p>
-        </a>
-      </div>
-      <div data-moment="marquee-row" data-moment-opts='{"speed": 32}' style="margin-top: var(--s-8)">
-        <ul class="mo-mq__track"><li>Python</li><li>FastAPI</li><li>API di Claude</li><li>Electron</li><li>React Native</li><li>Kotlin</li><li>Supabase</li><li>Stripe</li><li>SQL Server</li><li>Microsoft 365</li><li>Git</li></ul>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="percorso" aria-labelledby="percorso-h">
-    <div class="wrap">
-      <div class="section-head">
-        <h2 id="percorso-h">Sei anni di IT, poi l'IA in produzione</h2>
-        <p>Dalle reti e dall'help desk ho imparato a vedere dove un processo perde tempo.</p>
-      </div>
-      <div class="grid grid--top fill">
-      <ul class="rows span-6">
-          <li><span class="rows__name">AI Automation Specialist, Studio Vacchini</span><p>Strumenti con l'IA su misura, siti e automazioni, da freelance.</p><span class="rows__value">02/2025, oggi</span></li>
-          <li><span class="rows__name">IT Infrastructure Specialist, Mytec</span><p>Reti e dispositivi per catene di ristorazione in tutta Italia.</p><span class="rows__value">11/2024, oggi</span></li>
-          <li><span class="rows__name">Tecnico fibra ottica, CF Impianti</span><p>Reti FTTH per Open Fiber e FiberCop.</p><span class="rows__value">10/2023, 10/2024</span></li>
-          <li><span class="rows__name">Consulente digitalizzazione, Synsphere</span><p>Microsoft 365 e formazione degli utenti.</p><span class="rows__value">05/2023, 10/2023</span></li>
-          <li><span class="rows__name">SQL e help desk, 4Service Solution</span><p>Query SQL Server, server e supporto.</p><span class="rows__value">10/2020, 04/2023</span></li>
-          <li><span class="rows__name">Perito in informatica e telecomunicazioni</span><p>ITIS Lagrange, Milano.</p><span class="rows__value">2020</span></li>
-        </ul>
-        <div class="frame frame--photo span-6 start-7">
-          <img class="frame__img" src="img/cv.jpg" alt="La prima pagina del CV di Andrea Vacchini" loading="lazy" data-source="client" data-subject="il CV">
-        </div>
-      </div>
-    </div>
-  </section>
-</main>
-
-<footer class="footer closing footer--statement g2m" id="contact" aria-labelledby="close-h">
-  <div class="wrap">
-    <div class="closing__cta close--word">
-      <div class="section-head--split">
-        <div><h2 id="close-h">Il mio CV in una pagina</h2><p class="t-lead">Cerco un ruolo da AI Automation Engineer, in Italia o all'estero, con un mese di preavviso.</p></div>
-        <a class="btn btn--primary" href="cv/CV-Andrea-Vacchini-IT.pdf" download>Scarica il CV<svg class="m-arrow" viewBox="0 0 12 12" aria-hidden="true"><path class="m-arrow__stem" d="M1 6h8"/><path class="m-arrow__head" d="M4.5 2.5 8 6l-3.5 3.5"/></svg></a>
-      </div>
-      <p class="close__word" aria-hidden="true">Vacchini</p>
-    </div>
-    <div class="closing__links">
-      <div class="grid">
-        <div class="span-6 stack-4">
-          <a class="nav__logo" href="#top"><span class="mark" data-mark="ring" aria-hidden="true"></span>Andrea Vacchini</a>
-          <p class="footer__lede">Strumenti con l'IA per aziende, da Milano.</p>
-        </div>
-        <div class="span-2 footer__col"><h3>Progetti</h3><ul><li><a href="#progetti">In uso</a></li><li><a href="#orbita">Orbita</a></li><li><a href="#lavori">Demo</a></li></ul></div>
-        <div class="span-2 footer__col"><h3>Profilo</h3><ul><li><a href="#principio">Metodo</a></li><li><a href="#percorso">Percorso</a></li><li><a href="cv/CV-Andrea-Vacchini-EN.pdf" download>CV in inglese</a></li></ul></div>
-        <div class="span-2 footer__col"><h3>Contatti</h3><ul><li><a href="mailto:vacchiniandrea2001@gmail.com">Email</a></li><li><a href="https://wa.me/393312510052">WhatsApp</a></li><li><a href="https://www.linkedin.com/in/andrea-vacchini-it">LinkedIn</a></li></ul></div>
-      </div>
-      <div class="footer__legal">
-        <span>&copy; 2026 Andrea Vacchini, Milano</span>
-        <div class="socials"></div>
-      </div>
-    </div>
-  </div>
-</footer>
-
-<nav class="actionbar" aria-label="Azioni rapide">
-  <a class="btn btn--primary" href="cv/CV-Andrea-Vacchini-IT.pdf" download>Scarica il CV</a>
-</nav>
-
-<script type="module" src="assets/system.js"></script>
-<script type="module" src="assets/motion/motion.js"></script>
-<script type="module" src="assets/layout/layout.js"></script>
+    <script src="script.js"></script>
+<script data-goatcounter="https://andreavacchini.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
