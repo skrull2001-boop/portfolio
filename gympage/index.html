@@ -12,20 +12,19 @@
   body { background:var(--bg); color:var(--text); font:16px/1.6 "Segoe UI", system-ui, sans-serif; }
   .wrap { max-width:1080px; margin:0 auto; padding:0 20px; }
   header { padding:22px 0; } header a { color:var(--soft); text-decoration:none; font-size:14px; }
-  .hero { display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:center; padding:30px 0 60px; }
+  .hero { max-width:720px; padding:30px 0 34px; }
   .kicker { font:600 12px/1 ui-monospace, monospace; letter-spacing:2px; text-transform:uppercase; color:var(--cy); }
   h1 { font-size:46px; line-height:1.1; margin:12px 0 16px; }
   p { color:var(--soft); margin-bottom:14px; }
   .pill { display:inline-block; border:1px solid var(--line); border-radius:99px; padding:4px 12px; font:12px ui-monospace, monospace; color:var(--soft); margin:4px 6px 0 0; }
-  .shot { border:1px solid var(--line); border-radius:16px; overflow:hidden; height:520px; background:var(--card); box-shadow:0 20px 60px rgba(0,0,0,.4); }
-  .shot img { width:100%; display:block; transition:transform 6s ease; }
-  .shot:hover img { transform:translateY(calc(-100% + 520px)); }
+  .shot { border:1px solid var(--line); border-radius:14px; overflow:hidden; background:var(--card); margin-bottom:40px; }
+  .shot img { width:100%; height:auto; display:block; }
   .grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; padding-bottom:60px; }
   .box { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:20px; }
   .box h3 { font-size:16px; margin-bottom:6px; } .box p { font-size:14px; margin:0; }
   footer { border-top:1px solid var(--line); padding:24px 0 40px; font-size:14px; color:var(--soft); }
   footer a { color:var(--cy); }
-  @media (max-width:800px) { .hero, .grid { grid-template-columns:1fr; } h1 { font-size:34px; } .shot { height:380px; } .shot:hover img { transform:none; } }
+  @media (max-width:800px) { .grid { grid-template-columns:1fr; } h1 { font-size:34px; } }
 </style>
 </head>
 <body>
@@ -39,8 +38,8 @@
       <p>Pagine veloci (punteggio Lighthouse 100/100), pensate per il telefono, con dominio, hosting e pagamenti gestiti.</p>
       <span class="pill">HTML · CSS · JavaScript</span><span class="pill">Template</span><span class="pill">Lighthouse 100/100</span>
     </div>
-    <div class="shot"><img src="../img/gp-full.jpg" width="1200" height="3583" alt="Pagina iniziale di GymPage"></div>
   </section>
+  <div class="shot"><img src="../img/gp.jpg" width="1200" height="750" alt="Pagina iniziale di GymPage"></div>
   <section class="grid">
     <div class="box"><h3>Il problema</h3><p>Molti personal trainer e piccole palestre non hanno un sito, o ne hanno uno vecchio e lento.</p></div>
     <div class="box"><h3>La soluzione</h3><p>Un modello pronto: si cambiano testi, foto e prezzi, e il sito è online in un giorno.</p></div>
