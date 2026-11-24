@@ -22,20 +22,28 @@ export default function DiskPanel({ t }: { t: Content["disk"] }) {
       return;
     }
 
-    // Rises out of the desk and turns toward the reader.
-    animate(stage, {
-      rotateX: [62, REST.rotateX],
-      rotateY: [-4, REST.rotateY],
-      rotateZ: [-9, 0],
-      translateY: [140, 0],
-      opacity: [0, 1],
-      duration: 1600,
-      ease,
-    });
+    // Rises out of the desk and turns toward the reader, once it is in view.
+    const io = new IntersectionObserver(
+      ([e]) => {
+        if (!e.isIntersecting) return;
+        io.disconnect();
+        animate(stage, {
+          rotateX: [62, REST.rotateX],
+          rotateY: [-4, REST.rotateY],
+          rotateZ: [-9, 0],
+          translateY: [140, 0],
+          opacity: [0, 1],
+          duration: 1600,
+          ease,
+        });
+      },
+      { rootMargin: "0px 0px -15% 0px" }
+    );
+    io.observe(stage);
 
     // Follows the pointer a few degrees, like picking the panel up.
-    const hero = stage.closest("section");
-    if (!hero) return;
+    const hero = stage.closest("article") ?? stage.closest("section");
+    if (!hero) return () => io.disconnect();
     const onMove = (e: PointerEvent) => {
       const r = hero.getBoundingClientRect();
       const x = (e.clientX - r.left) / r.width - 0.5;
@@ -53,6 +61,7 @@ export default function DiskPanel({ t }: { t: Content["disk"] }) {
     return () => {
       hero.removeEventListener("pointermove", onMove);
       hero.removeEventListener("pointerleave", onLeave);
+      io.disconnect();
     };
   }, []);
 
@@ -64,7 +73,7 @@ export default function DiskPanel({ t }: { t: Content["disk"] }) {
   return (
     <figure className="[perspective:1400px]">
       <div
-        className="rounded-[18px] border hairline bg-card opacity-0 shadow-[0_40px_80px_-30px_rgb(0_0_0/0.7)] [transform-style:preserve-3d]"
+        className="rounded-[18px] border hairline bg-card opacity-0 shadow-[0_40px_80px_-30px_rgb(0_0_0/0.8),0_0_0_1px_rgb(34_227_255/0.06)] [transform-style:preserve-3d]"
         ref={stageRef}
       >
         <div className="flex h-10 items-center justify-between border-b hairline px-4 text-[13px] text-ink-2">
@@ -89,7 +98,7 @@ export default function DiskPanel({ t }: { t: Content["disk"] }) {
           <ul className="space-y-2 [transform:translateZ(24px)]">
             {data.map((d) => (
               <li className="flex items-center gap-3 rounded-[10px] bg-raised px-3 py-3" key={d.label}>
-                <span className="grid size-5 shrink-0 place-items-center rounded-[5px] bg-amber text-amber-ink">
+                <span className="grid size-5 shrink-0 place-items-center rounded-[5px] bg-accent text-accent-ink">
                   <Check size={14} strokeWidth={2} />
                 </span>
                 <span className="flex-1 text-sm">{d.label}</span>

@@ -2,6 +2,8 @@ import { useEffect, useState, type ReactNode } from "react";
 import { ArrowUpRight, Download, Mail, MessageCircle, Phone, RotateCw } from "lucide-react";
 import { content, contact, type Lang, type Project } from "@/content";
 import DiskPanel from "@/components/DiskPanel";
+import OrbitRing from "@/components/OrbitRing";
+import DotField from "@/components/kokonutui/dot-field";
 import { DealIn, Reveal, TurnIn, useInView } from "@/components/Anim";
 import SplitFlapText from "@/components/kokonutui/split-flap-text";
 import CardFlip from "@/components/kokonutui/card-flip";
@@ -19,6 +21,8 @@ function initialLang(): Lang {
 
 const btnPrimary =
   "inline-flex h-12 items-center gap-2 rounded-[10px] bg-ink px-5 text-[15px] font-medium text-deep shadow-[inset_0_1px_0_rgb(255_255_255/0.5)] transition-[background-color,transform] duration-150 ease-out-soft hover:bg-white active:scale-[0.98]";
+const btnAccent =
+  "inline-flex h-12 items-center gap-2 rounded-[10px] bg-accent px-5 text-[15px] font-medium text-accent-ink transition-[background-color,transform] duration-150 ease-out-soft hover:bg-[#6ff0ff] active:scale-[0.98]";
 const btnSecondary =
   "inline-flex h-12 items-center gap-2 rounded-[10px] border hairline bg-raised px-5 text-[15px] font-medium text-ink shadow-[inset_0_1px_0_rgb(255_255_255/0.06)] transition-[background-color,transform] duration-150 ease-out-soft hover:bg-[#2e2b27] active:scale-[0.98]";
 
@@ -107,7 +111,7 @@ function ProjectCard({ p, flip, problem, built }: { p: Project; flip: string; pr
       {p.note && <p className="mt-4 text-xs leading-4 text-ink-3">{p.note}</p>}
       {p.link && (
         <a
-          className="mt-auto inline-flex items-center gap-1.5 self-start text-sm font-medium text-amber hover:underline"
+          className="mt-auto inline-flex items-center gap-1.5 self-start text-sm font-medium text-accent hover:underline"
           href={p.link.href}
           onPointerDown={stop}
         >
@@ -177,42 +181,40 @@ export default function App() {
       </header>
 
       <main id="top">
-        {/* Hero */}
-        <section className="mx-auto grid min-h-[calc(100svh-64px)] max-w-[1200px] items-center gap-16 px-6 py-16 lg:grid-cols-[1fr_1.05fr]">
-          <Reveal>
-            <p className="font-mono text-xs text-ink-3">{t.hero.kicker}</p>
-            <h1 className="mt-6 text-[42px] font-medium leading-[1.05] tracking-[-0.03em] sm:text-[60px]">{t.hero.title}</h1>
-            <p className="mt-6 max-w-[36rem] text-lg leading-[30px] text-ink-2">{t.hero.sub}</p>
-            <div className="mt-10 flex flex-wrap gap-3">
-              <a className={btnPrimary} href="#progetti">{t.hero.primary}</a>
-              <a className={btnSecondary} download href={t.hero.cv}>
-                <Download size={18} strokeWidth={1.5} />
-                {t.hero.secondary}
-              </a>
+        {/* Hero: the things I built, on an orbit */}
+        <DotField className="min-h-[calc(100svh-64px)] bg-page text-[#1d2a44] dark:bg-page dark:text-[#1d2a44]" spacing={22}>
+          <div className="relative z-10 mx-auto w-full max-w-[1200px] px-6 pt-10 pb-10 text-ink">
+            <Reveal>
+              <p className="font-mono text-xs text-ink-3">
+                <span className="text-accent">●</span> {t.hero.kicker}
+              </p>
+              <h1 className="mt-5 max-w-[1100px] text-[42px] font-medium leading-[1.02] tracking-[-0.035em] sm:text-[64px]">
+                {t.hero.title} <span className="text-accent">{t.hero.titleAccent}</span>
+              </h1>
+              <div className="mt-6 flex flex-wrap items-center gap-x-10 gap-y-6">
+                <p className="max-w-[36rem] text-[17px] leading-7 text-ink-2">{t.hero.sub}</p>
+                <div className="flex flex-wrap gap-3">
+                  <a className={btnAccent} href="#progetti">{t.hero.primary}</a>
+                  <a className={btnSecondary} download href={t.hero.cv}>
+                    <Download size={18} strokeWidth={1.5} />
+                    {t.hero.secondary}
+                  </a>
+                </div>
+              </div>
+            </Reveal>
+            <div className="mt-2">
+              <OrbitRing items={t.orbit} />
+              <p className="mt-1 text-center font-mono text-[11px] text-ink-3">{t.hero.orbitHint}</p>
             </div>
-            <p className="mt-8 inline-flex items-center gap-2 text-sm text-ink-2">
-              <span className="size-1.5 rounded-full bg-ok" />
-              {t.hero.status}
-            </p>
-          </Reveal>
-          <DiskPanel t={t.disk} />
-        </section>
-
-        {/* Numbers on the split-flap board */}
-        <section className="border-y hairline bg-deep">
-          <div className="mx-auto grid max-w-[1200px] gap-x-8 px-6 sm:grid-cols-2 lg:grid-cols-4">
-            {t.stats.map((s) => (
-              <Stat key={s.label} label={s.label} value={s.value} />
-            ))}
           </div>
-        </section>
+        </DotField>
 
         {/* Projects */}
-        <section className="mx-auto max-w-[1200px] px-6 pt-32" id="progetti">
+        <section className="mx-auto max-w-[1200px] scroll-mt-16 px-6 pt-24" id="progetti">
           <SectionHead sub={t.projectsSub} title={t.projectsTitle} />
 
           {/* Orbita */}
-          <article className="grid items-center gap-12 border-t hairline py-16 lg:grid-cols-[1fr_1.2fr]">
+          <article id="orbita" className="scroll-mt-20 grid items-center gap-12 border-t hairline py-16 lg:grid-cols-[1fr_1.2fr]">
             <Reveal>
               <p className="font-mono text-xs text-ink-3">{t.orbita.sector}</p>
               <h3 className="mt-3 text-[40px] font-medium leading-none tracking-[-0.02em]">{t.orbita.title}</h3>
@@ -220,20 +222,16 @@ export default function App() {
               <p className="mt-4 text-[17px] leading-7 text-ink">{t.orbita.built}</p>
               <Facts items={t.orbita.facts} />
               <p className="mt-6 font-mono text-xs leading-5 text-ink-3">{t.orbita.stack}</p>
-              <a className="mt-8 inline-flex items-center gap-1.5 text-[15px] font-medium text-amber hover:underline" href="orbita/">
+              <a className="mt-8 inline-flex items-center gap-1.5 text-[15px] font-medium text-accent hover:underline" href="orbita/">
                 {t.orbita.link}
                 <ArrowUpRight size={16} strokeWidth={1.5} />
               </a>
             </Reveal>
-            <TurnIn from="right">
-              <div className="overflow-hidden rounded-[16px] border hairline bg-card shadow-[0_40px_80px_-40px_rgb(0_0_0/0.8)]">
-                <img alt="Orbita" className="block w-full" loading="lazy" src={t.orbita.image} />
-              </div>
-            </TurnIn>
+            <DiskPanel t={t.disk} />
           </article>
 
           {/* Invoice checker */}
-          <article className="grid items-center gap-12 border-t hairline py-16 lg:grid-cols-[1fr_1fr]">
+          <article id="fatture" className="scroll-mt-20 grid items-center gap-12 border-t hairline py-16 lg:grid-cols-[1fr_1fr]">
             <TurnIn className="order-2 flex justify-center lg:order-1" from="left">
               <div>
                 <ReceiptPrinter
@@ -271,11 +269,66 @@ export default function App() {
                 <ProjectCard built={t.built} flip={t.flipHint} p={p} problem={t.problem} />
               </div>
             ))}
+            <div className="opacity-0">
+              <CardFlip
+                back={
+                  <ul className="flex h-full flex-col gap-5 p-6">
+                    {t.others.map((o) => (
+                      <li key={o.title}>
+                        <p className="text-[15px] font-medium">{o.title}</p>
+                        <p className="mt-1 text-sm leading-5 text-ink-2">{o.text}</p>
+                      </li>
+                    ))}
+                  </ul>
+                }
+                className="aspect-[4/5] w-full"
+                faceClassName="border-[var(--line)] bg-card text-ink dark:border-[var(--line)] dark:bg-card dark:text-ink"
+                front={
+                  <div className="flex h-full flex-col">
+                    <div className="flex h-[46%] flex-col justify-end border-b hairline bg-deep p-5">
+                      <span className="font-mono text-[56px] font-medium leading-none text-ink tnum">3</span>
+                      <span className="mt-2 text-sm text-ink-3">{t.othersTitle.toLowerCase()}</span>
+                    </div>
+                    <div className="flex flex-1 flex-col p-5">
+                      <h3 className="text-[22px] font-medium leading-7">{t.othersTitle}</h3>
+                      <p className="mt-2 text-sm leading-5 text-ink-2">{t.others.map((o) => o.title).join(" · ")}</p>
+                      <span className="mt-auto inline-flex items-center gap-1.5 self-end pt-4 text-xs text-ink-3">
+                        <RotateCw size={14} strokeWidth={1.5} />
+                        {t.flipHint}
+                      </span>
+                    </div>
+                  </div>
+                }
+                label={t.othersTitle}
+              />
+            </div>
+            <div className="opacity-0">
+              <a
+                className="flex aspect-[4/5] w-full flex-col justify-between rounded-2xl border border-accent/30 bg-card p-6 transition-colors duration-150 hover:bg-raised"
+                href="#contatti"
+              >
+                <span className="font-mono text-xs text-accent">{t.nextLabel}</span>
+                <span className="font-display text-[30px] font-medium leading-[1.1] tracking-[-0.02em]">{t.nextTitle}</span>
+                <span className="inline-flex items-center gap-1.5 text-sm font-medium text-accent">
+                  {t.nav.write}
+                  <ArrowUpRight size={16} strokeWidth={1.5} />
+                </span>
+              </a>
+            </div>
           </DealIn>
         </section>
 
+        {/* Numbers on the split-flap board */}
+        <section className="mt-32 border-y hairline bg-deep">
+          <div className="mx-auto grid max-w-[1200px] gap-x-8 px-6 sm:grid-cols-2 lg:grid-cols-4">
+            {t.stats.map((s) => (
+              <Stat key={s.label} label={s.label} value={s.value} />
+            ))}
+          </div>
+        </section>
+
         {/* Trades and other tools */}
-        <section className="mx-auto max-w-[1200px] px-6 pt-32">
+        <section id="settori" className="scroll-mt-20 mx-auto max-w-[1200px] px-6 pt-32">
           <SectionHead sub={t.sectorsSub} title={t.sectorsTitle} />
           <div className="grid gap-4 md:grid-cols-3">
             {t.sectors.map((s, i) => (
@@ -283,7 +336,7 @@ export default function App() {
                 <a className="group flex h-full flex-col rounded-[14px] border hairline bg-card p-6 transition-colors duration-150 hover:bg-raised" href={s.href}>
                   <h3 className="text-lg font-medium">{s.title}</h3>
                   <p className="mt-2 text-sm leading-[22px] text-ink-2">{s.text}</p>
-                  <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-amber">
+                  <span className="mt-6 inline-flex items-center gap-1.5 text-sm font-medium text-accent">
                     {t.demo}
                     <ArrowUpRight size={16} strokeWidth={1.5} />
                   </span>
@@ -291,17 +344,6 @@ export default function App() {
               </Reveal>
             ))}
           </div>
-          <Reveal className="mt-16">
-            <h3 className="text-sm text-ink-3">{t.othersTitle}</h3>
-            <ul className="mt-4 divide-y divide-[var(--line)] border-y hairline">
-              {t.others.map((o) => (
-                <li className="grid gap-1 py-4 sm:grid-cols-[220px_1fr]" key={o.title}>
-                  <span className="text-[15px] font-medium">{o.title}</span>
-                  <span className="text-[15px] text-ink-2">{o.text}</span>
-                </li>
-              ))}
-            </ul>
-          </Reveal>
         </section>
 
         {/* Method */}
@@ -316,7 +358,7 @@ export default function App() {
               </div>
             ))}
           </DealIn>
-          <Reveal className="mt-12 max-w-3xl border-l-2 border-amber pl-6">
+          <Reveal className="mt-12 max-w-3xl border-l-2 border-accent pl-6">
             <h3 className="text-sm text-ink-3">{t.aiTitle}</h3>
             <p className="mt-2 text-xl leading-8">{t.ai}</p>
           </Reveal>

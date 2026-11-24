@@ -1,21 +1,23 @@
 @import "tailwindcss";
-@import "@fontsource-variable/instrument-sans";
-@import "@fontsource-variable/jetbrains-mono";
+@import "@fontsource-variable/space-grotesk";
+@import "@fontsource-variable/geist";
+@import "@fontsource-variable/geist-mono";
 
-/* Studio Vacchini portfolio: warm graphite ramp, one amber accent */
+/* Portfolio: night ink ramp, one cyan accent (the brand colour), Space Grotesk headlines */
 @theme {
-  --font-sans: "Instrument Sans Variable", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "JetBrains Mono Variable", ui-monospace, monospace;
+  --font-sans: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Space Grotesk Variable", "Geist Variable", sans-serif;
+  --font-mono: "Geist Mono Variable", ui-monospace, monospace;
 
-  --color-deep: #12110f;
-  --color-page: #161513;
-  --color-card: #1c1a18;
-  --color-raised: #262421;
-  --color-ink: #efe9de;
-  --color-ink-2: #aaa398;
-  --color-ink-3: #8a847a;
-  --color-amber: #f0a43a;
-  --color-amber-ink: #1f1406;
+  --color-deep: #05060a;
+  --color-page: #080a10;
+  --color-card: #0f121a;
+  --color-raised: #171b26;
+  --color-ink: #eef0f5;
+  --color-ink-2: #a3a9b8;
+  --color-ink-3: #7a8296;
+  --color-accent: #22e3ff;
+  --color-accent-ink: #03141a;
   --color-ok: #4cc38a;
   --color-bad: #e5484d;
 
@@ -23,18 +25,18 @@
 }
 
 :root {
-  --line: rgb(239 233 222 / 0.08);
-  --line-strong: rgb(239 233 222 / 0.14);
+  --line: rgb(238 240 245 / 0.08);
+  --line-strong: rgb(238 240 245 / 0.14);
   /* Bklit chart palette */
-  --chart-background: #1c1a18;
-  --chart-foreground: #efe9de;
-  --chart-foreground-muted: #8a847a;
-  --chart-label: #aaa398;
-  --chart-1: #f0a43a;
-  --chart-2: #5b564e;
-  --chart-3: #45413b;
-  --chart-4: #37342f;
-  --chart-5: #2b2926;
+  --chart-background: #0f121a;
+  --chart-foreground: #eef0f5;
+  --chart-foreground-muted: #7a8296;
+  --chart-label: #a3a9b8;
+  --chart-1: #22e3ff;
+  --chart-2: #3a4256;
+  --chart-3: #2c3344;
+  --chart-4: #232836;
+  --chart-5: #1a1e29;
   color-scheme: dark;
 }
 
@@ -48,14 +50,16 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-::selection { background: var(--color-amber); color: var(--color-amber-ink); }
+::selection { background: var(--color-accent); color: var(--color-accent-ink); }
 
 .hairline { border-color: var(--line); }
 .tnum { font-variant-numeric: tabular-nums; }
 
 a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
-  outline: 2px solid var(--color-amber);
+  outline: 2px solid var(--color-accent);
   outline-offset: 3px;
   border-radius: 6px;
 }
 @custom-variant dark (&:where(.dark, .dark *));
+
+h1, h2, h3 { font-family: var(--font-display); }
