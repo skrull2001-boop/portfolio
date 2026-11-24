@@ -1,0 +1,61 @@
+@import "tailwindcss";
+@import "@fontsource-variable/instrument-sans";
+@import "@fontsource-variable/jetbrains-mono";
+
+/* Studio Vacchini portfolio: warm graphite ramp, one amber accent */
+@theme {
+  --font-sans: "Instrument Sans Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono Variable", ui-monospace, monospace;
+
+  --color-deep: #12110f;
+  --color-page: #161513;
+  --color-card: #1c1a18;
+  --color-raised: #262421;
+  --color-ink: #efe9de;
+  --color-ink-2: #aaa398;
+  --color-ink-3: #8a847a;
+  --color-amber: #f0a43a;
+  --color-amber-ink: #1f1406;
+  --color-ok: #4cc38a;
+  --color-bad: #e5484d;
+
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+:root {
+  --line: rgb(239 233 222 / 0.08);
+  --line-strong: rgb(239 233 222 / 0.14);
+  /* Bklit chart palette */
+  --chart-background: #1c1a18;
+  --chart-foreground: #efe9de;
+  --chart-foreground-muted: #8a847a;
+  --chart-label: #aaa398;
+  --chart-1: #f0a43a;
+  --chart-2: #5b564e;
+  --chart-3: #45413b;
+  --chart-4: #37342f;
+  --chart-5: #2b2926;
+  color-scheme: dark;
+}
+
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+body {
+  background: var(--color-page);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection { background: var(--color-amber); color: var(--color-amber-ink); }
+
+.hairline { border-color: var(--line); }
+.tnum { font-variant-numeric: tabular-nums; }
+
+a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
+  outline: 2px solid var(--color-amber);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+@custom-variant dark (&:where(.dark, .dark *));
