@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RispostaFacile · Andrea Vacchini</title>
+<meta name="description" content="RispostaFacile: bozze di risposta alle email dei clienti per studi commercialisti, con l'IA. Progetto di Andrea Vacchini.">
+<link rel="icon" href="../favicon.svg">
+<style>
+  :root { --bg:#0b1020; --card:#111830; --line:#222b45; --text:#eef0f6; --soft:#c3c8d8; --cy:#22e3ff; --vi:#8b6bff; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { background:var(--bg); color:var(--text); font:16px/1.6 "Segoe UI", system-ui, sans-serif; }
+  .wrap { max-width:1080px; margin:0 auto; padding:0 20px; }
+  header { padding:22px 0; } header a { color:var(--soft); text-decoration:none; font-size:14px; }
+  .hero { display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:center; padding:30px 0 60px; }
+  .kicker { font:600 12px/1 ui-monospace, monospace; letter-spacing:2px; text-transform:uppercase; color:var(--cy); }
+  h1 { font-size:46px; line-height:1.1; margin:12px 0 16px; }
+  p { color:var(--soft); margin-bottom:14px; }
+  .pill { display:inline-block; border:1px solid var(--line); border-radius:99px; padding:4px 12px; font:12px ui-monospace, monospace; color:var(--soft); margin:4px 6px 0 0; }
+  .shot { border:1px solid var(--line); border-radius:16px; overflow:hidden; height:520px; background:var(--card); box-shadow:0 20px 60px rgba(0,0,0,.4); }
+  .shot img { width:100%; display:block; transition:transform 6s ease; }
+  .shot:hover img { transform:translateY(calc(-100% + 520px)); }
+  .grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; padding-bottom:60px; }
+  .box { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:20px; }
+  .box h3 { font-size:16px; margin-bottom:6px; } .box p { font-size:14px; margin:0; }
+  footer { border-top:1px solid var(--line); padding:24px 0 40px; font-size:14px; color:var(--soft); }
+  footer a { color:var(--cy); }
+  @media (max-width:800px) { .hero, .grid { grid-template-columns:1fr; } h1 { font-size:34px; } .shot { height:380px; } .shot:hover img { transform:none; } }
+</style>
+</head>
+<body>
+<header class="wrap"><a href="../#rispostafacile">← Torna al portfolio di Andrea Vacchini</a></header>
+<main class="wrap">
+  <section class="hero">
+    <div>
+      <div class="kicker">Studi commercialisti · progetto 2026</div>
+      <h1>RispostaFacile</h1>
+      <p>I clienti fanno al commercialista le stesse domande tutto il giorno. RispostaFacile prepara la bozza di risposta in pochi secondi: il professionista la legge, la corregge se serve e la invia.</p>
+      <p>Servizio web completo: accesso con Google, generazione delle risposte con l'IA, storico, pagine legali.</p>
+      <span class="pill">Python · FastAPI</span><span class="pill">API di Claude</span><span class="pill">Supabase</span><span class="pill">Login Google</span>
+    </div>
+    <div class="shot"><img src="../img/rf-full.jpg" width="1200" height="3867" alt="Pagina iniziale di RispostaFacile"></div>
+  </section>
+  <section class="grid">
+    <div class="box"><h3>Il problema</h3><p>Ore perse ogni settimana a riscrivere risposte simili su scadenze, documenti e adempimenti.</p></div>
+    <div class="box"><h3>La soluzione</h3><p>Una bozza pronta e coerente col tono dello studio, sempre rivista da una persona prima dell'invio.</p></div>
+    <div class="box"><h3>Stato</h3><p>Il servizio online è in pausa: questa è la vetrina del progetto. Per una demo, scrivimi.</p></div>
+  </section>
+</main>
+<footer class="wrap">Andrea Vacchini · AI Automation Engineer · <a href="https://www.linkedin.com/in/andrea-vacchini-it">LinkedIn</a> · <a href="../">Portfolio</a></footer>
+</body>
+</html>

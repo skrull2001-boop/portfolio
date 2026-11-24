@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GymPage · Andrea Vacchini</title>
+<meta name="description" content="GymPage: siti pronti per palestre e personal trainer. Progetto di Andrea Vacchini.">
+<link rel="icon" href="../favicon.svg">
+<style>
+  :root { --bg:#0b1020; --card:#111830; --line:#222b45; --text:#eef0f6; --soft:#c3c8d8; --cy:#22e3ff; --vi:#8b6bff; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  body { background:var(--bg); color:var(--text); font:16px/1.6 "Segoe UI", system-ui, sans-serif; }
+  .wrap { max-width:1080px; margin:0 auto; padding:0 20px; }
+  header { padding:22px 0; } header a { color:var(--soft); text-decoration:none; font-size:14px; }
+  .hero { display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:center; padding:30px 0 60px; }
+  .kicker { font:600 12px/1 ui-monospace, monospace; letter-spacing:2px; text-transform:uppercase; color:var(--cy); }
+  h1 { font-size:46px; line-height:1.1; margin:12px 0 16px; }
+  p { color:var(--soft); margin-bottom:14px; }
+  .pill { display:inline-block; border:1px solid var(--line); border-radius:99px; padding:4px 12px; font:12px ui-monospace, monospace; color:var(--soft); margin:4px 6px 0 0; }
+  .shot { border:1px solid var(--line); border-radius:16px; overflow:hidden; height:520px; background:var(--card); box-shadow:0 20px 60px rgba(0,0,0,.4); }
+  .shot img { width:100%; display:block; transition:transform 6s ease; }
+  .shot:hover img { transform:translateY(calc(-100% + 520px)); }
+  .grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; padding-bottom:60px; }
+  .box { background:var(--card); border:1px solid var(--line); border-radius:14px; padding:20px; }
+  .box h3 { font-size:16px; margin-bottom:6px; } .box p { font-size:14px; margin:0; }
+  footer { border-top:1px solid var(--line); padding:24px 0 40px; font-size:14px; color:var(--soft); }
+  footer a { color:var(--cy); }
+  @media (max-width:800px) { .hero, .grid { grid-template-columns:1fr; } h1 { font-size:34px; } .shot { height:380px; } .shot:hover img { transform:none; } }
+</style>
+</head>
+<body>
+<header class="wrap"><a href="../#gympage">← Torna al portfolio di Andrea Vacchini</a></header>
+<main class="wrap">
+  <section class="hero">
+    <div>
+      <div class="kicker">Palestre e personal trainer · progetto 2026</div>
+      <h1>GymPage</h1>
+      <p>Una palestra ha bisogno di un sito chiaro, senza dover seguire un progetto web. GymPage offre siti pronti con servizi, orari, prezzi e contatti, personalizzati in poco tempo.</p>
+      <p>Pagine veloci (punteggio Lighthouse 100/100), pensate per il telefono, con dominio, hosting e pagamenti gestiti.</p>
+      <span class="pill">HTML · CSS · JavaScript</span><span class="pill">Template</span><span class="pill">Lighthouse 100/100</span>
+    </div>
+    <div class="shot"><img src="../img/gp-full.jpg" width="1200" height="3583" alt="Pagina iniziale di GymPage"></div>
+  </section>
+  <section class="grid">
+    <div class="box"><h3>Il problema</h3><p>Molti personal trainer e piccole palestre non hanno un sito, o ne hanno uno vecchio e lento.</p></div>
+    <div class="box"><h3>La soluzione</h3><p>Un modello pronto: si cambiano testi, foto e prezzi, e il sito è online in un giorno.</p></div>
+    <div class="box"><h3>Stato</h3><p>Il servizio online è in pausa: questa è la vetrina del progetto. Per un sito su misura, scrivimi.</p></div>
+  </section>
+</main>
+<footer class="wrap">Andrea Vacchini · AI Automation Engineer · <a href="https://www.linkedin.com/in/andrea-vacchini-it">LinkedIn</a> · <a href="../">Portfolio</a></footer>
+</body>
+</html>
